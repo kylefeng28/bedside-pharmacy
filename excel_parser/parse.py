@@ -57,11 +57,6 @@ def parse_worksheet(ws):
                     else:
                         drug_data[col_name.value][subcolumn_name] += r[0].value + '\n'
 
-        # drug['data'][col]
-
-    # for col in columns:
-    #     data[ws.title][col.value] = {}
-
     return data
 
 if __name__ == '__main__':

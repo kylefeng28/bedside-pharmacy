@@ -8,7 +8,9 @@
 	"rules": {
         "no-any": true,
         "quotemark": [true, "single", "avoid-escape", "avoid-template"],
-        "object-literal-sort-keys": false
+        "object-literal-sort-keys": false,
+        "jsx-no-multiline-js": false,
+        "trailing-comma": false
 	},
     "rulesDirectory": []
 }

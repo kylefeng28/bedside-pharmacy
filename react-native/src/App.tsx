@@ -60,20 +60,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: '1.5rem',
-    marginVertical: '1em',
+    fontSize: 15,
+    marginVertical: 10,
     textAlign: 'center'
   },
   text: {
-    lineHeight: '1.5em',
-    fontSize: '1.125rem',
-    marginVertical: '1em',
+    lineHeight: 15,
+    fontSize: 11.25,
+    marginVertical: 10,
     textAlign: 'center'
   },
   link: {
     color: '#1B95E0'
   },
   code: {
-    fontFamily: 'monospace, monospace'
+    // fontFamily: 'monospace, monospace'
   }
 });

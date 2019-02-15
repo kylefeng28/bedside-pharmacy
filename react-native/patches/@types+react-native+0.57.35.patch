@@ -1,0 +1,22 @@
+diff --git a/node_modules/@types/react-native/index.d.ts b/node_modules/@types/react-native/index.d.ts
+index ad641ce..0c05bb7 100644
+--- a/node_modules/@types/react-native/index.d.ts
++++ b/node_modules/@types/react-native/index.d.ts
+@@ -772,7 +772,7 @@ export interface TextStyleAndroid extends ViewStyle {
+ export interface TextStyle extends TextStyleIOS, TextStyleAndroid, ViewStyle {
+     color?: string;
+     fontFamily?: string;
+-    fontSize?: number;
++    fontSize?: number | string;
+     fontStyle?: "normal" | "italic";
+     /**
+      * Specifies font weight. The values 'normal' and 'bold' are supported
+@@ -781,7 +781,7 @@ export interface TextStyle extends TextStyleIOS, TextStyleAndroid, ViewStyle {
+      */
+     fontWeight?: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900";
+     letterSpacing?: number;
+-    lineHeight?: number;
++    lineHeight?: number | string;
+     textAlign?: "auto" | "left" | "right" | "center" | "justify";
+     textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through";
+     textDecorationStyle?: "solid" | "double" | "dotted" | "dashed";

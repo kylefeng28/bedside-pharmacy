@@ -1,0 +1,44 @@
+{
+  "extends": "./tsconfig_full.json",
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "esnext",
+    "allowJs": true,
+    "checkJs": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "types": [
+    "react",
+    "react-dom",
+    "react-native"
+  ],
+  "exclude": [
+    "build",
+    "node_modules",
+    "jest.config.js",
+    "App.js"
+  ],
+  "include": [
+    "src"
+  ]
+}

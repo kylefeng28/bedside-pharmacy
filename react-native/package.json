@@ -5,17 +5,15 @@
     "start:expo": "expo start",
     "start:android": "expo start --android",
     "start:ios": "expo start --ios",
-
     "build:web": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-
     "lint": "tslint src/**/*.{ts,tsx}",
-
     "postinstall": "patch-package"
   },
   "dependencies": {
     "expo": "^32.0.0",
     "expokit": "^32.0.6",
+    "patch-package": "^6.0.2",
     "react": "16.5.0",
     "react-art": "^16.8.2",
     "react-dom": "^16.8.2",

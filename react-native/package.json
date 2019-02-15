@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start:web": "react-scripts build",
+    "start:web": "react-scripts start",
     "start:expo": "expo start",
     "start:android": "expo start --android",
     "start:ios": "expo start --ios",
@@ -9,7 +9,9 @@
     "build:web": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
 
-    "lint": "tslint src/**/*.{ts,tsx}"
+    "lint": "tslint src/**/*.{ts,tsx}",
+
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "expo": "^32.0.0",

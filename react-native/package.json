@@ -1,17 +1,25 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "eject": "expo eject",
+    "start:web": "react-scripts build",
+    "start:expo": "expo start",
+    "start:android": "expo start --android",
+    "start:ios": "expo start --ios",
+
+    "build:web": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+
     "lint": "tslint src/**/*.{ts,tsx}"
   },
   "dependencies": {
     "expo": "^32.0.0",
     "expokit": "^32.0.6",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
+    "react-art": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-web": "^0.10.0",
+    "react-scripts": "^2.1.5"
   },
   "devDependencies": {
     "@types/react": "^16.8.2",
@@ -21,5 +29,11 @@
     "tslint-react": "^3.6.0",
     "typescript": "^3.3.3"
   },
-  "private": true
+  "private": true,
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

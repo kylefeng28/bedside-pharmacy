@@ -1,7 +1,7 @@
 export const benzodiazepines = {
   "name": "BENZODIAZEPINES",
   "columns": [
-    { key: 'name', name: "NAME" },
+    { key: 'name', name: "NAME", width: 200 },
     { key: "DOSE", name: "DOSE", width: 500 },
     { key: "ONSET/DURATION", name: "ONSET/DURATION", width: 500 },
     { key: "METABOLISM/EXCRETION", name: "METABOLISM/EXCRETION" },

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDataGrid from 'react-data-grid';
 
 import {benzodiazepines} from './mock_data'
-let rowsCount = benzodiazepines.drugs.length;
+let rowsCount = benzodiazepines.drugs.length * 50; // TODO remove multiplier
 
 const EmptyRowsView = () => {
   const message = "No data to show (yet!)";
@@ -33,17 +33,17 @@ const CellFormatter = ({ value }) => {
 
   // TODO align left
   return (
-    <div>
-      {/* {subcells} */}
-      "helloooo"
+    <div style={{textAlign: 'left', verticalAlign: 'top'}}>
+      {subcells}
     </div>
   );
 }
 
 const CustomRowRenderer = ({renderBaseRow, ...props}) => {
-  const height = 300; // TODO calculate how much space it needs
+  // TODO calculate how much space it needs
+  // however, having this slows down the renderer a TON
   // props.row /* row data */
-  return renderBaseRow({...props, height: height});
+  return renderBaseRow({...props});
  }
 
 // Attach CellFormatter to columns
@@ -78,7 +78,7 @@ export default class Editor extends React.Component {
   */
 
   getRow = (i) => {
-    const drug = benzodiazepines.drugs[i];
+    const drug = benzodiazepines.drugs[i % benzodiazepines.drugs.length]; // TODO remove mod
 
     if (!drug) {
       return null;
@@ -100,6 +100,9 @@ export default class Editor extends React.Component {
         // onGridRowsUpdated={this.onGridRowsUpdated}
         headerRowHeight={35}
         rowRenderer={CustomRowRenderer}
+        rowHeight={300}
+
+        minWidth={window.innerWidth * 2}
         minHeight={window.innerHeight}
         maxHeight={window.innerHeight}
 

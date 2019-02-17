@@ -1,112 +1,46 @@
-import React from 'react';
-import ReactDataGrid from 'react-data-grid';
+import React from "react";
+import { render } from "react-dom";
 
-import {benzodiazepines} from './mock_data'
-let rowsCount = benzodiazepines.drugs.length * 50; // TODO remove multiplier
+// Import React Table
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
-const EmptyRowsView = () => {
-  const message = "No data to show (yet!)";
-  return (
-    <div style={{ textAlign: "center", backgroundColor: "#ddd", padding: "100px" }}>
-      {/* <img src="./logo.png" alt={message} /> */}
-      <h3>{message}</h3>
-    </div>
-  );
-};
+// import * as R from 'ramda';
 
-const SubcellFormatter = ({ subfield, subvalue }) => {
-  return (
-    <div>
-      <b>{subfield}:</b><br/>
-      {subvalue}
-    </div>
-  )
-}
+import {benzodiazepines} from './mock_data';
+const R = require('ramda');
 
-const CellFormatter = ({ value }) => {
-  // value is the cell data received by the formatter
-  // in this case, it is an object
-  const subcells = Object.entries(value).map((entry) => {
-    let [ subfield, subvalue ] = entry; // destructure entry
-    return (<SubcellFormatter subfield={subfield} subvalue={subvalue} />);
-  });
-
-  // TODO align left
-  return (
-    <div style={{textAlign: 'left', verticalAlign: 'top'}}>
-      {subcells}
-    </div>
-  );
-}
-
-const CustomRowRenderer = ({renderBaseRow, ...props}) => {
-  // TODO calculate how much space it needs
-  // however, having this slows down the renderer a TON
-  // props.row /* row data */
-  return renderBaseRow({...props});
- }
-
-// Attach CellFormatter to columns
-for (let i in benzodiazepines.columns) {
-  const col = benzodiazepines.columns[i];
-  if (col.key !== 'name') {
-    col.formatter = CellFormatter;
-  }
+function makeData() {
+  return R.flatten(R.repeat(benzodiazepines.drugs, 20));
 }
 
 export default class Editor extends React.Component {
-  /*
-  state = {
-  };
-
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+    this.state = {
+      data: makeData()
+    };
   }
-  */
-
-  /*
-  onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-    console.log({fromRow, toRow});
-    this.setState(state => {
-      const rows = state.rows.slice();
-      for (let i = fromRow; i <= toRow; i++) {
-        rows[i] = { ...rows[i], ...updated };
-      }
-      return { rows };
-    });
-  };
-  */
-
-  getRow = (i) => {
-    const drug = benzodiazepines.drugs[i % benzodiazepines.drugs.length]; // TODO remove mod
-
-    if (!drug) {
-      return null;
-    }
-
-    const rowData = Object.assign({ name: drug.name }, drug.data);
-    return rowData;
-  }
-
   render() {
+    const { data } = this.state;
+    console.log(data)
+
     return (
-      <ReactDataGrid
-        columns={benzodiazepines.columns}
-        rows={benzodiazepines.drugs}
-        rowsCount={rowsCount}
-        emptyRowsView={EmptyRowsView}
-
-        rowGetter={this.getRow}
-        // onGridRowsUpdated={this.onGridRowsUpdated}
-        headerRowHeight={35}
-        rowRenderer={CustomRowRenderer}
-        rowHeight={300}
-
-        minWidth={window.innerWidth * 2}
-        minHeight={window.innerHeight}
-        maxHeight={window.innerHeight}
-
-      />
+      <div>
+        <ReactTable
+          data={data}
+          // id: 'dose', // only needed if accessor is not a string
+          columns={[
+            { Header: "DOSE", id: 'a', accessor: d => JSON.stringify(d.data["DOSE"]) },
+            { Header: "ONSET/DURATION", id: 'b', accessor: d => JSON.stringify(d.data["DOSE"]) },
+            { Header: "ONSET/DURATION", id: 'c', accessor: d => JSON.stringify(d.data["ONSET/DURATION"]) },
+            { Header: "METABOLISM/EXCRETION", id: 'd', accessor: d => JSON.stringify(d.data["METABOLISM/EXCRETION"]) },
+            { Header: "WARNINGS", id: 'e', accessor: d => JSON.stringify(d.data["WARNINGS"]) }
+          ]}
+          defaultPageSize={30}
+          className="-striped -highlight"
+        />
+      </div>
     );
   }
 }

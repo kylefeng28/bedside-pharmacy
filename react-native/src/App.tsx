@@ -1,8 +1,9 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import styles from './style'
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button, Header, Icon} from 'react-native-elements';
+// import Icon from 'react-native-vector-icons';
+
 
 
 const Link = (props) => (
@@ -16,8 +17,13 @@ const Link = (props) => (
 export default class App extends React.Component {
   public render() {
     return (
-      <View style={styles.app}>
-      <Button title="Solid Button"/>
+
+      <View style={[styles.page_layout, styles.drug_page]}>
+
+      <Header 
+      leftComponent={{ text: 'menu', color: '#fff' }}
+      centerComponent={{ text: 'Durg Reference App', style: { color: '#fff' } }}
+      rightComponent={{ text: 'home', color: '#fff' }}/>
 
         <View style={styles.header}>
           <Text style={styles.title}>React Native for Web</Text>

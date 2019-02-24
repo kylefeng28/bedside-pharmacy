@@ -2,9 +2,9 @@ import React, {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
 
- app: {
+ page_layout: {
     marginHorizontal: 'auto',
-    width: '80%'
+    width: '100%',
   },
   logo: {
     height: 80
@@ -29,6 +29,9 @@ export default StyleSheet.create({
   },
   code: {
     // fontFamily: 'monospace, monospace'
+  },
+  drug_page:{
+
   }
   
 });

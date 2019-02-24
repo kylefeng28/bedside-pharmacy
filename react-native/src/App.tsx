@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import styles from './style'
-// import { Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -17,6 +17,7 @@ export default class App extends React.Component {
   public render() {
     return (
       <View style={styles.app}>
+      <Button title="Solid Button"/>
 
         <View style={styles.header}>
           <Text style={styles.title}>React Native for Web</Text>

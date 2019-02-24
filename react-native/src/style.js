@@ -4,7 +4,7 @@ export default StyleSheet.create({
 
  app: {
     marginHorizontal: 'auto',
-    maxWidth: 500
+    width: '80%'
   },
   logo: {
     height: 80

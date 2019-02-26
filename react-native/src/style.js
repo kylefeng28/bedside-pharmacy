@@ -32,6 +32,9 @@ export default StyleSheet.create({
   },
   drug_page:{
 
+  },
+  Title:{
+    color: 'red'
   }
   
 });

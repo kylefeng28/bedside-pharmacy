@@ -13,15 +13,18 @@ def parse_worksheet(ws):
 
     #print(column_names)
     #    column_names.append(name.replace('/', ''))
-    column_names = list(filter(lambda cell: cell.value != None, column_names))
+    column_names = list(reduce(lambda cell: cell.value.replace('/',''), list(filter(lambda cell: cell.value != None, column_names))))
     column_indices = [ c.column for c in column_names ]
+    for name in column_names:
+        column_names.get(name).value = column_names.get(name).value.replace('/','')
 
     # Find row names
     # read-only mode has no iter_col, so do it like this
     row_names = [ x[0] for x in ws.iter_rows(min_row=0, max_row=500, min_col=0, max_col=0) ]
     row_names = list(filter(lambda cell: cell.value != None, row_names))
     row_indices = [ r.row for r in row_names ]
-
+    for name in row_names:
+        print(name.value)
     # Find where last row ends based on bottom border
     last_row = row_names[-1].row
     while last_row <= 500: # set max bound
@@ -45,8 +48,7 @@ def parse_worksheet(ws):
         # Iterate by columns
         # ex. DOSE, ONSET/DURATION, METABOLISM/EXCRETION, WARNINGS
         for (col_i, col_name) in enumerate(column_names):
-            col_name_value = col_name.value.replace('/','|')
-            drug_data[col_name_value] = {}
+            drug_data[col_name.value] = {}
             #print(drug_data[col_name.value])
             col = column_indices[col_i]
             min_row = row_indices[row_i]
@@ -57,10 +59,10 @@ def parse_worksheet(ws):
             for r in ws.iter_rows(min_row=min_row, max_row=max_row, min_col=col, max_col=col):
                 if r[0].value is not None:
                     if r[0].font.bold:
-                        subcolumn_name = r[0].value
-                        drug_data[col_name_value][subcolumn_name] = ''
+                        subcolumn_name = r[0].value.replace('/','')
+                        drug_data[col_name.value][subcolumn_name] = ''
                     else:
-                        drug_data[col_name_value][subcolumn_name] += r[0].value + '\n'
+                        drug_data[col_name.value][subcolumn_name] += r[0].value + '\n'
                    # print(r[0].value)
 
             #print(drug_data[col_name.value])

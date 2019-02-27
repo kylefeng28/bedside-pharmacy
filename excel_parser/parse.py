@@ -1,7 +1,7 @@
 import openpyxl as xl
 import sys
 import json
-
+from functools import reduce
 def parse_worksheet(ws):
     data = {
         'name': ws.title,
@@ -10,6 +10,9 @@ def parse_worksheet(ws):
 
     # Find column names
     column_names = ws['1']
+
+    #print(column_names)
+    #    column_names.append(name.replace('/', ''))
     column_names = list(filter(lambda cell: cell.value != None, column_names))
     column_indices = [ c.column for c in column_names ]
 
@@ -42,7 +45,9 @@ def parse_worksheet(ws):
         # Iterate by columns
         # ex. DOSE, ONSET/DURATION, METABOLISM/EXCRETION, WARNINGS
         for (col_i, col_name) in enumerate(column_names):
-            drug_data[col_name.value] = {}
+            col_name_value = col_name.value.replace('/','|')
+            drug_data[col_name_value] = {}
+            #print(drug_data[col_name.value])
             col = column_indices[col_i]
             min_row = row_indices[row_i]
             max_row = row_indices[row_i+1]
@@ -53,10 +58,12 @@ def parse_worksheet(ws):
                 if r[0].value is not None:
                     if r[0].font.bold:
                         subcolumn_name = r[0].value
-                        drug_data[col_name.value][subcolumn_name] = ''
+                        drug_data[col_name_value][subcolumn_name] = ''
                     else:
-                        drug_data[col_name.value][subcolumn_name] += r[0].value + '\n'
+                        drug_data[col_name_value][subcolumn_name] += r[0].value + '\n'
+                   # print(r[0].value)
 
+            #print(drug_data[col_name.value])
     return data
 
 if __name__ == '__main__':
@@ -78,4 +85,5 @@ if __name__ == '__main__':
     data['classes'].append(parse_worksheet(wb['BENZODIAZEPINES']))
 
     # Print JSON
-    print(json.dumps(data, indent=4))
+    with open('data.json', 'w') as outfile:
+        json.dump(data, outfile, indent = 4)

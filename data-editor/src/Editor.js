@@ -25,11 +25,14 @@ const EmptyRowsView = () => {
   );
 };
 
-const SubcellFormatter = ({ subfield, subvalue }) => {
+const SubcellFormatter = ({ subfield, subvalue, handleChange }) => {
   return (
     <div>
       <b>{subfield}:</b><br/>
-      {subvalue}
+      {/* <input type="text" name={subfield} value={subvalue} onChange={handleChange} /> */}
+      <span contentEditable onBlur={handleChange}>
+        {subvalue ? subvalue : "<empty>"}
+      </span>
     </div>
   )
 }
@@ -37,9 +40,19 @@ const SubcellFormatter = ({ subfield, subvalue }) => {
 const CellFormatter = (props) => {
   // value contains the original (JSON) data of the cell
   const { value } = props;
-  const subcells = Object.entries(value).map((entry) => {
+  const subcells = Object.entries(value).map((entry, i) => {
     let [ subfield, subvalue ] = entry; // destructure entry
-    return (<SubcellFormatter subfield={subfield} subvalue={subvalue} />);
+    const handleChange = (event) => {
+      // TODO
+      // for some reason, cell contents are not editable until the column is resized
+      console.log(event)
+      value[subfield] = event.value;
+    };
+    return (
+      <SubcellFormatter key={i}
+        subfield={subfield} subvalue={subvalue}
+        handleChange={handleChange} />
+    );
   });
 
   // TODO align left

@@ -1,36 +1,52 @@
-/*
-Framework usage:
- 1. NativeBase (https://github.com/GeekyAnts/NativeBase)
- 2. react-native-vector-icons (https://github.com/oblador/react-native-vector-icons)
-*/
+import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import styles from './style'
+import { Button, Header, Icon} from 'react-native-elements';
+// import Icon from 'react-native-vector-icons';
 
-import React, { Component } from 'react';
-import styles from './style';
-import { Container, Header, Left, Body, Right, Button, Title, Text } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
 
-export default class HeaderExample extends Component {
-  render() {
+
+const Link = (props) => (
+  <Text
+    {...props}
+    accessibilityRole='link'
+    style={[styles.link, props.style]}
+  />
+);
+
+export default class App extends React.Component {
+  public render() {
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button transparent>
-             <Ionicons name="md-checkmark-circle" size={32} color="green" />
-            </Button>
-          </Left>
 
-          <Body>
-            <Title>Drug Reference App</Title>
-          </Body>
+      <View style={[styles.page_layout, styles.drug_page]}>
 
-          <Right>
-            <Button transparent>
-            </Button>
-          </Right>
-        </Header>
-        <Title style={styles.text}>Hello</Title>
-      </Container>
+      <Header 
+      leftComponent={{ text: 'menu', color: '#fff' }}
+      centerComponent={{ text: 'Durg Reference App', style: { color: '#fff' } }}
+      rightComponent={{ text: 'home', color: '#fff' }}/>
+
+        <View style={styles.header}>
+          <Text style={styles.title}>React Native for Web</Text>
+        </View>
+        <Text style={styles.text}>
+          This is an example of an app built with{' '}
+          <Link href='https://github.com/facebook/create-react-app'>
+            Create React App
+          </Link>{' '}
+          and{' '}
+          <Link href='https://github.com/necolas/react-native-web'>
+            React Native for Web
+          </Link>
+        </Text>
+        <Text style={styles.text}>
+          To get started, edit{' '}
+          <Link href='https://codesandbox.io/s/q4qymyp2l6/' style={styles.code}>
+            src/App.js
+          </Link>
+          .
+        </Text>
+        <Button onPress={() => {}} title='Example button' />
+      </View>
     );
   }
 }

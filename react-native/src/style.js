@@ -1,41 +1,22 @@
 import React, {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
+  title:{
+    color: '#151515',
+     marginTop:30,
+     marginBottom:30,
+  },
 
- page_layout: {
-    marginHorizontal: 'auto',
-    width: '100%',
+  box:{
+    flexGrow: 1
   },
-  logo: {
-    height: 80
-  },
-  header: {
-    padding: 20
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    marginVertical: 10,
-    textAlign: 'center'
-  },
-  text: {
-    lineHeight: 15,
-    fontSize: 11.25,
-    marginVertical: 10,
-    textAlign: 'center'
-  },
-  link: {
-    color: '#1B95E0'
-  },
-  code: {
-    // fontFamily: 'monospace, monospace'
-  },
-  drug_page:{
 
+  column:{
+    backgroundColor:'#007FAE'
   },
-  Title:{
-    color: 'red'
+
+  column_head:{
+    color: '#ffffff'
   }
-  
 });
 

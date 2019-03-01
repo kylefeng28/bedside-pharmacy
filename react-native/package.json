@@ -11,7 +11,6 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@shoutem/ui": "^0.23.12",
     "expo": "^32.0.0",
     "expokit": "^32.0.6",
     "firebase": "^5.8.4",
@@ -22,13 +21,11 @@
     "react-dom": "^16.8.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-elements": "^1.0.0",
-    "react-native-ui-kitten": "^3.1.2",
     "react-native-vector-icons": "^6.3.0",
     "react-native-web": "^0.10.0",
     "react-scripts": "^2.1.5"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
     "@types/react-native": "^0.57.35",

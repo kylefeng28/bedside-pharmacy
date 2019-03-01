@@ -6,18 +6,11 @@ import 'react-table/react-table.css';
 import { FirebaseContext } from "./Firebase";
 
 /*
-async function getData(firebase) {
-  let snapshot = await firebase.drugsDbRef.once('value');
-  let data = snapshot.val();
-  data = data['classes'][0]['drugs'];
-  return data;
-}
-*/
-
 import { benzodiazepines } from './mock_data.js';
 async function getData(firebase) {
   return benzodiazepines['drugs'];
 }
+*/
 
 const EmptyRowsView = () => {
   const message = "No data to show (yet!)";
@@ -77,11 +70,12 @@ export default class Editor extends React.Component {
 
   async componentDidMount() {
     let firebase = this.context;
-    let data = await getData(firebase);
-    this.setState({
-      data: data
+    firebase.drugsDbRef.on('value', (snapshot) => {
+      let data = snapshot.val();
+      data = data['drugs'];
+      console.log(data);
+      this.setState({data: data});
     });
-    console.log(data);
   }
 
   render() {
@@ -109,11 +103,11 @@ export default class Editor extends React.Component {
             },
             {
               Header: "ONSET/DURATION", id: 'onset_duration',
-              accessor: accessData("ONSET/DURATION"), Cell: CellFormatter
+              accessor: accessData("ONSET_DURATION"), Cell: CellFormatter
             },
             {
               Header: "METABOLISM/EXCRETION", id: 'metabolism_excretion',
-              accessor: accessData("METABOLISM/EXCRETION"), Cell: CellFormatter
+              accessor: accessData("METABOLISM_EXCRETION"), Cell: CellFormatter
             },
             {
               Header: "WARNINGS", id: 'warnings',

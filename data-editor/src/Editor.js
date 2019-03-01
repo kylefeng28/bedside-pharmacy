@@ -1,18 +1,22 @@
 import React from "react";
-import { render } from "react-dom";
 
 // Import React Table
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import { FirebaseContext } from "./Firebase";
 
-// import * as R from 'ramda';
+/*
+async function getData(firebase) {
+  let snapshot = await firebase.drugsDbRef.once('value');
+  let data = snapshot.val();
+  data = data['classes'][0]['drugs'];
+  return data;
+}
+*/
 
-import {benzodiazepines} from './mock_data';
-import { access } from "fs";
-const R = require('ramda');
-
-function makeData() {
-  return R.flatten(R.repeat(benzodiazepines.drugs, 20));
+import { benzodiazepines } from './mock_data.js';
+async function getData(firebase) {
+  return benzodiazepines['drugs'];
 }
 
 const EmptyRowsView = () => {
@@ -67,14 +71,31 @@ export default class Editor extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: makeData()
+      data: []
     };
+  }
+
+  async componentDidMount() {
+    let firebase = this.context;
+    let data = await getData(firebase);
+    this.setState({
+      data: data
+    });
+    console.log(data);
   }
 
   render() {
     const { data } = this.state;
 
-    const accessData = (key) => (d) => d.data[key]
+    const accessData = (key) => (d) => {
+      if (d.data) {
+        return d.data[key];
+      } else {
+        console.error('accesing failed!');
+        console.error(d, key);
+        return '<error>';
+      }
+    }
 
     return (
       <div>
@@ -106,3 +127,5 @@ export default class Editor extends React.Component {
     );
   }
 }
+
+Editor.contextType = FirebaseContext;

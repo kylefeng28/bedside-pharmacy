@@ -7,11 +7,65 @@ Framework usage:
 
 import React, { Component } from 'react';
 import styles from './style';
-import { StatusBar, StyleSheet, ScrollView } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Text, Accordion, Card, CardItem } from 'native-base';
+// import { StatusBar, StyleSheet, ScrollView } from 'react-native';
+import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 // import Expo from "expo";
 import Firebase, {FirebaseContext} from './Firebase';
+
+import {
+  Switch,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import { Constants } from 'expo';
+import * as Animatable from 'react-native-animatable';
+import Collapsible from 'react-native-collapsible';
+import Accordion from 'react-native-collapsible/Accordion';
+
+
+const BACON_IPSUM =
+  'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
+
+const CONTENT = [
+  {
+    title: 'First',
+    content: BACON_IPSUM,
+  },
+  {
+    title: 'Second',
+    content: BACON_IPSUM,
+  },
+  {
+    title: 'Third',
+    content: BACON_IPSUM,
+  },
+  {
+    title: 'Fourth',
+    content: BACON_IPSUM,
+  },
+  {
+    title: 'Fifth',
+    content: BACON_IPSUM,
+  },
+];
+
+const SELECTORS = [
+  {
+    title: 'First',
+    value: 0,
+  },
+  {
+    title: 'Third',
+    value: 2,
+  },
+  {
+    title: 'None',
+  },
+];
 
 async function getData(firebase){
   let snapshot = await firebase.drugsDbRef.once('value');
@@ -24,11 +78,54 @@ export default class HeaderExample extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { loading: true, data: null };
+    this.state = { loading: true, 
+                   data: null,
+                   activeSections: [],
+                   collapsed: true,
+                   multipleSelect: false,
+                 };
+  }
+
+  toggleExpanded = () => {
+    this.setState({ collapsed: !this.state.collapsed });
+  };
+
+  setSections = sections => {
+    this.setState({
+      activeSections: sections.includes(undefined) ? [] : sections,
+    });
+  };
+
+  renderHeader = (section, _, isActive) => {
+    return (
+      <Animatable.View
+        duration={400}
+        style={[styles.header, isActive ? styles.active : styles.inactive]}
+        transition="backgroundColor"
+      >
+        <Text style={styles.headerText}>{section.title}</Text>
+      </Animatable.View>
+    );
+  };
+
+  renderContent(section, _, isActive) {
+    return (
+      <Animatable.View
+        duration={400}
+        style={[styles.content, isActive ? styles.active : styles.inactive]}
+        transition="backgroundColor"
+      >
+        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>
+          {section.content}
+        </Animatable.Text>
+      </Animatable.View>
+    );
   }
 
 
+
   render() {
+    const { multipleSelect, activeSections } = this.state;
     return (
 
        <Container>
@@ -62,7 +159,7 @@ export default class HeaderExample extends Component {
 
                 let d_warnings = ((JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['WARNINGS']['Warnings'] :  '')).slice(1,-3)).replace("\\n", " ");
 
-                return (
+                return(
                   <Container>
 
                     <Header>
@@ -166,11 +263,75 @@ export default class HeaderExample extends Component {
                     </Card>
                   </ScrollView>
 
-                </Container>)
+                </Container>
+                  )
+
               }
             }
-            </FirebaseContext.Consumer>
-      </Container>
+        </FirebaseContext.Consumer>
+        
+        <View style={styles.container}>
+        <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
+          <Text style={styles.title}>Accordion Example</Text>
+
+          <View style={styles.multipleToggle}>
+            <Text style={styles.multipleToggle__title}>Multiple Select?</Text>
+            <Switch
+              value={multipleSelect}
+              onValueChange={multipleSelect =>
+                this.setState({ multipleSelect })
+              }
+            />
+         </View>
+
+          <View style={styles.selectors}>
+            <Text style={styles.selectTitle}>Select:</Text>
+
+            {SELECTORS.map(selector => (
+              <TouchableOpacity
+                key={selector.title}
+                onPress={() => this.setSections([selector.value])}
+              >
+                <View style={styles.selector}>
+                  <Text
+                    style={
+                      activeSections.includes(selector.value) &&
+                      styles.activeSelector
+                    }
+                  >
+                    {selector.title}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <TouchableOpacity onPress={this.toggleExpanded}>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>Single Collapsible</Text>
+            </View>
+          </TouchableOpacity>
+          <Collapsible collapsed={this.state.collapsed} align="center">
+            <View style={styles.content}>
+              <Text>
+                Bacon ipsum dolor amet chuck turducken landjaeger tongue spare
+                ribs
+              </Text>
+            </View>
+          </Collapsible>
+          <Accordion
+            activeSections={activeSections}
+            sections={CONTENT}
+            touchableComponent={TouchableOpacity}
+            expandMultiple={multipleSelect}
+            renderHeader={this.renderHeader}
+            renderContent={this.renderContent}
+            duration={400}
+            onChange={this.setSections}
+          />
+        </ScrollView>
+      </View>
+    </Container>
       
     );
   }

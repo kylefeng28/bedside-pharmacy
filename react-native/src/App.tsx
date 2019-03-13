@@ -53,19 +53,6 @@ const CONTENT = [
   },
 ];
 
-const SELECTORS = [
-  {
-    title: 'First',
-    value: 0,
-  },
-  {
-    title: 'Third',
-    value: 2,
-  },
-  {
-    title: 'None',
-  },
-];
 
 async function getData(firebase){
   let snapshot = await firebase.drugsDbRef.once('value');
@@ -82,13 +69,10 @@ export default class HeaderExample extends Component {
                    data: null,
                    activeSections: [],
                    collapsed: true,
-                   multipleSelect: false,
+                   multipleSelect: true,
                  };
   }
 
-  toggleExpanded = () => {
-    this.setState({ collapsed: !this.state.collapsed });
-  };
 
   setSections = sections => {
     this.setState({
@@ -115,7 +99,7 @@ export default class HeaderExample extends Component {
         style={[styles.content, isActive ? styles.active : styles.inactive]}
         transition="backgroundColor"
       >
-        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>
+        <Animatable.Text>
           {section.content}
         </Animatable.Text>
       </Animatable.View>
@@ -126,199 +110,35 @@ export default class HeaderExample extends Component {
 
   render() {
     const { multipleSelect, activeSections } = this.state;
+
     return (
 
-       <Container>
-         <FirebaseContext.Consumer>
-            {
-              (firebase)=>{
-                getData(firebase).then((data)=>{
-                  this.setState({data: data})
-                });
+       <Container>  
+         <Header>
+           <Left>
+            <Button transparent>
+              <Ionicons name="ios-arrow-back" size={32} color="#007FAE" />
+            </Button>
+          </Left>
 
-                let d_name = (JSON.stringify(this.state.data ? this.state.data['drugs'][6]['name'] :  '')).slice(1,-1);
+          <Body>
+            <Title>Durg References</Title>
+          </Body>
 
-                let d_alcohol_withdraw = (JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['DOSE']['Alcohol withdrawal'] :  '')).slice(1,-3);
-
-                let d_agitation = (JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['DOSE']['Anxiety, agitation'] :  '')).slice(1,-3);
-
-
-                let d_excretion = (JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['METABOLISM_EXCRETION']['Excretion'] :  '')).slice(1,-3);
-
-
-                let d_metabolism = ((JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['METABOLISM_EXCRETION']['Metabolism'] :  '')).slice(1,-3).replace("\\n", " ")).replace("\\n", " ");
-
-
-                let d_half_life = JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['ONSET_DURATION']['Half-life'] :  '').slice(1,-3);
-
-
-                 let d_onset = (JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['ONSET_DURATION']['Onset'] :  '')).slice(1,-3);
-
-
-                let d_contrainidications = (JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['WARNINGS']['Contrainidications'] :  '')).slice(1,-3);
-
-                let d_warnings = ((JSON.stringify(this.state.data ? this.state.data['drugs'][6]['data']['WARNINGS']['Warnings'] :  '')).slice(1,-3)).replace("\\n", " ");
-
-                return(
-                  <Container>
-
-                    <Header>
-                      <Left>
-                        <Button transparent>
-                          <Ionicons name="ios-arrow-back" size={32} color="#007FAE" />
-                        </Button>
-                      </Left>
-
-                      <Body>
-                        <Title>Durg References</Title>
-                      </Body>
-
-                      <Right>
-                        <Button transparent>
-                          <Ionicons name="ios-search" size={32} color="#007FAE" />
-                        </Button>
-                      </Right>
-                    </Header>
-
-                    <ScrollView style={styles.box}>
-                      <H1 style={styles.title}>{d_name}</H1>
-                      <Card>
-                        <CardItem header bordered style={styles.column}>
-                          <Text style={styles.column_head}>Dose</Text>
-                        </CardItem>
-                        <CardItem bordered>
-                          <Body>
-                            <Text>
-                              Alcohol withdraw: {d_alcohol_withdraw}
-                            </Text>
-                          </Body>
-                        </CardItem>
-
-                        <CardItem bordered>
-                          <Body>
-                            <Text>
-                              Anxiety, agitation: {d_agitation}      
-                            </Text>
-                          </Body>
-                        </CardItem>
-
-                        <CardItem header bordered style={styles.column}>
-                          <Text style={styles.column_head}>Metabolism Excretion</Text>
-                        </CardItem>
-                        <CardItem bordered>
-                          <Body>
-                            <Text>
-                              Excretion: {d_excretion}
-                            </Text>
-                          </Body>
-                        </CardItem>
-
-                        <CardItem bordered >
-                          <Body>
-                            <Text>
-                              Metabolism: {d_metabolism}      
-                            </Text>
-                          </Body>
-                        </CardItem>
-
-                         <CardItem header bordered style={styles.column}>
-                          <Text style={styles.column_head}>Onset Duration</Text>
-                        </CardItem>
-                        <CardItem bordered>
-                          <Body>
-                            <Text>
-                              Half-life: {d_half_life}
-                            </Text>
-                          </Body>
-                        </CardItem>
-
-                        <CardItem bordered>
-                          <Body>
-                            <Text>
-                              Onset: {d_onset}      
-                            </Text>
-                          </Body>
-                        </CardItem>
-                  
-
-                         <CardItem header bordered style={styles.column}>
-                          <Text style={styles.column_head}>Warnings</Text>
-                        </CardItem>
-                        <CardItem bordered>
-                          <Body>
-                            <Text>
-                            Contrainidications:{d_contrainidications}
-                            </Text>
-                          </Body>
-                        </CardItem>
-
-                        <CardItem bordered>
-                          <Body>
-                            <Text>
-                              Onset: {d_warnings}      
-                            </Text>
-                          </Body>
-                        </CardItem>
-
-                    </Card>
-                  </ScrollView>
-
-                </Container>
-                  )
-
-              }
-            }
-        </FirebaseContext.Consumer>
-        
+          <Right>
+            <Button transparent>
+              <Ionicons name="ios-search" size={32} color="#007FAE" />
+            </Button>
+          </Right>
+          </Header>
         <View style={styles.container}>
         <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
-          <Text style={styles.title}>Accordion Example</Text>
 
           <View style={styles.multipleToggle}>
             <Text style={styles.multipleToggle__title}>Multiple Select?</Text>
-            <Switch
-              value={multipleSelect}
-              onValueChange={multipleSelect =>
-                this.setState({ multipleSelect })
-              }
-            />
-         </View>
-
-          <View style={styles.selectors}>
-            <Text style={styles.selectTitle}>Select:</Text>
-
-            {SELECTORS.map(selector => (
-              <TouchableOpacity
-                key={selector.title}
-                onPress={() => this.setSections([selector.value])}
-              >
-                <View style={styles.selector}>
-                  <Text
-                    style={
-                      activeSections.includes(selector.value) &&
-                      styles.activeSelector
-                    }
-                  >
-                    {selector.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
+            
           </View>
 
-          <TouchableOpacity onPress={this.toggleExpanded}>
-            <View style={styles.header}>
-              <Text style={styles.headerText}>Single Collapsible</Text>
-            </View>
-          </TouchableOpacity>
-          <Collapsible collapsed={this.state.collapsed} align="center">
-            <View style={styles.content}>
-              <Text>
-                Bacon ipsum dolor amet chuck turducken landjaeger tongue spare
-                ribs
-              </Text>
-            </View>
-          </Collapsible>
           <Accordion
             activeSections={activeSections}
             sections={CONTENT}

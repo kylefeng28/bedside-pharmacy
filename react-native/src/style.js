@@ -1,6 +1,8 @@
 import React, {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
+
+  
   title:{
     color: '#151515',
      marginTop:30,

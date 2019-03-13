@@ -1,13 +1,11 @@
 import React, {StyleSheet} from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-export default StyleSheet.create({
+EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+  $textColor: '#0275d8'
+});
 
-  
-  title:{
-    color: '#151515',
-     marginTop:30,
-     marginBottom:30,
-  },
+export default EStyleSheet.create({
 
   box:{
     flexGrow: 1

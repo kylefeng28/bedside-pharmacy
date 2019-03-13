@@ -6,7 +6,6 @@ Framework usage:
 */
 
 import React, { Component } from 'react';
-import styles from './style';
 // import { StatusBar, StyleSheet, ScrollView } from 'react-native';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
@@ -25,6 +24,8 @@ import { Constants } from 'expo';
 import * as Animatable from 'react-native-animatable';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
+import EStyleSheet from 'react-native-extended-stylesheet'; 
+import styles from './style';
 
 
 const BACON_IPSUM =
@@ -61,17 +62,20 @@ async function getData(firebase){
 }
 
 
+
 export default class HeaderExample extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { loading: true, 
-                   data: null,
-                   activeSections: [],
-                   collapsed: true,
-                   multipleSelect: true,
-                 };
+    this.state = { 
+      loading: true, 
+      data: null,
+      activeSections: [],
+      collapsed: true,
+      multipleSelect: true,
+    };
   }
+
 
 
   setSections = sections => {

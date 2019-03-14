@@ -88,10 +88,10 @@ export default class HeaderExample extends Component {
     return (
       <Animatable.View
         duration={400}
-        style={[styles.header, isActive ? styles.active : styles.inactive]}
+        style={[styles.indication_header, isActive ? styles.indication_active : styles.indication_inactive]}
         transition="backgroundColor"
       >
-        <Text style={styles.headerText}>{section.title}</Text>
+        <Text style={styles.indication_headerText}>{section.title}</Text>
       </Animatable.View>
     );
   };
@@ -100,7 +100,7 @@ export default class HeaderExample extends Component {
     return (
       <Animatable.View
         duration={400}
-        style={[styles.content, isActive ? styles.active : styles.inactive]}
+        style={styles.indication_content}
         transition="backgroundColor"
       >
         <Animatable.Text>
@@ -117,7 +117,7 @@ export default class HeaderExample extends Component {
 
     return (
 
-       <Container>  
+       <Container> 
          <Header>
            <Left>
             <Button transparent>
@@ -135,27 +135,23 @@ export default class HeaderExample extends Component {
             </Button>
           </Right>
           </Header>
+
         <View style={styles.container}>
-        <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
-
-          <View style={styles.multipleToggle}>
-            <Text style={styles.multipleToggle__title}>Multiple Select?</Text>
-            
-          </View>
-
-          <Accordion
-            activeSections={activeSections}
-            sections={CONTENT}
-            touchableComponent={TouchableOpacity}
-            expandMultiple={multipleSelect}
-            renderHeader={this.renderHeader}
-            renderContent={this.renderContent}
-            duration={400}
-            onChange={this.setSections}
-          />
-        </ScrollView>
-      </View>
-    </Container>
+          <ScrollView>
+       
+            <Accordion
+              activeSections={activeSections}
+              sections={CONTENT}
+              touchableComponent={TouchableOpacity}
+              expandMultiple={multipleSelect}
+              renderHeader={this.renderHeader}
+              renderContent={this.renderContent}
+              duration={400}
+              onChange={this.setSections}
+            />
+          </ScrollView>
+        </View>
+      </Container>
       
     );
   }

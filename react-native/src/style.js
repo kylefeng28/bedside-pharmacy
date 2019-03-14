@@ -1,79 +1,62 @@
 import React, {StyleSheet} from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
-  $textColor: '#0275d8'
+EStyleSheet.build({ 
+  
+  /* ==========================================================================
+   Global styles
+   ========================================================================== */
+
+  // Global colors
+  $CarolinaBlue: '#4B9CD3',
+  $LinkBlue: '#007FAE',
+  $AthleticsNavy: '#13294B',
+  $LightGray: '#E1E1E1',
+  $DarkGray: '#767676',
+  $MainBlack: '#151515',
+  $MainWhite: '#FFFFFF'
 });
 
 export default EStyleSheet.create({
-
-  box:{
-    flexGrow: 1
-  },
-
-  column:{
-    backgroundColor:'#007FAE'
-  },
-
-  column_head:{
-    color: '#ffffff'
-  },
   container: {
+    // justifyContent: 'center',
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    // paddingTop: statusBarHeight,
+    alignItems: 'center', 
+    alignSelf: 'stretch',
+    // textAlign: 'center'
   },
-  // title: {
-  //   textAlign: 'center',
-  //   fontSize: 22,
-  //   fontWeight: '300',
-  //   marginBottom: 20,
-  // },
-  header: {
-    backgroundColor: '#F5FCFF',
-    padding: 10,
+
+  indication_header: {
+    padding: 25,
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '$LightGray',
+    width: '95%',
+    // justifyContent: 'left'
   },
-  headerText: {
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '500',
+
+  indication_headerText: {
+    fontSize: 18,
+    color: '$LinkBlue',
+    textAlign: 'left'
   },
-  content: {
+
+  indication_content: {
+    width: '95%',
     padding: 20,
     backgroundColor: '#fff',
+    
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '$LightGray',
   },
-  active: {
-    backgroundColor: 'rgba(255,255,255,1)',
+
+  indication_active: {
+    backgroundColor: '$LinkBlue',
   },
-  inactive: {
-    backgroundColor: 'rgba(245,252,255,1)',
-  },
-  selectors: {
-    marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  selector: {
-    backgroundColor: '#F5FCFF',
-    padding: 10,
-  },
-  activeSelector: {
-    fontWeight: 'bold',
-  },
-  selectTitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    padding: 10,
-  },
-  multipleToggle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 30,
-    alignItems: 'center',
-  },
-  multipleToggle__title: {
-    fontSize: 16,
-    marginRight: 8,
+
+  indication_inactive: {
+    backgroundColor: '$MainWhite',
   },
 });
 

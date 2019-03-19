@@ -11,6 +11,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "accordion-collapse-react-native": "^0.1.9",
     "expo": "^32.0.0",
     "expokit": "^32.0.6",
     "firebase": "^5.8.4",

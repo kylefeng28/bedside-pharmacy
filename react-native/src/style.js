@@ -18,21 +18,54 @@ EStyleSheet.build({
 });
 
 export default EStyleSheet.create({
+   /* ==========================================================================
+   Global styles
+   ========================================================================== */
   body:{
-    width: '90%'
+    marginLeft: '2%',
+    marginRight: '2%'
   },
+
+  header:{
+    marginBottom: 15,
+  },
+
+  inline:{
+    flex: 1, 
+    flexDirection: 'row'
+  },
+  // container:{
+  //   width: '95%',
+  //   justifyContent:'center'
+  // },
 
   drug_name:{
     fontSize: 30,
     fontFamily: 'Open-Sans-Bold',
-    width: '95%'
+    color: '$MainBlack'
+  },
+
+  add_comparison:{
+    fontSize: 32,
+    color: '$DarkGray',
+  },
+
+   /* ==========================================================================
+   Durg Page
+   ========================================================================== */
+
+  brand_name:{
+    fontSize: 16,
+    fontFamily: 'Open-Sans-Regular',
+    color: '$MainBlack'
   },
 
   subclass_name:{
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'Open-Sans-Italic',
     width: '95%',
-    color: '$DarkGray'
+    color: '$DarkGray',
+    marginBottom: 20
   },
 
   indication_header: {
@@ -41,14 +74,14 @@ export default EStyleSheet.create({
     borderWidth: 0.5,
     borderColor: '$LightGray',
     // width: '95%',
-    alignItems:'center',
+    alignItems:'flex-start',
     // justifyContent: 'left'
   },
 
   indication_headerText: {
     fontSize: 18,
     textAlign: 'left',
-    alignItems:'center',
+    // alignItems:'left',
     color: '$LinkBlue',
   },
 
@@ -65,7 +98,6 @@ export default EStyleSheet.create({
 
   indication_active: {
     backgroundColor: '$LinkBlue',
-    alignItems:'center',
     color: '$MainWhite'
   },
 
@@ -82,17 +114,17 @@ export default EStyleSheet.create({
     color: '$LinkBlue'
   },
 
-  container: {
-    width: '96%',
-    alignItems: 'center',
-    // justifyContent: 'center',
+  // container: {
+  //   width: '96%',
+  //   alignItems: 'center',
+  //   // justifyContent: 'center',
    
-    // backgroundColor: '$MainBlack',
-    // margin: 0
-    // right: 5
-    textAlign: 'center'
+  //   // backgroundColor: '$MainBlack',
+  //   // margin: 0
+  //   // right: 5
+  //   textAlign: 'center'
 
-    // justifyContent: 'center',
-  },
+  //   // justifyContent: 'center',
+  // },
 });
 

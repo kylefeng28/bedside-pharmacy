@@ -40,23 +40,19 @@ const BACON_IPSUM =
 
 const CONTENT = [
   {
-    title: 'First',
+    title: 'Onset/Duration',
     content: BACON_IPSUM,
   },
   {
-    title: 'Second',
+    title: 'Dose',
     content: BACON_IPSUM,
   },
   {
-    title: 'Third',
+    title: 'Metabolism/Excretion',
     content: BACON_IPSUM,
   },
   {
-    title: 'Fourth',
-    content: BACON_IPSUM,
-  },
-  {
-    title: 'Fifth',
+    title: 'Warnings',
     content: BACON_IPSUM,
   },
 ];
@@ -99,13 +95,13 @@ export default class HeaderExample extends Component {
 
 
 
-  setSections = sections => {
+  _setSections = sections => {
     this.setState({
       activeSections: sections.includes(undefined) ? [] : sections,
     });
   };
 
-  renderHeader = (section, _, isActive) => {
+  _renderHeader = (section, _, isActive) => {
     return (
       <Animatable.View
         // duration={400}
@@ -113,11 +109,12 @@ export default class HeaderExample extends Component {
         transition="backgroundColor"
       >
         <Text style={[styles.indication_headerText,isActive ? styles.indication_header_active : styles.indication_header_inactive]}>{section.title}</Text>
+
       </Animatable.View>
     );
   };
 
-  renderContent(section, _, isActive) {
+  _renderContent(section, _, isActive) {
     return (
       <Animatable.View
         duration={400}
@@ -131,6 +128,19 @@ export default class HeaderExample extends Component {
     );
   }
 
+  _renderIcon(){
+    console.log('hello')
+    // if (isActive){
+    //   return(
+    //      <Ionicons name="ios-checkmark-circle" style={styles.add_comparison} ></Ionicons>
+    //   )
+    // }else{
+    //   return(
+    //      <Ionicons name="ios-add-circle-outline" style={styles.add_comparison} ></Ionicons>
+    //     )
+    // }
+  }
+
 
 
 
@@ -142,8 +152,9 @@ export default class HeaderExample extends Component {
 
     return (
 
+
        <Container> 
-         <Header>
+         <Header style={styles.header}>
            <Left>
             <Button transparent>
               <Ionicons name="ios-arrow-back" size={32} color="#007FAE" />
@@ -159,24 +170,38 @@ export default class HeaderExample extends Component {
               <Ionicons name="ios-search" size={32} color="#007FAE" />
             </Button>
           </Right>
-          </Header>
+        </Header>
           
 
-          <Content padder>
-            <Text style={styles.drug_name}>Lorazepam</Text>
-            <Text style={styles.subclass_name}>Benzodiazepines</Text>
-            <Accordion
-              // containerStyle={styles.container}
-              activeSections={activeSections}
-              sections={CONTENT}
-              // touchableComponent={TouchableOpacity}
-              expandMultiple={multipleSelect}
-              renderHeader={this.renderHeader}
-              renderContent={this.renderContent}
-              // duration={400}
-              onChange={this.setSections}
-            />
+        <Content padder style={styles.body}>
+          <View style={styles.inline}>
+            <Text style={styles.drug_name}>Lorazepam
+              <Text style={styles.brand_name}> (Ativan)</Text>
+            </Text>
+            <Right>
+              <Button transparent>
+              <TouchableOpacity onPress={() => this._renderIcon()}>
+                  <Ionicons name="ios-checkmark-circle" style={styles.add_comparison} ></Ionicons>
+               </TouchableOpacity>
+               </Button>
+             </Right>
+           </View>
+             <Text style={styles.subclass_name}>Benzodiazepines</Text>
+  
+
+          <Accordion
+            // containerStyle={styles.container}
+            activeSections={activeSections}
+            sections={CONTENT}
+            touchableComponent={TouchableOpacity}
+            expandMultiple={multipleSelect}
+            renderHeader={this._renderHeader}
+            renderContent={this._renderContent}
+            // duration={400}
+            onChange={this._setSections}
+          />
         </Content>
+
         <Footer>
           <FooterTab>
             <Button>

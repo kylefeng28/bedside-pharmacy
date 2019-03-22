@@ -33,13 +33,43 @@ import styles from './style';
 import {db} from './config/firebase';
 let itemsRef = db.ref('/drugs');
 
-import { UserRegistration, UserLogin } from './UserRegistrationLogin';
+import { UserRegistration, UserLogin } from './UserAuth';
 
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
 
 export default class App extends Component {
+  state: {
+    font_loaded: boolean;
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      font_loaded: false
+    };
+  }
+
+  componentWillMount() {
+    this._loadFontsAsync();
+  }
+
+   _loadFontsAsync = async () => {
+    await Font.loadAsync({
+      'Open-Sans-Regular': require('../assets/fonts/OpenSans-Regular.ttf'),
+      'Open-Sans-SemiBold': require('../assets/fonts/OpenSans-SemiBold.ttf'),
+      'Open-Sans-Bold': require('../assets/fonts/OpenSans-Bold.ttf'),
+      'Open-Sans-Light': require('../assets/fonts/OpenSans-Light.ttf'),
+      'Open-Sans-Italic': require('../assets/fonts/OpenSans-Italic.ttf'),
+    });
+    this.setState({ ...this.state, font_loaded: true});
+  }
+
   render() {
+    if (!this.state.font_loaded) {
+      return <AppLoading />;
+    }
+
     return (<DrugInformation/>);
   }
 }
@@ -50,7 +80,6 @@ export class DrugInformation extends Component {
     activeSections: any[];
     collapsed: boolean;
     multipleSelect: boolean;
-    font_loaded: boolean;
   };
 
   constructor(props) {
@@ -60,7 +89,6 @@ export class DrugInformation extends Component {
       activeSections: [],
       collapsed: true,
       multipleSelect: true,
-      font_loaded: false,
     };
   }
 
@@ -88,6 +116,10 @@ export class DrugInformation extends Component {
     return content;
   }
 
+  componentWillMount() {
+    console.log(itemsRef);
+  }
+
   componentDidMount(){
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
@@ -96,26 +128,6 @@ export class DrugInformation extends Component {
       console.log(this.state.items['0']['_coordinate']) 
     });
   }
-
-
-  componentWillMount() {
-    console.log(itemsRef);
-    this._loadFontsAsync();
-
-  }
-
-   _loadFontsAsync = async () => {
-    await Font.loadAsync({
-      'Open-Sans-Regular': require('../assets/fonts/OpenSans-Regular.ttf'),
-      'Open-Sans-SemiBold': require('../assets/fonts/OpenSans-SemiBold.ttf'),
-      'Open-Sans-Bold': require('../assets/fonts/OpenSans-Bold.ttf'),
-      'Open-Sans-Light': require('../assets/fonts/OpenSans-Light.ttf'),
-      'Open-Sans-Italic': require('../assets/fonts/OpenSans-Italic.ttf'),
-    });
-    this.setState({ ...this.state, font_loaded: true});
-  }
-
-
 
   _setSections = sections => {
     this.setState({
@@ -168,12 +180,8 @@ export class DrugInformation extends Component {
   }
 
 
-
-
+  // TODO
   render() {
-    if (!this.state.font_loaded) {
-      return <AppLoading />;
-    }
     const { multipleSelect, activeSections } = this.state;
     console.log(this.state.items)
 
@@ -187,7 +195,7 @@ export class DrugInformation extends Component {
           </Left>
 
           <Body style={styles.header_text_box}>
-            <Title style={styles.header_text}>Durg References</Title>
+            <Title style={styles.header_text}>Drug References</Title>
           </Body>
 
           <Right>

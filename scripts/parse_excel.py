@@ -1,7 +1,7 @@
 import openpyxl as xl
 import sys
 import json
-
+from functools import reduce
 def parse_worksheet(ws):
     data = {
         'name': ws.title,
@@ -10,15 +10,21 @@ def parse_worksheet(ws):
 
     # Find column names
     column_names = ws['1']
-    column_names = list(filter(lambda cell: cell.value != None, column_names))
+
+    #print(column_names)
+    #    column_names.append(name.replace('/', ''))
+    column_names = list(reduce(lambda cell: cell.value.replace('/',''), list(filter(lambda cell: cell.value != None, column_names))))
     column_indices = [ c.column for c in column_names ]
+    for name in column_names:
+        column_names.get(name).value = column_names.get(name).value.replace('/','')
 
     # Find row names
     # read-only mode has no iter_col, so do it like this
     row_names = [ x[0] for x in ws.iter_rows(min_row=0, max_row=500, min_col=0, max_col=0) ]
     row_names = list(filter(lambda cell: cell.value != None, row_names))
     row_indices = [ r.row for r in row_names ]
-
+    for name in row_names:
+        print(name.value)
     # Find where last row ends based on bottom border
     last_row = row_names[-1].row
     while last_row <= 500: # set max bound
@@ -43,6 +49,7 @@ def parse_worksheet(ws):
         # ex. DOSE, ONSET/DURATION, METABOLISM/EXCRETION, WARNINGS
         for (col_i, col_name) in enumerate(column_names):
             drug_data[col_name.value] = {}
+            #print(drug_data[col_name.value])
             col = column_indices[col_i]
             min_row = row_indices[row_i]
             max_row = row_indices[row_i+1]
@@ -52,11 +59,13 @@ def parse_worksheet(ws):
             for r in ws.iter_rows(min_row=min_row, max_row=max_row, min_col=col, max_col=col):
                 if r[0].value is not None:
                     if r[0].font.bold:
-                        subcolumn_name = r[0].value
+                        subcolumn_name = r[0].value.replace('/','')
                         drug_data[col_name.value][subcolumn_name] = ''
                     else:
                         drug_data[col_name.value][subcolumn_name] += r[0].value + '\n'
+                   # print(r[0].value)
 
+            #print(drug_data[col_name.value])
     return data
 
 if __name__ == '__main__':
@@ -78,4 +87,5 @@ if __name__ == '__main__':
     data['classes'].append(parse_worksheet(wb['BENZODIAZEPINES']))
 
     # Print JSON
-    print(json.dumps(data, indent=4))
+    with open('data.json', 'w') as outfile:
+        json.dump(data, outfile, indent = 4)

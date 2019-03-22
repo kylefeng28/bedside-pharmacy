@@ -33,10 +33,18 @@ import styles from './style';
 import {db} from './config/firebase';
 let itemsRef = db.ref('/drugs');
 
+import { UserRegistration, UserLogin } from './UserRegistrationLogin';
+
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
 
-export default class HeaderExample extends Component {
+export default class App extends Component {
+  render() {
+    return (<DrugInformation/>);
+  }
+}
+
+export class DrugInformation extends Component {
   state: {
     items: any[];
     activeSections: any[];

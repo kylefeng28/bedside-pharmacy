@@ -33,48 +33,28 @@ import styles from './style';
 import {db} from './config/firebase';
 let itemsRef = db.ref('/drugs');
 
-
-
-
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
 
-const CONTENT = [
-  {
-    title: 'Onset/Duration',
-    content: BACON_IPSUM,
-  },
-  {
-    title: 'Dose',
-    content: BACON_IPSUM,
-  },
-  {
-    title: 'Metabolism/Excretion',
-    content: BACON_IPSUM,
-  },
-  {
-    title: 'Warnings',
-    content: BACON_IPSUM,
-  },
-];
-
-
 export default class HeaderExample extends Component {
+  state: {
+    items: any[];
+    activeSections: any[];
+    collapsed: boolean;
+    multipleSelect: boolean;
+    font_loaded: boolean;
+  };
 
   constructor(props) {
     super(props);
-    this.state = { 
-      data: null,
+    this.state = {
+      // items: null,
       activeSections: [],
       collapsed: true,
       multipleSelect: true,
       font_loaded: false,
     };
   }
-
-  state = {
-    items: []
-  };
 
   makeContents() {
       let loaded = !!this.state.items;
@@ -104,7 +84,7 @@ export default class HeaderExample extends Component {
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
       let items = Object.values(data);
-      this.setState({ items });
+      this.setState({ ...this.state, items });
       console.log(this.state.items['0']['_coordinate']) 
     });
   }
@@ -124,13 +104,14 @@ export default class HeaderExample extends Component {
       'Open-Sans-Light': require('../assets/fonts/OpenSans-Light.ttf'),
       'Open-Sans-Italic': require('../assets/fonts/OpenSans-Italic.ttf'),
     });
-    this.setState({font_loaded: true});
+    this.setState({ ...this.state, font_loaded: true});
   }
 
 
 
   _setSections = sections => {
     this.setState({
+      ...this.state,
       activeSections: sections.includes(undefined) ? [] : sections,
     });
   };

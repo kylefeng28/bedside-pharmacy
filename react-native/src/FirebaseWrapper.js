@@ -6,7 +6,8 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-export default class Firebase {
+let initialized = false;
+export class FirebaseWrapper {
   constructor() {
     app.initializeApp(firebaseConfig);
     this.app = app;
@@ -27,7 +28,6 @@ export default class Firebase {
 
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
-
 }
 
-export const FirebaseContext = React.createContext(null);
+export const firebase = new FirebaseWrapper();

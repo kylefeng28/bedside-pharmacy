@@ -30,10 +30,10 @@ import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
 import styles from './style';
-import {db} from './config/firebase';
-let itemsRef = db.ref('/drugs');
+import { firebase } from './FirebaseWrapper';
+let itemsRef = firebase.database.ref('/drugs');
 
-import { UserRegistration, UserLogin } from './UserAuth';
+import { UserLogin, UserSignup } from './UserAuth';
 
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
@@ -62,7 +62,7 @@ export default class App extends Component {
       'Open-Sans-Light': require('../assets/fonts/OpenSans-Light.ttf'),
       'Open-Sans-Italic': require('../assets/fonts/OpenSans-Italic.ttf'),
     });
-    this.setState({ ...this.state, font_loaded: true});
+    this.setState({ font_loaded: true});
   }
 
   render() {
@@ -70,7 +70,9 @@ export default class App extends Component {
       return <AppLoading />;
     }
 
-    return (<DrugInformation/>);
+    // return (<DrugInformation/>);
+    // return (<UserLogin/>);
+    return (<UserSignup/>);
   }
 }
 
@@ -124,14 +126,13 @@ export class DrugInformation extends Component {
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
       let items = Object.values(data);
-      this.setState({ ...this.state, items });
+      this.setState({ items });
       console.log(this.state.items['0']['_coordinate']) 
     });
   }
 
   _setSections = sections => {
     this.setState({
-      ...this.state,
       activeSections: sections.includes(undefined) ? [] : sections,
     });
   };

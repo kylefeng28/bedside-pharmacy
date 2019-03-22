@@ -13,7 +13,3 @@ export const config = {
 	storageBucket:  bucket + '.appspot.com',
 	messagingSenderId: '714865155586'
 };
-
-// TODO move to Firebase.js, keep config and init separate
-let app = Firebase.initializeApp(config);
-export const db = app.database();

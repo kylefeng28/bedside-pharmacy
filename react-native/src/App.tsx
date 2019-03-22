@@ -5,13 +5,6 @@ Framework usage:
  2. @expo/vector-icons (https://docs.expo.io/versions/latest/guides/icons/)
 */
 
-import React, { Component } from 'react';
-// import { StatusBar, StyleSheet, ScrollView } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-// import Expo from "expo";
-// import Firebase, {FirebaseContext} from './Firebase';
-
 import {
   Switch,
   ScrollView,
@@ -20,19 +13,23 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+
+import React, { Component } from 'react';
+import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
+
 import { Constants } from 'expo';
 import * as Animatable from 'react-native-animatable';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import EStyleSheet from 'react-native-extended-stylesheet'; 
-import styles from './style';
 
 import {AccordionList} from "accordion-collapse-react-native";
 import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
-// import ItemComponent from './components/ItemComponent';
-
+import styles from './style';
 import {db} from './config/firebase';
 let itemsRef = db.ref('/drugs');
 
@@ -62,12 +59,6 @@ const CONTENT = [
 ];
 
 
-// async function getData(firebase){
-//   let snapshot = await firebase.drugsDbRef.once('value');
-//   let data = snapshot.val();
-//   return data;
-// }
-
 export default class HeaderExample extends Component {
 
   constructor(props) {
@@ -78,7 +69,6 @@ export default class HeaderExample extends Component {
       collapsed: true,
       multipleSelect: true,
       font_loaded: false,
-      // items: []
     };
   }
 
@@ -117,7 +107,6 @@ export default class HeaderExample extends Component {
       this.setState({ items });
       console.log(this.state.items['0']['_coordinate']) 
     });
-    // console.log(this.state.items['0']['_coordinate'])
   }
 
 
@@ -264,5 +253,3 @@ export default class HeaderExample extends Component {
     );
   }
 }
-
-// HeaderExample.contextType = FirebaseContext;

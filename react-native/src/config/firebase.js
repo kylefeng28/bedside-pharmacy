@@ -4,16 +4,6 @@ const projectId = 'drug-reference-f3c33';
 const databaseName = 'drug-reference-f3c33';
 const bucket = 'drug-reference-f3c33';
 
-// const firebaseConfig = {
-//   apiKey: apiKey,
-//   authDomain: projectId + '.firebaseapp.com',
-//   databaseURL: 'https://' + databaseName + '.firebaseio.com/',
-//   storageBucket: bucket + '.appspot.com',
-// };
-
-// export default firebaseConfig;
-
-
 import Firebase from 'firebase';
 let config = {
 	apiKey: apiKey,

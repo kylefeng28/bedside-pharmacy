@@ -52,10 +52,6 @@ export default EStyleSheet.create({
     flex: 1, 
     flexDirection: 'row'
   },
-  // container:{
-  //   width: '95%',
-  //   justifyContent:'center'
-  // },
 
   drug_name:{
     fontSize: 30,
@@ -100,15 +96,12 @@ export default EStyleSheet.create({
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '$MediumGray',
-    // width: '95%',
     alignItems:'flex-start',
-    // justifyContent: 'left'
   },
 
   indication_headerText: {
     fontSize: 18,
     textAlign: 'left',
-    // alignItems:'left',
     color: '$LinkBlue',
   },
 
@@ -141,17 +134,5 @@ export default EStyleSheet.create({
     color: '$LinkBlue'
   },
 
-  // container: {
-  //   width: '96%',
-  //   alignItems: 'center',
-  //   // justifyContent: 'center',
-   
-  //   // backgroundColor: '$MainBlack',
-  //   // margin: 0
-  //   // right: 5
-  //   textAlign: 'center'
-
-  //   // justifyContent: 'center',
-  // },
 });
 

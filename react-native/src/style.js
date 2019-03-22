@@ -11,8 +11,9 @@ EStyleSheet.build({
   $CarolinaBlue: '#4B9CD3',
   $LinkBlue: '#007FAE',
   $AthleticsNavy: '#13294B',
-  $LightGray: '#E1E1E1',
   $DarkGray: '#767676',
+  $MediumGray: '#E1E1E1',
+  $LightGray: '#FAFAFA',
   $MainBlack: '#151515',
   $MainWhite: '#FFFFFF'
 });
@@ -28,6 +29,23 @@ export default EStyleSheet.create({
 
   header:{
     marginBottom: 15,
+    backgroundColor: '$LightGray',
+    padding: '4%',
+  },
+
+  header_text_box:{
+    flex: 2,
+  },
+
+  header_icon:{
+    fontSize:32,
+    color: '$DarkGray'
+  },
+
+  header_text:{
+    fontSize: 18,
+    color: '$MainBlack',
+    fontFamily:'Open-Sans-SemiBold'
   },
 
   inline:{
@@ -50,13 +68,22 @@ export default EStyleSheet.create({
     color: '$DarkGray',
   },
 
+  footer:{
+    backgroundColor: '$LightGray'
+  },
+
+  footer_icon:{
+    fontSize: 32,
+    color: '$LinkBlue'
+  },
+
    /* ==========================================================================
    Durg Page
    ========================================================================== */
 
   brand_name:{
     fontSize: 16,
-    fontFamily: 'Open-Sans-Regular',
+    fontFamily: 'Open-Sans-Bold',
     color: '$MainBlack'
   },
 
@@ -72,7 +99,7 @@ export default EStyleSheet.create({
     padding: 25,
     borderRadius: 4,
     borderWidth: 0.5,
-    borderColor: '$LightGray',
+    borderColor: '$MediumGray',
     // width: '95%',
     alignItems:'flex-start',
     // justifyContent: 'left'
@@ -92,7 +119,7 @@ export default EStyleSheet.create({
     
     borderRadius: 4,
     borderWidth: 0.5,
-    borderColor: '$LightGray',
+    borderColor: '$MediumGray',
     alignItems:'center',
   },
 

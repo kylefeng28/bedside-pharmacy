@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 // import Expo from "expo";
-import Firebase, {FirebaseContext} from './Firebase';
+// import Firebase, {FirebaseContext} from './Firebase';
 
 import {
   Switch,
@@ -31,6 +31,10 @@ import {AccordionList} from "accordion-collapse-react-native";
 import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
+// import ItemComponent from './components/ItemComponent';
+
+import {db} from './config/firebase';
+let itemsRef = db.ref('/drugs');
 
 
 
@@ -58,11 +62,11 @@ const CONTENT = [
 ];
 
 
-async function getData(firebase){
-  let snapshot = await firebase.drugsDbRef.once('value');
-  let data = snapshot.val();
-  return data;
-}
+// async function getData(firebase){
+//   let snapshot = await firebase.drugsDbRef.once('value');
+//   let data = snapshot.val();
+//   return data;
+// }
 
 export default class HeaderExample extends Component {
 
@@ -74,12 +78,28 @@ export default class HeaderExample extends Component {
       activeSections: [],
       collapsed: true,
       multipleSelect: true,
-      loaded: false,
+      font_loaded: false,
     };
   }
 
+  state = {
+    items: []
+  };
+
+  componentDidMount(){
+    itemsRef.on('value', snapshot => {
+      let data = snapshot.val();
+      let items = Object.values(data);
+      this.setState({ items });
+      console.log(this.state.items['0']['_coordinate']) 
+    });
+  }
+
+
   componentWillMount() {
+    // console.log(itemsRef);
     this._loadFontsAsync();
+
   }
 
    _loadFontsAsync = async () => {
@@ -90,7 +110,7 @@ export default class HeaderExample extends Component {
       'Open-Sans-Light': require('../assets/fonts/OpenSans-Light.ttf'),
       'Open-Sans-Italic': require('../assets/fonts/OpenSans-Italic.ttf'),
     });
-    this.setState({loaded: true});
+    this.setState({font_loaded: true});
   }
 
 
@@ -103,14 +123,14 @@ export default class HeaderExample extends Component {
 
   _renderHeader = (section, _, isActive) => {
     return (
-      <Animatable.View
+      <View
         // duration={400}
         style={[styles.indication_header, isActive ? styles.indication_active : styles.indication_inactive]}
         transition="backgroundColor"
       >
         <Text style={[styles.indication_headerText,isActive ? styles.indication_header_active : styles.indication_header_inactive]}>{section.title}</Text>
 
-      </Animatable.View>
+      </View>
     );
   };
 
@@ -129,7 +149,10 @@ export default class HeaderExample extends Component {
   }
 
   _renderIcon(){
-    console.log('hello')
+    // console.log(this.refs)
+    return(
+         <Ionicons name="ios-add-circle-outline" style={styles.add_comparison}></Ionicons>
+      )
     // if (isActive){
     //   return(
     //      <Ionicons name="ios-checkmark-circle" style={styles.add_comparison} ></Ionicons>
@@ -145,29 +168,28 @@ export default class HeaderExample extends Component {
 
 
   render() {
-    if (!this.state.loaded) {
+    if (!this.state.font_loaded) {
       return <AppLoading />;
     }
     const { multipleSelect, activeSections } = this.state;
+    console.log(this.state.items)
 
     return (
-
-
        <Container> 
          <Header style={styles.header}>
            <Left>
             <Button transparent>
-              <Ionicons name="ios-arrow-back" size={32} color="#007FAE" />
+              <Ionicons name="ios-arrow-back" style={styles.header_icon} />
             </Button>
           </Left>
 
-          <Body>
-            <Title>Durg References</Title>
+          <Body style={styles.header_text_box}>
+            <Title style={styles.header_text}>Durg References</Title>
           </Body>
 
           <Right>
             <Button transparent>
-              <Ionicons name="ios-search" size={32} color="#007FAE" />
+              <Ionicons name="ios-search" style={styles.header_icon} />
             </Button>
           </Right>
         </Header>
@@ -181,14 +203,14 @@ export default class HeaderExample extends Component {
             <Right>
               <Button transparent>
               <TouchableOpacity onPress={() => this._renderIcon()}>
-                  <Ionicons name="ios-checkmark-circle" style={styles.add_comparison} ></Ionicons>
+                <Ionicons name="ios-checkmark-circle" style={styles.add_comparison}></Ionicons>
                </TouchableOpacity>
                </Button>
              </Right>
            </View>
-             <Text style={styles.subclass_name}>Benzodiazepines</Text>
-  
-
+           <Text style={styles.subclass_name}>Benzodiazepines</Text>
+           
+           
           <Accordion
             // containerStyle={styles.container}
             activeSections={activeSections}
@@ -202,13 +224,13 @@ export default class HeaderExample extends Component {
           />
         </Content>
 
-        <Footer>
+        <Footer style={styles.footer}>
           <FooterTab>
             <Button>
-              <MaterialCommunityIcons name="pill" size={32} color="#007FAE" />
+              <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
             </Button>
             <Button>
-              <MaterialCommunityIcons name="file-compare" size={32} color="#007FAE" />
+              <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
             </Button>
  
           </FooterTab>
@@ -219,4 +241,4 @@ export default class HeaderExample extends Component {
   }
 }
 
-HeaderExample.contextType = FirebaseContext;
+// HeaderExample.contextType = FirebaseContext;

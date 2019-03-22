@@ -30,10 +30,10 @@ import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
 import styles from './style';
-import { firebase } from './FirebaseWrapper';
+import { firebase } from './utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
-import { UserLogin, UserSignup } from './UserAuth';
+import { UserLogin, UserSignup } from './views/UserAuth';
 
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
@@ -70,9 +70,9 @@ export default class App extends Component {
       return <AppLoading />;
     }
 
-    // return (<DrugInformation/>);
+    return (<DrugInformation/>);
     // return (<UserLogin/>);
-    return (<UserSignup/>);
+    // return (<UserSignup/>);
   }
 }
 

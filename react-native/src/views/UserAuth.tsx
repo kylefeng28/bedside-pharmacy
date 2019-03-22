@@ -6,8 +6,8 @@ import {
 import React, { Component } from 'react';
 import { Container, Header, Body, Form, Button, Item, Input, Title, Card, Content } from 'native-base';
 
-import styles from './style';
-import { firebase } from './FirebaseWrapper';
+import styles from '../style';
+import { firebase } from '../utils/FirebaseWrapper';
 
 const LOGIN_INITIAL_STATE = {
   email: '',

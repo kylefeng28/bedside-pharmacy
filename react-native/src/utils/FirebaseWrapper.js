@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import firebaseConfig from './config/firebase';
-import { config as firebaseConfig } from './config/firebase';
+import { config as firebaseConfig } from '../config/firebase';
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';

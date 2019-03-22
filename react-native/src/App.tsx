@@ -73,18 +73,42 @@ export default class HeaderExample extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      loading: true, 
       data: null,
       activeSections: [],
       collapsed: true,
       multipleSelect: true,
       font_loaded: false,
+      // items: []
     };
   }
 
   state = {
     items: []
   };
+
+  makeContents() {
+      let loaded = !!this.state.items;
+      const content = [
+      {
+        title: 'Onset/Duration',
+        content: loaded ? this.state.items['0']['_coordinate'] : BACON_IPSUM,
+      },
+      {
+        title: 'Dose',
+        content: BACON_IPSUM,
+      },
+      {
+        title: 'Metabolism/Excretion',
+        content: BACON_IPSUM,
+      },
+      {
+        title: 'Warnings',
+        content: BACON_IPSUM,
+      },
+    ];
+
+    return content;
+  }
 
   componentDidMount(){
     itemsRef.on('value', snapshot => {
@@ -93,11 +117,12 @@ export default class HeaderExample extends Component {
       this.setState({ items });
       console.log(this.state.items['0']['_coordinate']) 
     });
+    // console.log(this.state.items['0']['_coordinate'])
   }
 
 
   componentWillMount() {
-    // console.log(itemsRef);
+    console.log(itemsRef);
     this._loadFontsAsync();
 
   }
@@ -210,11 +235,10 @@ export default class HeaderExample extends Component {
            </View>
            <Text style={styles.subclass_name}>Benzodiazepines</Text>
            
-           
           <Accordion
             // containerStyle={styles.container}
             activeSections={activeSections}
-            sections={CONTENT}
+            sections={this.makeContents()}
             touchableComponent={TouchableOpacity}
             expandMultiple={multipleSelect}
             renderHeader={this._renderHeader}

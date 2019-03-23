@@ -5,15 +5,16 @@ import {
 
 import React, { Component } from 'react';
 import { Container, Header, Body, Form, Button, Item, Input, Title, Card, Content } from 'native-base';
-
-import styles from '../style';
 import { firebase } from '../utils/FirebaseWrapper';
+import styles from '../style';
 
 const LOGIN_INITIAL_STATE = {
   email: '',
   password: '',
   error: null,
 };
+
+
 export class UserLogin extends Component {
   state: {
     email: string;
@@ -91,6 +92,8 @@ const SIGNUP_INITIAL_STATE = {
   passwordTwo: '',
   error: null,
 };
+
+
 export class UserSignup extends Component {
   state: {
     email: string;

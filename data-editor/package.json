@@ -1,0 +1,30 @@
+{
+  "name": "data-editor",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "firebase": "^5.8.3",
+    "ramda": "^0.26.1",
+    "react": "^16.8.2",
+    "react-data-grid": "^5.0.5",
+    "react-dom": "^16.8.2",
+    "react-scripts": "2.1.5",
+    "react-table": "^6.9.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

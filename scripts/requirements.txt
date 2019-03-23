@@ -1,0 +1,3 @@
+openpyxl>=2.5
+Pyrebase>=3.0.27
+PyInquirer>=1.0.3

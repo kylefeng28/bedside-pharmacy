@@ -30,51 +30,69 @@ import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
 import styles from './style';
-import {db} from './config/firebase';
-let itemsRef = db.ref('/drugs');
+import { firebase } from './utils/FirebaseWrapper';
+let itemsRef = firebase.database.ref('/drugs');
 
-
-
+import { UserLogin, UserSignup } from './views/UserAuth';
 
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
 
-const CONTENT = [
-  {
-    title: 'Onset/Duration',
-    content: BACON_IPSUM,
-  },
-  {
-    title: 'Dose',
-    content: BACON_IPSUM,
-  },
-  {
-    title: 'Metabolism/Excretion',
-    content: BACON_IPSUM,
-  },
-  {
-    title: 'Warnings',
-    content: BACON_IPSUM,
-  },
-];
-
-
-export default class HeaderExample extends Component {
+export default class App extends Component {
+  state: {
+    font_loaded: boolean;
+  };
 
   constructor(props) {
     super(props);
-    this.state = { 
-      data: null,
-      activeSections: [],
-      collapsed: true,
-      multipleSelect: true,
-      font_loaded: false,
+    this.state = {
+      font_loaded: false
     };
   }
 
-  state = {
-    items: []
+  componentWillMount() {
+    this._loadFontsAsync();
+  }
+
+   _loadFontsAsync = async () => {
+    await Font.loadAsync({
+      'Open-Sans-Regular': require('../assets/fonts/OpenSans-Regular.ttf'),
+      'Open-Sans-SemiBold': require('../assets/fonts/OpenSans-SemiBold.ttf'),
+      'Open-Sans-Bold': require('../assets/fonts/OpenSans-Bold.ttf'),
+      'Open-Sans-Light': require('../assets/fonts/OpenSans-Light.ttf'),
+      'Open-Sans-Italic': require('../assets/fonts/OpenSans-Italic.ttf'),
+    });
+    this.setState({ font_loaded: true});
+  }
+
+  render() {
+    if (!this.state.font_loaded) {
+      return <AppLoading />;
+    }
+
+    return (<DrugInformation/>);
+    // return (<UserLogin/>);
+    // return (<UserSignup/>);
+  }
+}
+
+export class DrugInformation extends Component {
+  state: {
+    items: any[];
+    activeSections: any[];
+    collapsed: boolean;
+    multipleSelect: boolean;
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      // items: null,
+      activeSections: [],
+      collapsed: true,
+      multipleSelect: true,
+    };
+  }
 
   makeContents() {
       let loaded = !!this.state.items;
@@ -100,6 +118,10 @@ export default class HeaderExample extends Component {
     return content;
   }
 
+  componentWillMount() {
+    console.log(itemsRef);
+  }
+
   componentDidMount(){
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
@@ -108,26 +130,6 @@ export default class HeaderExample extends Component {
       console.log(this.state.items['0']['_coordinate']) 
     });
   }
-
-
-  componentWillMount() {
-    console.log(itemsRef);
-    this._loadFontsAsync();
-
-  }
-
-   _loadFontsAsync = async () => {
-    await Font.loadAsync({
-      'Open-Sans-Regular': require('../assets/fonts/OpenSans-Regular.ttf'),
-      'Open-Sans-SemiBold': require('../assets/fonts/OpenSans-SemiBold.ttf'),
-      'Open-Sans-Bold': require('../assets/fonts/OpenSans-Bold.ttf'),
-      'Open-Sans-Light': require('../assets/fonts/OpenSans-Light.ttf'),
-      'Open-Sans-Italic': require('../assets/fonts/OpenSans-Italic.ttf'),
-    });
-    this.setState({font_loaded: true});
-  }
-
-
 
   _setSections = sections => {
     this.setState({
@@ -179,12 +181,8 @@ export default class HeaderExample extends Component {
   }
 
 
-
-
+  // TODO
   render() {
-    if (!this.state.font_loaded) {
-      return <AppLoading />;
-    }
     const { multipleSelect, activeSections } = this.state;
     console.log(this.state.items)
 
@@ -198,7 +196,7 @@ export default class HeaderExample extends Component {
           </Left>
 
           <Body style={styles.header_text_box}>
-            <Title style={styles.header_text}>Durg References</Title>
+            <Title style={styles.header_text}>Drug References</Title>
           </Body>
 
           <Right>

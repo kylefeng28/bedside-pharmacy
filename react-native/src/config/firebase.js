@@ -5,7 +5,7 @@ const databaseName = 'drug-reference-f3c33';
 const bucket = 'drug-reference-f3c33';
 
 import Firebase from 'firebase';
-let config = {
+export const config = {
 	apiKey: apiKey,
 	authDomain: projectId + '.firebaseapp.com',
 	databaseURL: 'https://' + databaseName + '.firebaseio.com/',
@@ -13,6 +13,3 @@ let config = {
 	storageBucket:  bucket + '.appspot.com',
 	messagingSenderId: '714865155586'
 };
-
-let app = Firebase.initializeApp(config);
-export const db = app.database();

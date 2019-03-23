@@ -72,7 +72,7 @@ export class DrugInfo extends Component {
   }
 
   componentWillMount() {
-    console.log(itemsRef);
+    // console.log(itemsRef);
   }
 
   componentDidMount(){
@@ -80,7 +80,7 @@ export class DrugInfo extends Component {
       let data = snapshot.val();
       let items = Object.values(data);
       this.setState({ items });
-      console.log(this.state.items['0']['_coordinate']) 
+      // console.log(this.state.items['0']['_coordinate']) 
     });
   }
 
@@ -137,7 +137,6 @@ export class DrugInfo extends Component {
   // TODO
   render() {
     const { multipleSelect, activeSections } = this.state;
-    console.log(this.state.items)
 
     return (
        <Container> 
@@ -190,7 +189,7 @@ export class DrugInfo extends Component {
 
         <Footer style={styles.footer}>
           <FooterTab>
-            <Button>
+            <Button onPress={() => this.props.navigation.navigate('UserInfo')}>
               <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
             </Button>
             <Button>

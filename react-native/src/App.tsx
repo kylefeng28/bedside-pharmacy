@@ -32,9 +32,27 @@ import { AppLoading, Font } from 'expo';
 import styles from './style';
 import { firebase } from './utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+
 
 import { UserLogin, UserSignup } from './views/UserAuth';
-import { DrugInfo } from './views/DrugInfo'
+import { DrugInfo } from './views/DrugInfo';
+import { DrugList} from './views/DrugList';
+
+
+
+const AppNavigator = createStackNavigator(
+  {
+    DrugInfo,
+    UserLogin,
+    UserSignup
+  },
+  {
+    initialRouteName: 'DrugInfo'
+  }
+);
+
+const AppContainer = createAppContainer(AppNavigator);
 
 
 export default class App extends Component {
@@ -69,7 +87,9 @@ export default class App extends Component {
       return <AppLoading />;
     }
 
-    return (<DrugInfo/>);
+    // return <AppContainer />;
+
+    return (<DrugList/>);
     // return (<UserLogin/>);
     // return (<UserSignup/>);
   }

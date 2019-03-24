@@ -37,7 +37,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import { UserLogin, UserSignup } from './views/UserAuth';
 import { DrugInfo } from './views/DrugInfo';
-import { DrugList} from './views/DrugList';
+import { ClassList } from './views/ClassList';
 
 
 
@@ -89,7 +89,7 @@ export default class App extends Component {
 
     // return <AppContainer />;
 
-    return (<DrugList/>);
+    return (<ClassList/>);
     // return (<UserLogin/>);
     // return (<UserSignup/>);
   }

@@ -74,6 +74,33 @@ export default EStyleSheet.create({
   },
 
    /* ==========================================================================
+   Home Page
+   ========================================================================== */
+
+   title:{
+     fontSize: 30,
+     fontFamily: 'Open-Sans-Bold',
+     marginTop: 50,
+     color: '$MainBlack'
+   },
+
+   title_light:{
+     fontFamily: 'Open-Sans-Light'
+   },
+
+   class_list:{
+     fontSize: 18,
+     fontFamily: 'Open-Sans-Regular',
+     color:'$LinkBlue'
+   },
+
+   forward_icon:{
+     fontSize: 20,
+     color: '$MediumGray'
+   },
+
+
+   /* ==========================================================================
    Durg Page
    ========================================================================== */
 

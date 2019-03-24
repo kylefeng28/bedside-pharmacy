@@ -195,7 +195,6 @@ export class DrugInfo extends Component {
             <Button>
               <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
             </Button>
- 
           </FooterTab>
         </Footer>
       </Container>

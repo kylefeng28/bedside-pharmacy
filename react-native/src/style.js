@@ -28,6 +28,7 @@ export default EStyleSheet.create({
   },
 
   header:{
+    marginBottom: 0,
     marginBottom: 15,
     backgroundColor: '$LightGray',
     padding: '4%',
@@ -72,6 +73,33 @@ export default EStyleSheet.create({
     fontSize: 32,
     color: '$LinkBlue'
   },
+
+   /* ==========================================================================
+   Home Page
+   ========================================================================== */
+
+   title:{
+     fontSize: 30,
+     fontFamily: 'Open-Sans-Bold',
+     marginTop: 50,
+     color: '$MainBlack'
+   },
+
+   title_light:{
+     fontFamily: 'Open-Sans-Light'
+   },
+
+   class_list:{
+     fontSize: 18,
+     fontFamily: 'Open-Sans-Regular',
+     color:'$LinkBlue'
+   },
+
+   forward_icon:{
+     fontSize: 20,
+     color: '$MediumGray'
+   },
+
 
    /* ==========================================================================
    Durg Page

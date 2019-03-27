@@ -32,23 +32,38 @@ import { AppLoading, Font } from 'expo';
 import styles from './style';
 import { firebase } from './utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createAppContainer,createBottomTabNavigator } from 'react-navigation';
 
 
-import { UserLogin, UserSignup } from './views/UserAuth';
-import { DrugInfo } from './views/DrugInfo';
-import { ClassList } from './views/ClassList';
+import { UserLogin, UserSignup } from './screens/UserAuth';
+import { DrugInfo } from './screens/DrugInfo';
+import { ClassList } from './screens/ClassList';
+// import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 
 
-const AppNavigator = createStackNavigator(
+
+const AppNavigator = createBottomTabNavigator(
   {
-    DrugInfo,
-    UserLogin,
-    UserSignup
+    ClassList:{
+      screen: ClassList,
+      navigationOptions:{
+        tabBarLabel:'Catalog',
+        tabBarIcon: <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
+      }
+    },
+    DrugInfo:{
+      screen: DrugInfo,
+      navigationOptions:{
+        tabBarLabel:'Compare',
+        tabBarIcon: <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
+      }
+
+    }
   },
+
   {
-    initialRouteName: 'DrugInfo'
+    initialRouteName: 'ClassList'
   }
 );
 
@@ -87,10 +102,6 @@ export default class App extends Component {
       return <AppLoading />;
     }
 
-    // return <AppContainer />;
-
-    return (<ClassList/>);
-    // return (<UserLogin/>);
-    // return (<UserSignup/>);
+    return <AppContainer />;
   }
 }

@@ -28,6 +28,7 @@ export default EStyleSheet.create({
   },
 
   header:{
+    marginBottom: 0,
     marginBottom: 15,
     backgroundColor: '$LightGray',
     padding: '4%',

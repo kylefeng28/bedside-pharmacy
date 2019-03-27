@@ -187,16 +187,7 @@ export class DrugInfo extends Component {
           />
         </Content>
 
-        <Footer style={styles.footer}>
-          <FooterTab>
-            <Button onPress={() => this.props.navigation.navigate('UserInfo')}>
-              <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
-            </Button>
-            <Button>
-              <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
-            </Button>
-          </FooterTab>
-        </Footer>
+
       </Container>
       
     );

@@ -14,21 +14,21 @@ const AppNavigator = createBottomTabNavigator(
       screen: ClassList,
       navigationOptions:{
         tabBarLabel:'Catalog',
-        tabBarIcon: <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
+        tabBarIcon: ({}) => <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
       }
     },
     DrugInfo:{
       screen: DrugInfo,
       navigationOptions:{
         tabBarLabel:'Compare',
-        tabBarIcon: <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
+        tabBarIcon: ({}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
       }
 
     }
   },
 
   {
-    initialRouteName: 'ClassList'
+    initialRouteName: 'ClassList',
   }
 );
 

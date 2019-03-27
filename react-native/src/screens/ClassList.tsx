@@ -10,22 +10,13 @@ import {
 
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem } from 'native-base';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
-import { Constants } from 'expo';
-import * as Animatable from 'react-native-animatable';
-import Collapsible from 'react-native-collapsible';
-import Accordion from 'react-native-collapsible/Accordion';
-import EStyleSheet from 'react-native-extended-stylesheet'; 
-
-import {AccordionList} from "accordion-collapse-react-native";
 import SearchBar from 'react-native-search-bar'
-import { Separator } from 'native-base';
-import { AppLoading, Font } from 'expo';
+import Search from 'react-native-search-box';
 
 import styles from '../style';
-import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
+
 
 export class ClassList extends Component {
 
@@ -57,15 +48,30 @@ export class ClassList extends Component {
        <Container>
          <Content padder>
            <Text style={styles.title}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
+           <View styles = {styles.seach_box}>
+             <Search
+                ref='search_box'
+                backgroundColor= '#FFFFFF'
+                cancelTitle='Cancel'     
+                titleCancelColor='#007FAE'
+                tintColorSearch='#151515'
+                inputHeight={40}
+                iconSearch = {<Ionicons name="ios-search" style={styles.search_icon}></Ionicons>}
+                iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
+                searchIconCollapsedMargin = {0}
+                searchIconExpandedMargin = {-3}
+              />
+            </View>
          
-            <View style={styles.container}>
+            <View style={styles.class_list}>
+              <Text style={styles.by_class}>By Class</Text>
               <FlatList
                 data={this.state.data}
                 //need a data extractor here
                 renderItem={({item}) => 
                   <ListItem noIndent>
                     <Left>
-                      <Text style={styles.class_list}>{item.key}</Text>
+                      <Text style={styles.class_list_item}>{item.key}</Text>
                     </Left>
                     <Right>
                       <Ionicons name="ios-arrow-forward" style={styles.forward_icon}></Ionicons>

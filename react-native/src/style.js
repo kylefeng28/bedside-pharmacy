@@ -82,6 +82,7 @@ export default EStyleSheet.create({
      fontSize: 30,
      fontFamily: 'Open-Sans-Bold',
      marginTop: 50,
+     marginBottom: 10,
      color: '$MainBlack'
    },
 
@@ -89,7 +90,22 @@ export default EStyleSheet.create({
      fontFamily: 'Open-Sans-Light'
    },
 
+   by_class:{
+     fontSize: 20,
+     fontFamily: 'Open-Sans-Bold',
+     color: '$MainBlack'
+   },
+
+   search_icon:{
+     color: '$DarkGray',
+     fontSize: 30
+   },
+
    class_list:{
+     marginTop: 30
+   },
+
+   class_list_item:{
      fontSize: 18,
      fontFamily: 'Open-Sans-Regular',
      color:'$LinkBlue'

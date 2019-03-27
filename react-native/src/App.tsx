@@ -38,36 +38,37 @@ import { createStackNavigator, createAppContainer,createBottomTabNavigator } fro
 import { UserLogin, UserSignup } from './screens/UserAuth';
 import { DrugInfo } from './screens/DrugInfo';
 import { ClassList } from './screens/ClassList';
+import { AppContainer } from './components/navigator';
 // import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 
 
 
-const AppNavigator = createBottomTabNavigator(
-  {
-    ClassList:{
-      screen: ClassList,
-      navigationOptions:{
-        tabBarLabel:'Catalog',
-        tabBarIcon: <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
-      }
-    },
-    DrugInfo:{
-      screen: DrugInfo,
-      navigationOptions:{
-        tabBarLabel:'Compare',
-        tabBarIcon: <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
-      }
+// const AppNavigator = createBottomTabNavigator(
+//   {
+//     ClassList:{
+//       screen: ClassList,
+//       navigationOptions:{
+//         tabBarLabel:'Catalog',
+//         tabBarIcon: <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
+//       }
+//     },
+//     DrugInfo:{
+//       screen: DrugInfo,
+//       navigationOptions:{
+//         tabBarLabel:'Compare',
+//         tabBarIcon: <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
+//       }
 
-    }
-  },
+//     }
+//   },
 
-  {
-    initialRouteName: 'ClassList'
-  }
-);
+//   {
+//     initialRouteName: 'ClassList'
+//   }
+// );
 
-const AppContainer = createAppContainer(AppNavigator);
+// const AppContainer = createAppContainer(AppNavigator);
 
 
 export default class App extends Component {

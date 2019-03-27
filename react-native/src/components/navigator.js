@@ -1,36 +1,38 @@
-// import React from 'react';
-// import { TabNavigator, StackNavigator } from 'react-navigation';
-// import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
+import { createStackNavigator, createAppContainer,createBottomTabNavigator } from 'react-navigation';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-// import { UserLogin, UserSignup } from '../views/UserAuth';
-// import { DrugInfo } from '../views/DrugInfo';
-// import { ClassList } from '../views/ClassList';
+import { UserLogin, UserSignup } from '../screens/UserAuth';
+import { DrugInfo } from '../screens/DrugInfo';
+import { ClassList } from '../screens/ClassList';
 
-// export const Tabs = TabNavigator({
-//   DrugInfo: {
-//     screen: DrugInfo,
-//     navigationOptions: {
-//       tabBarLabel: 'Feed',
-//       tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name="pill" style={styles.footer_icon} />,
-//     },
-//   },
-//   ClassList: {
-//     screen: ClassList,
-//     navigationOptions: {
-//       tabBarLabel: 'Me',
-//       tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
-//     },
-//   },
-// });
+import styles from '../style';
 
-// // export const Root = StackNavigator({
-// //   Tabs: {
-// //     screen: Tabs,
-// //   },
-// //   Settings: {
-// //     screen: SettingsStack,
-// //   },
-// // }, {
-// //   mode: 'modal',
-// //   headerMode: 'none',
-// // });
+const AppNavigator = createBottomTabNavigator(
+  {
+    ClassList:{
+      screen: ClassList,
+      navigationOptions:{
+        tabBarLabel:'Catalog',
+        tabBarIcon: <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
+      }
+    },
+    DrugInfo:{
+      screen: DrugInfo,
+      navigationOptions:{
+        tabBarLabel:'Compare',
+        tabBarIcon: <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
+      }
+
+    }
+  },
+
+  {
+    initialRouteName: 'ClassList'
+  }
+);
+
+export const AppContainer = createAppContainer(AppNavigator);
+
+
+

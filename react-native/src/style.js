@@ -71,7 +71,7 @@ export default EStyleSheet.create({
 
   footer_icon:{
     fontSize: 32,
-    color: '$LinkBlue'
+    // color: '$LinkBlue'
   },
 
    /* ==========================================================================
@@ -81,7 +81,7 @@ export default EStyleSheet.create({
    title:{
      fontSize: 30,
      fontFamily: 'Open-Sans-Bold',
-     marginTop: 50,
+     marginTop: 30,
      marginBottom: 10,
      color: '$MainBlack'
    },
@@ -114,6 +114,22 @@ export default EStyleSheet.create({
    forward_icon:{
      fontSize: 20,
      color: '$MediumGray'
+   },
+
+  /* ==========================================================================
+   Subclass Page
+   ========================================================================== */
+
+   circle_icon:{
+     fontSize: 18,
+     color:'$LinkBlue',
+   },
+
+   subclass_list_item:{
+     fontSize: 18,
+     fontFamily: 'Open-Sans-Regular',
+     color:'$MainBlack',
+     marginLeft: 8,
    },
 
 

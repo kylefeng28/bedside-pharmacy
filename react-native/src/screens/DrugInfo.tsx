@@ -139,25 +139,7 @@ export class DrugInfo extends Component {
     const { multipleSelect, activeSections } = this.state;
 
     return (
-       <Container> 
-         <Header style={styles.header}>
-           <Left>
-            <Button transparent>
-              <Ionicons name="ios-arrow-back" style={styles.header_icon} />
-            </Button>
-          </Left>
-
-          <Body style={styles.header_text_box}>
-            <Title style={styles.header_text}>Drug References</Title>
-          </Body>
-
-          <Right>
-            <Button transparent>
-              <Ionicons name="ios-search" style={styles.header_icon} />
-            </Button>
-          </Right>
-        </Header>
-          
+       <Container>         
 
         <Content padder style={styles.body}>
           <View style={styles.inline}>

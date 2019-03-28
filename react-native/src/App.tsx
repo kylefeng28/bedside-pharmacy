@@ -9,17 +9,15 @@ Base Class:
 import React, { Component } from 'react';
 import { AppLoading, Font } from 'expo';
 
-//Import screens
-import { UserLogin, UserSignup } from './screens/UserAuth';
-import { DrugInfo } from './screens/DrugInfo';
-import { ClassList } from './screens/ClassList';
-
 //Import components and utils
 import { AppContainer } from './components/navigator';
 import { firebase } from './utils/FirebaseWrapper';
 
 //Reference data
 let itemsRef = firebase.database.ref('/drugs');
+
+//Delete later, for development use only
+import { Subclass } from './screens/Subclass';
 
 export default class App extends Component {
   state: {
@@ -54,5 +52,6 @@ export default class App extends Component {
     }
 
     return <AppContainer />;
+    // return <Subclass/>
   }
 }

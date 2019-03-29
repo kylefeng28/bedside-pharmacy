@@ -163,7 +163,7 @@ export default EStyleSheet.create({
   brand_name:{
     fontSize: 16,
     fontFamily: 'Open-Sans-Bold',
-    color: '$MainBlack'
+    color: '$MainBlack',
   },
 
   subclass_name:{
@@ -216,6 +216,12 @@ export default EStyleSheet.create({
   indication_header_inactive:{
     color: '$LinkBlue'
   },
+
+
+
+  /* ==========================================================================
+   Compare Page
+   ========================================================================== */
 
 });
 

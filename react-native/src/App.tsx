@@ -1,75 +1,24 @@
 
 /*
-Framework usage:
- 1. NativeBase (https://github.com/GeekyAnts/NativeBase)
- 2. @expo/vector-icons (https://docs.expo.io/versions/latest/guides/icons/)
+Base Class:
+ 1. Load firebase data, font
+ 2. Render homepage
 */
 
-import {
-  Switch,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-
+//Import package
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-
-
-import { Constants } from 'expo';
-import * as Animatable from 'react-native-animatable';
-import Collapsible from 'react-native-collapsible';
-import Accordion from 'react-native-collapsible/Accordion';
-import EStyleSheet from 'react-native-extended-stylesheet'; 
-
-import {AccordionList} from "accordion-collapse-react-native";
-import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
-import styles from './style';
-import { firebase } from './utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
-import { createStackNavigator, createAppContainer,createBottomTabNavigator } from 'react-navigation';
-
-
-import { UserLogin, UserSignup } from './screens/UserAuth';
-import { DrugInfo } from './screens/DrugInfo';
-import { ClassList } from './screens/ClassList';
+//Import components and utils
 import { AppContainer } from './components/navigator';
-// import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { firebase } from './utils/FirebaseWrapper';
 
+//Reference data
+let itemsRef = firebase.database.ref('/drugs');
 
-
-
-// const AppNavigator = createBottomTabNavigator(
-//   {
-//     ClassList:{
-//       screen: ClassList,
-//       navigationOptions:{
-//         tabBarLabel:'Catalog',
-//         tabBarIcon: <MaterialCommunityIcons name="pill" style={styles.footer_icon} />
-//       }
-//     },
-//     DrugInfo:{
-//       screen: DrugInfo,
-//       navigationOptions:{
-//         tabBarLabel:'Compare',
-//         tabBarIcon: <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} />
-//       }
-
-//     }
-//   },
-
-//   {
-//     initialRouteName: 'ClassList'
-//   }
-// );
-
-// const AppContainer = createAppContainer(AppNavigator);
-
+//Delete later, for development use only
+import { Subclass } from './screens/Subclass';
+import { DrugList } from './screens/DrugList';
 
 export default class App extends Component {
   state: {
@@ -103,6 +52,8 @@ export default class App extends Component {
       return <AppLoading />;
     }
 
+    // return <DrugList />;
     return <AppContainer />;
+    // return <Subclass/>
   }
 }

@@ -71,7 +71,7 @@ export default EStyleSheet.create({
 
   footer_icon:{
     fontSize: 32,
-    color: '$LinkBlue'
+    // color: '$LinkBlue'
   },
 
    /* ==========================================================================
@@ -81,7 +81,8 @@ export default EStyleSheet.create({
    title:{
      fontSize: 30,
      fontFamily: 'Open-Sans-Bold',
-     marginTop: 50,
+     marginTop: 30,
+     marginBottom: 10,
      color: '$MainBlack'
    },
 
@@ -89,7 +90,22 @@ export default EStyleSheet.create({
      fontFamily: 'Open-Sans-Light'
    },
 
+   by_class:{
+     fontSize: 20,
+     fontFamily: 'Open-Sans-Bold',
+     color: '$MainBlack'
+   },
+
+   search_icon:{
+     color: '$DarkGray',
+     fontSize: 30
+   },
+
    class_list:{
+     marginTop: 30
+   },
+
+   class_list_item:{
      fontSize: 18,
      fontFamily: 'Open-Sans-Regular',
      color:'$LinkBlue'
@@ -100,9 +116,48 @@ export default EStyleSheet.create({
      color: '$MediumGray'
    },
 
+  /* ==========================================================================
+   Subclass Page
+   ========================================================================== */
+
+   circle_icon:{
+     fontSize: 18,
+     color:'$LinkBlue',
+   },
+
+   subclass_list_item:{
+     height: 60
+   },
+
+   subclass_list_item_text:{
+     fontSize: 18,
+     fontFamily: 'Open-Sans-Regular',
+     color:'$MainBlack',
+     marginLeft: 8,
+   },
 
    /* ==========================================================================
-   Durg Page
+   Druglist Page
+   ========================================================================== */
+
+   add_icon:{
+     fontSize: 30,
+     color: '$LinkBlue'
+   },
+
+   drug_list_item:{
+     height: 60
+   },
+
+   drug_list_item_text:{
+     fontSize: 18,
+     fontFamily: 'Open-Sans-Regular',
+     color:'$MainBlack',
+     marginLeft: 8,
+   },
+
+  /* ==========================================================================
+   DrugInfo Page
    ========================================================================== */
 
   brand_name:{

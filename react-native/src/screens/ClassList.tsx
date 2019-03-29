@@ -10,22 +10,13 @@ import {
 
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem } from 'native-base';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
-import { Constants } from 'expo';
-import * as Animatable from 'react-native-animatable';
-import Collapsible from 'react-native-collapsible';
-import Accordion from 'react-native-collapsible/Accordion';
-import EStyleSheet from 'react-native-extended-stylesheet'; 
-
-import {AccordionList} from "accordion-collapse-react-native";
 import SearchBar from 'react-native-search-bar'
-import { Separator } from 'native-base';
-import { AppLoading, Font } from 'expo';
+import Search from 'react-native-search-box';
 
 import styles from '../style';
-import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
+
 
 export class ClassList extends Component {
 
@@ -40,16 +31,20 @@ export class ClassList extends Component {
   // search1: SearchBar
 
   componentDidMount() {
-    this._getClassList();
+    this.getClassList();
     // this.refs.searchBar.focus();
   }
 
-   _getClassList(){
-     const content = [{key: 'hello'}, {key: 'oh'}, {key: 'my'},{key: 'z'},{key: 'ashell'}];
+   getClassList(){
+     const content = [{key: 'Anticid'}, {key: 'Antiarrhythmic'}, {key: 'Anticoagulant'},{key: 'Antiemetic'},{key: 'Antihypertensive'}, {key: 'Antipsychotic'}, {key: 'Anticonvulsant'}, {key: 'Benzodiazepines'},{key: 'Blood Products'}, {key: 'Bronchodilator'}, {key: 'Coagulation Reversal Products'}, {key: 'Insulin'}, {key: 'Hyperosmolar Therapy'}, {key: 'Non-opioid Analgesics'}, {key: 'Opioids'},{key: 'Sedation'}, {key: 'Steroids'}, {key: 'Vasoperssors'}, {key: 'Misc'}];
      this.setState({
-          data: [...this.state.data, ...content, ...content]
+          data: [...this.state.data, ...content]
         });
   }
+
+  _clickClass = () => {
+    this.props.navigation.navigate('SubclassTab');
+  };
   
 
   render() {
@@ -57,15 +52,29 @@ export class ClassList extends Component {
        <Container>
          <Content padder>
            <Text style={styles.title}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
-         
-            <View style={styles.container}>
+           <View styles = {styles.seach_box}>
+             <Search
+                ref='search_box'
+                backgroundColor= '#FFFFFF'
+                cancelTitle='Cancel'     
+                titleCancelColor='#007FAE'
+                tintColorSearch='#151515'
+                inputHeight={40}
+                // iconSearch = {<Ionicons name="ios-search" style={styles.search_icon}></Ionicons>}
+                iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
+                middleWidth = {100}
+              />
+            </View>
+            <View style={styles.class_list}>
+              <Text style={styles.by_class}>By Class</Text>
               <FlatList
                 data={this.state.data}
                 //need a data extractor here
                 renderItem={({item}) => 
-                  <ListItem noIndent>
+                  <ListItem noIndent
+                  onPress={() => this._clickClass()}>
                     <Left>
-                      <Text style={styles.class_list}>{item.key}</Text>
+                      <Text style={styles.class_list_item}>{item.key}</Text>
                     </Left>
                     <Right>
                       <Ionicons name="ios-arrow-forward" style={styles.forward_icon}></Ionicons>

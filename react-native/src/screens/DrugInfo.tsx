@@ -143,7 +143,7 @@ export class DrugInfo extends Component {
 
         <Content padder style={styles.body}>
           <View style={styles.inline}>
-            <Text style={styles.drug_name}>Lorazepam
+            <Text style={styles.title}>Lorazepam
               <Text style={styles.brand_name}> (Ativan)</Text>
             </Text>
             <Right>

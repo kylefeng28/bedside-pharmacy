@@ -52,11 +52,6 @@ export class UserLogin extends Component {
 
     return (
       <Container>
-        <Header style={styles.header}>
-          <Body style={styles.header_text_box}>
-            <Title style={styles.header_text}>Log in</Title>
-          </Body>
-        </Header>
 
         <Content padder style={styles.body}>
           <Text>Please log in</Text>

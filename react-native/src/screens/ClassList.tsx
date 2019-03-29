@@ -43,7 +43,7 @@ export class ClassList extends Component {
   }
 
   _clickClass = () => {
-    this.props.navigation.navigate('Subclass');
+    this.props.navigation.navigate('SubclassTab');
   };
   
 

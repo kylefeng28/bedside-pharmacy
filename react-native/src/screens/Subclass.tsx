@@ -42,7 +42,7 @@ export class Subclass extends Component {
   }
 
   _clickSubclass = () => {
-    this.props.navigation.navigate('DrugList');
+    this.props.navigation.navigate('DrugListTab');
   };
   
 

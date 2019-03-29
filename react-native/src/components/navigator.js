@@ -35,14 +35,8 @@ const DrugInfoStack = createStackNavigator(
     }
   );
 
-// const ClassListTab = createAppContainer(
-//     {
 
-//     }
-
-//   );
-
-const TabNavigator = createBottomTabNavigator(
+const ClassTab = createBottomTabNavigator(
   {
     ClassList:{
       screen: ClassList,
@@ -52,8 +46,8 @@ const TabNavigator = createBottomTabNavigator(
       }
     },
 
-    DrugInfo:{
-      screen: DrugInfoStack,
+    UserLogin:{
+      screen: UserLogin,
       navigationOptions:{
         tabBarLabel:'Compare',
         tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
@@ -79,18 +73,134 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
+const SubclassTab = createBottomTabNavigator(
+  {
+    ClassList:{
+      screen: Subclass,
+      navigationOptions:{
+        tabBarLabel:'Catalog',
+        tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="pill" style={styles.footer_icon} color={tintColor} />
+      }
+    },
+
+    UserLogin:{
+      screen: UserLogin,
+      navigationOptions:{
+        tabBarLabel:'Compare',
+        tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
+      }
+
+    }
+  },
+
+  {
+    // initialRouteName: 'ClassList',
+    tabBarOptions: {
+        activeTintColor: '#007FAE',
+        inactiveTintColor: '#767676',
+        labelStyle:{
+          marginBottom: 5
+        },
+        style: {
+          height: 55,
+          paddingTop: 5
+        },
+      }
+
+  }
+);
+
+const DrugListTab = createBottomTabNavigator(
+  {
+    ClassList:{
+      screen: DrugList,
+      navigationOptions:{
+        tabBarLabel:'Catalog',
+        tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="pill" style={styles.footer_icon} color={tintColor} />
+      }
+    },
+
+    UserLogin:{
+      screen: UserLogin,
+      navigationOptions:{
+        tabBarLabel:'Compare',
+        tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
+      }
+
+    }
+  },
+
+  {
+    // initialRouteName: 'ClassList',
+    tabBarOptions: {
+        activeTintColor: '#007FAE',
+        inactiveTintColor: '#767676',
+        labelStyle:{
+          marginBottom: 5
+        },
+        style: {
+          height: 55,
+          paddingTop: 5
+        },
+      }
+
+  }
+);
+
+const DrugInfoTab = createBottomTabNavigator(
+  {
+    ClassList:{
+      screen: DrugInfo,
+      navigationOptions:{
+        tabBarLabel:'Catalog',
+        tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="pill" style={styles.footer_icon} color={tintColor} />
+      }
+    },
+
+    UserLogin:{
+      screen: UserLogin,
+      navigationOptions:{
+        tabBarLabel:'Compare',
+        tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
+      }
+
+    }
+  },
+
+  {
+    // initialRouteName: 'ClassList',
+    tabBarOptions: {
+        activeTintColor: '#007FAE',
+        inactiveTintColor: '#767676',
+        labelStyle:{
+          marginBottom: 5
+        },
+        style: {
+          height: 55,
+          paddingTop: 5
+        },
+      }
+
+  }
+);
+
+
+
 const AppNavigator = createStackNavigator(
     {
+      ClassTab,
       ClassList,
-      Subclass,
-      DrugList,
-      DrugInfo
+      SubclassTab,
+      DrugListTab,
+      DrugInfoTab
     },
     {
-      initialRouteName: 'ClassList'
+      initialRouteName: 'ClassTab'
     }
 
   );
+
+
 
 export const AppContainer = createAppContainer(AppNavigator);
 

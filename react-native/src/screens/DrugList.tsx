@@ -42,7 +42,7 @@ export class DrugList extends Component {
   }
 
   _clickDrugList = () => {
-    this.props.navigation.navigate('DrugInfo');
+    this.props.navigation.navigate('DrugInfoTab');
   };
 
   

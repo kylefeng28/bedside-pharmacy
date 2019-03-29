@@ -126,15 +126,38 @@ export default EStyleSheet.create({
    },
 
    subclass_list_item:{
+     height: 60
+   },
+
+   subclass_list_item_text:{
      fontSize: 18,
      fontFamily: 'Open-Sans-Regular',
      color:'$MainBlack',
      marginLeft: 8,
    },
 
-
    /* ==========================================================================
-   Durg Page
+   Druglist Page
+   ========================================================================== */
+
+   add_icon:{
+     fontSize: 30,
+     color: '$LinkBlue'
+   },
+
+   drug_list_item:{
+     height: 60
+   },
+
+   drug_list_item_text:{
+     fontSize: 18,
+     fontFamily: 'Open-Sans-Regular',
+     color:'$MainBlack',
+     marginLeft: 8,
+   },
+
+  /* ==========================================================================
+   DrugInfo Page
    ========================================================================== */
 
   brand_name:{

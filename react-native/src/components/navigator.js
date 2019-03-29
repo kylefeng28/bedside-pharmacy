@@ -3,9 +3,10 @@ import { createStackNavigator, createAppContainer,createBottomTabNavigator, crea
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { UserLogin, UserSignup } from '../screens/UserAuth';
-import { DrugInfo } from '../screens/DrugInfo';
 import { ClassList } from '../screens/ClassList';
 import { Subclass } from '../screens/Subclass';
+import { DrugList } from '../screens/DrugList';
+import { DrugInfo } from '../screens/DrugInfo';
 
 import styles from '../style';
 
@@ -81,7 +82,9 @@ const TabNavigator = createBottomTabNavigator(
 const AppNavigator = createStackNavigator(
     {
       ClassList,
-      Subclass
+      Subclass,
+      DrugList,
+      DrugInfo
     },
     {
       initialRouteName: 'ClassList'

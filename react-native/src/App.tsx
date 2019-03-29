@@ -18,6 +18,7 @@ let itemsRef = firebase.database.ref('/drugs');
 
 //Delete later, for development use only
 import { Subclass } from './screens/Subclass';
+import { DrugList } from './screens/DrugList';
 
 export default class App extends Component {
   state: {
@@ -51,6 +52,7 @@ export default class App extends Component {
       return <AppLoading />;
     }
 
+    // return <DrugList />;
     return <AppContainer />;
     // return <Subclass/>
   }

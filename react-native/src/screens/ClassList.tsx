@@ -31,18 +31,18 @@ export class ClassList extends Component {
   // search1: SearchBar
 
   componentDidMount() {
-    this._getClassList();
+    this.getClassList();
     // this.refs.searchBar.focus();
   }
 
-   _getClassList(){
-     const content = [{key: 'hello'}, {key: 'oh'}, {key: 'my'},{key: 'z'},{key: 'ashell'}];
+   getClassList(){
+     const content = [{key: 'Anticid'}, {key: 'Antiarrhythmic'}, {key: 'Anticoagulant'},{key: 'Antiemetic'},{key: 'Antihypertensive'}, {key: 'Antipsychotic'}, {key: 'Anticonvulsant'}, {key: 'Benzodiazepines'},{key: 'Blood Products'}, {key: 'Bronchodilator'}, {key: 'Coagulation Reversal Products'}, {key: 'Insulin'}, {key: 'Hyperosmolar Therapy'}, {key: 'Non-opioid Analgesics'}, {key: 'Opioids'},{key: 'Sedation'}, {key: 'Steroids'}, {key: 'Vasoperssors'}, {key: 'Misc'}];
      this.setState({
-          data: [...this.state.data, ...content, ...content]
+          data: [...this.state.data, ...content]
         });
   }
 
-  onLearnMore = () => {
+  _clickClass = () => {
     this.props.navigation.navigate('Subclass');
   };
   
@@ -72,7 +72,7 @@ export class ClassList extends Component {
                 //need a data extractor here
                 renderItem={({item}) => 
                   <ListItem noIndent
-                  onPress={() => this.onLearnMore()}>
+                  onPress={() => this._clickClass()}>
                     <Left>
                       <Text style={styles.class_list_item}>{item.key}</Text>
                     </Left>

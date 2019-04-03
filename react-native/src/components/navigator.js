@@ -2,7 +2,8 @@ import React from 'react';
 import { createStackNavigator, createAppContainer,createBottomTabNavigator, createDrawerNavigator, createSwitchNavigator } from 'react-navigation';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { UserLogin, UserSignup } from '../screens/UserAuth';
+// import { UserLogin } from '../screens/UserLogin';
+// import { UserSignup } from '../screens/UserSignup';
 import { ClassList } from '../screens/ClassList';
 import { Subclass } from '../screens/Subclass';
 import { DrugList } from '../screens/DrugList';

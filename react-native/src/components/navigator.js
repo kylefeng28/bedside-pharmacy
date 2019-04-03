@@ -7,34 +7,9 @@ import { ClassList } from '../screens/ClassList';
 import { Subclass } from '../screens/Subclass';
 import { DrugList } from '../screens/DrugList';
 import { DrugInfo } from '../screens/DrugInfo';
+import { Compare } from '../screens/Compare';
 
 import styles from '../style';
-
-const SubclassStack = createStackNavigator(
-    {
-      Subclass:{
-        screen: Subclass,
-        navigationOptions:{
-          title: 'Drug Reference',
-        }
-      }
-    }
-  );
-
-
-
-const DrugInfoStack = createStackNavigator(
-    {
-      ClassList,
-      DrugInfo:{
-        screen: DrugInfo,
-        navigationOptions:{
-          title: 'Drug Reference',
-        }
-      }
-    }
-  );
-
 
 const ClassTab = createBottomTabNavigator(
   {
@@ -46,8 +21,8 @@ const ClassTab = createBottomTabNavigator(
       }
     },
 
-    UserLogin:{
-      screen: UserLogin,
+    Compare:{
+      screen: Compare,
       navigationOptions:{
         tabBarLabel:'Compare',
         tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
@@ -83,8 +58,8 @@ const SubclassTab = createBottomTabNavigator(
       }
     },
 
-    UserLogin:{
-      screen: UserLogin,
+    Compare:{
+      screen: Compare,
       navigationOptions:{
         tabBarLabel:'Compare',
         tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
@@ -120,8 +95,8 @@ const DrugListTab = createBottomTabNavigator(
       }
     },
 
-    UserLogin:{
-      screen: UserLogin,
+    Compare:{
+      screen: Compare,
       navigationOptions:{
         tabBarLabel:'Compare',
         tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
@@ -157,8 +132,8 @@ const DrugInfoTab = createBottomTabNavigator(
       }
     },
 
-    UserLogin:{
-      screen: UserLogin,
+    Compare:{
+      screen: Compare,
       navigationOptions:{
         tabBarLabel:'Compare',
         tabBarIcon: ({tintColor}) => <MaterialCommunityIcons name="file-compare" style={styles.footer_icon} color={tintColor} />
@@ -189,7 +164,6 @@ const DrugInfoTab = createBottomTabNavigator(
 const AppNavigator = createStackNavigator(
     {
       ClassTab,
-      ClassList,
       SubclassTab,
       DrugListTab,
       DrugInfoTab

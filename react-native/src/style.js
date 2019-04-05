@@ -238,6 +238,11 @@ export default EStyleSheet.create({
         color: '$MainBlack'
     },
 
+    compare_by:{
+      fontSize: 13,
+      fontFamily: 'Open-Sans-Regular',
+    },
+
     container: {
         flex: 1,
         flexDirection: 'row',
@@ -246,14 +251,14 @@ export default EStyleSheet.create({
         // width: '80%'
     },
 
-    item: {
+    compare_item: {
         paddingTop: 2,
         paddingBottom: 2,
-        width: '40%',
+        width: '50%',
         // width: '50%'
     },
 
-    column_header: {
+    compare_drug: {
         paddingTop: 2,
         paddingBottom: 2,
         width: '100%'
@@ -262,7 +267,20 @@ export default EStyleSheet.create({
     column_header_text: {
         color: '$LinkBlue',
         fontSize: 18,
-        fontWeight: 'bold'
+        fontFamily: 'Open-Sans-SemiBold'
+    },
+
+    compare_column_name:{
+      color:'$MainBlack',
+      fontSize: 16,
+      fontFamily: 'Open-Sans-SemiBold'
+    },
+
+    compare_column_value:{
+      color: '$MainBlack',
+      fontSize: 16,
+      fontFamily: 'Open-Sans-Regular'
+
     },
 
     close_icon: {

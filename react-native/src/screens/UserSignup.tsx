@@ -4,24 +4,30 @@ import {
 } from 'react-native';
 
 import React, { Component } from 'react';
-import { Container, Header, Body, Form, Button, Item, Input, Title, Card, Content } from 'native-base';
+import { Container, Header, Body, Form, Button, Item, Input, Picker, Title, Card, Content } from 'native-base';
 import { firebase } from '../utils/FirebaseWrapper';
 import styles from '../style';
+import { FirebaseError } from 'firebase';
 
 const SIGNUP_INITIAL_STATE = {
+  error: null,
   email: '',
   passwordOne: '',
   passwordTwo: '',
-  error: null,
+  gender: undefined,
+  profession: undefined,
+  school: undefined
 };
 
 
 export class UserSignup extends Component {
   state: {
+    error: Error | null;
     email: string;
     passwordOne: string;
     passwordTwo: string;
-    error: Error | null;
+    profession: string | undefined;
+    // TODO
   }
 
   constructor(props) {
@@ -35,12 +41,20 @@ export class UserSignup extends Component {
   };
 
   handleSubmit = (event) => {
-    const { email, passwordOne, passwordTwo, error } = this.state;
+    const { email, passwordOne, passwordTwo, gender, profession, school} = this.state;
 
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(() => {
-        alert('Successful registration!')
+      .then((credential: firebase.auth.UserCredential) => {
+        // TODO refactor into separate function
+        const uid = credential.user.uid;
+        firebase.database.ref('/users/' + uid).set({
+          gender: gender,
+          profession: profession,
+          school: school
+        })
+
+        alert('Successful registration!');
       })
       .catch(error => {
         alert('Failed to register!')
@@ -83,6 +97,35 @@ export class UserSignup extends Component {
               <Input name="passwordTwo"
                 placeholder="Confirm password"
                 onChangeText={this.handleChangeGen('passwordTwo')} />
+            </Item>
+
+            <Item>
+              <Picker name="gender"
+                mode="dropdown"
+                placeholder="I identify as ..."
+                selectedValue={this.state.gender}
+                onValueChange={this.handleChangeGen('gender')}>
+                <Picker.Item label="Male" value="male" />
+                <Picker.Item label="Female" value="female" />
+                <Picker.Item label="Other" value="other" />
+              </Picker>
+            </Item>
+
+            <Item>
+              <Picker name="profession"
+                mode="dropdown"
+                placeholder="I am a ..."
+                selectedValue={this.state.profession}
+                onValueChange={this.handleChangeGen('profession')}>
+                <Picker.Item label="Student" value="student" />
+                <Picker.Item label="Professional" value="professional" />
+              </Picker>
+            </Item>
+
+            <Item>
+              <Input name="school"
+                placeholder="Where do/did you go to school?"
+                onChangeText={this.handleChangeGen('school')} />
             </Item>
 
             <Button block full

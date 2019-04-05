@@ -14,6 +14,7 @@ import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, 
 import { Ionicons, MaterialCommunityIcons, Entypo, SimpleLineIcons} from '@expo/vector-icons';
 
 import styles from '../style';
+import RNPickerSelect from 'react-native-picker-select';
 
 // let colors = ['#d9b3ff', '#b3e0ff'];
 let colors = ['#ffffff', '#f2f2f2']
@@ -22,10 +23,56 @@ export class Compare extends Component {
 
   constructor(props) {
     super(props);
+    this.inputRefs = {
+      firstTextInput: null,
+      favSport0: null,
+      favSport1: null,
+      lastTextInput: null,
+    };
 
     this.state = {
-      data: [],
-    };
+      data: [
+        {
+          label: 'Onset',
+          value: 'Onset'
+        },
+        {
+          label: 'Duration',
+          value: 'Duration'
+        },
+        {
+          label: 'Metabolism',
+          value: 'Metabolism'
+        }
+      ],
+      numbers: [
+        {
+          name:  'Lorazepam',
+          onset: '15-20 minutes',
+          duration: '8 to 15 hours',
+          metabolism: 'Hepatic'
+        },
+        {
+          name:  'Midazolam',
+          onset: '15-20 minutes',
+          duration: '8 to 15 hours',
+          metabolism: 'Hepatic'
+        },
+        {
+          name:  'Lorazepam',
+          onset: '15-20 minutes',
+          duration: '8 to 15 hours',
+          metabolism: 'Hepatic'
+        },
+      ],
+
+      favSport0: undefined,
+      favSport1: undefined,
+      favSport2: undefined,
+      favSport3: undefined,
+      favSport4: 'baseball',
+      favNumber: undefined,
+      };
   }
 
   // search1: SearchBar
@@ -43,27 +90,51 @@ export class Compare extends Component {
           <Content padder>
             <View style={{paddingLeft: 15, paddingRight: 15}}>
 
-              <View style={styles.compare_title_container}>
-                <Text style={styles.compare_title}>Compare</Text>
-                <SimpleLineIcons name="plus" style={[styles.add_icon, {paddingRight: 5}]}></SimpleLineIcons>
-              </View>
+              <View style={styles.inline}>
+               <Text style={styles.title}>Compare</Text>
+              <Right>
+                <Button transparent>
+                <TouchableOpacity>
+                   <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons> 
+                 </TouchableOpacity>
+                 </Button>
+               </Right>
+             </View>
 
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View style={{flex:.5}}>
-                  <Text>Compare by</Text>
+                  <Text style={styles.compared_by}>Compare by</Text>
                 </View>
                 <View style={{flex:.5}}>
-                  <Picker
-                    mode = "dropdown"
-                    selectedValue={this.state.language}
-                    // style={{height: 50, width: 100}}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.setState({language: itemValue})
-                    }>
-                    <Picker.Item label="Onset/Duration" value="onset"/>
-                    <Picker.Item label="Dose" value="dose"/>
-                    <Picker.Item label="Metabolism/Excretion" value="metabolism"/>
-                  </Picker>
+                  <RNPickerSelect
+                    // placeholder={{
+                    //   label: 'Select a number or add another...',
+                    // }}
+                    items={this.state.data}
+                    onValueChange={value => {
+                      this.setState({
+                        favNumber: value,
+                      });
+                    }}
+                    value={this.state.favNumber}
+                    Icon={() => {
+                      return (
+                        <View
+                          style={{
+                            backgroundColor: 'transparent',
+                            borderTopWidth: 10,
+                            borderTopColor: 'gray',
+                            borderRightWidth: 10,
+                            borderRightColor: 'transparent',
+                            borderLeftWidth: 10,
+                            borderLeftColor: 'transparent',
+                            width: 0,
+                            height: 0,
+                          }}
+                        />
+                      );
+                    }}
+                  />                 
                 </View>
               </View>
 
@@ -72,34 +143,38 @@ export class Compare extends Component {
             <View style={styles.class_list}>
               <FlatList
                 // hardcoded example data:
-                data={[{name: 'Lorazepam', onset: '15-20 minutes', duration: '8 to 15 hours', metabolism: 'Hepatic'},
-                  {name: 'Midazolam', onset: '15 minutes', duration: '<2 hours', metabolism: 'Urine metabolites'}]}
+                // data={[{name: 'Lorazepam', onset: '15-20 minutes', duration: '8 to 15 hours', metabolism: 'Hepatic'},
+                //   {name: 'Midazolam', onset: '15 minutes', duration: '<2 hours', metabolism: 'Urine metabolites'}]},
                 // tslint:disable-next-line:jsx-no-lambda
+                data={this.state.numbers}
                 renderItem={({item, index}) => 
                   <View style={{ backgroundColor: colors[index % colors.length] }}>
                     <ListItem noIndent>
                       <View style={styles.container}>
 
-                        <View style={styles.column_header}>
+                        <View style={styles.compare_drug}>
                           <Text style={styles.column_header_text}>{item.name}</Text>
                         </View>
                         
-                        <View style={styles.item}>
-                          <Text style={{fontWeight:'bold'}}>Onset:</Text>
+                        <View style={styles.compare_item}>
+                          <Text style={styles.compare_column_name}>{this.state.data[0].label}</Text>
                         </View>
-                        <View style={styles.item}><Text>{item.onset}</Text></View>
+                        <View><Text style={styles.compare_column_value}>{item.onset}</Text></View>
 
-                        <View style={styles.item}>
-                          <Text style={{fontWeight:'bold'}}>Duration:</Text>
+                        <View style={styles.compare_item}>
+                          <Text style={styles.compare_column_name}>{this.state.data[1].label}</Text>
                         </View>
-                        <View style={styles.item}><Text>{item.duration}</Text></View>
+                        <View><Text style={styles.compare_column_value}>{item.duration}</Text></View>
 
-                        <View style={styles.item}>
-                          <Text style={{fontWeight:'bold'}}>Metabolism</Text>
+
+                        <View style={styles.compare_item}>
+                          <Text style={styles.compare_column_name}>{this.state.data[2].label}</Text>
                         </View>
-                        <View style={styles.item}><Text>{item.metabolism}</Text></View>
+                        <View><Text style={styles.compare_column_value}>{item.metabolism}</Text></View>
 
-                      </View>
+                        </View>
+
+
 
                       <Ionicons name="ios-close" style={[styles.close_icon, {paddingRight: 15}]}></Ionicons>
                     </ListItem>

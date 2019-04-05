@@ -1,0 +1,50 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Mon Apr  1 22:20:55 2019
+# Process ID: 13176
+# Current directory: C:/Users/there_gp/Documents/2019_spring/COMP523/comp523-project/react-native
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent1152
+# Log file: C:/Users/there_gp/Documents/2019_spring/COMP523/comp523-project/react-native/vivado.log
+# Journal file: C:/Users/there_gp/Documents/2019_spring/COMP523/comp523-project/react-native\vivado.jou
+#-----------------------------------------------------------
+start_gui
+create_project Lab8 C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8 -part xc7a100tcsg324-1
+file mkdir C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sources_1/new
+close [ open C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sources_1/new/controller.sv w ]
+add_files C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sources_1/new/controller.sv
+update_compile_order -fileset sources_1
+file mkdir C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sim_1/new
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sim_1/new/controller_test.sv w ]
+add_files -fileset sim_1 C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sim_1/new/controller_test.sv
+update_compile_order -fileset sim_1
+launch_simulation
+source controller.tcl
+update_compile_order -fileset sim_1
+add_files -fileset constrs_1 -norecurse C:/Users/there_gp/Documents/2019_spring/COMP541/Lab7/Lab7.srcs/constrs_1/new/clock.xdc
+import_files -fileset constrs_1 C:/Users/there_gp/Documents/2019_spring/COMP541/Lab7/Lab7.srcs/constrs_1/new/clock.xdc
+launch_simulation
+source controller_test.tcl
+close_sim
+launch_simulation
+source controller_test.tcl
+close_sim
+launch_simulation
+source controller_test.tcl
+close_sim
+launch_simulation
+source controller_test.tcl
+close_sim
+launch_simulation
+source controller_test.tcl
+close_sim
+close_sim
+close [ open C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sources_1/new/top.sv w ]
+add_files C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sources_1/new/top.sv
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+close [ open C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sources_1/new/mips.sv w ]
+add_files C:/Users/there_gp/Documents/2019_spring/COMP541/Lab8/Lab8.srcs/sources_1/new/mips.sv
+update_compile_order -fileset sources_1

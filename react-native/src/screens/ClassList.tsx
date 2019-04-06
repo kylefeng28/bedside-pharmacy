@@ -20,6 +20,10 @@ import styles from '../style';
 
 export class ClassList extends Component {
 
+  static navigationOptions = {
+        header: null
+  }
+
   constructor(props) {
     super(props);
 
@@ -43,7 +47,7 @@ export class ClassList extends Component {
   }
 
   _clickClass = () => {
-    this.props.navigation.navigate('SubclassTab');
+    this.props.navigation.navigate('InsertNavigator');
   };
   
 
@@ -51,7 +55,7 @@ export class ClassList extends Component {
     return (
        <Container>
          <Content padder>
-           <Text style={styles.title}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
+           <Text style={[styles.title,styles.main_title]}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
            <View styles = {styles.seach_box}>
              <Search
                 ref='search_box'

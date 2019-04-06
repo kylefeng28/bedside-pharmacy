@@ -86,6 +86,10 @@ export default EStyleSheet.create({
         color: '$MainBlack'
     },
 
+    main_title:{
+      marginTop: 70
+    },
+
     title_light: {
         fontFamily: 'Open-Sans-Light'
     },

@@ -88,10 +88,10 @@ export class Compare extends Component {
     return (
        <Container>
           <Content padder>
-            <View style={{paddingLeft: 15, paddingRight: 15}}>
+            <View>
 
               <View style={styles.inline}>
-               <Text style={styles.title}>Compare</Text>
+               <Text style={[styles.title,styles.main_title]}>Compare</Text>
               <Right>
                 <Button transparent>
                 <TouchableOpacity>

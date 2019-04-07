@@ -75,6 +75,46 @@ export default EStyleSheet.create({
     },
 
     /* ==========================================================================
+    Register/Login page
+    ========================================================================== */
+
+    register_container:{
+      width: '80%',
+    },
+
+    register_title:{
+      textAlign: 'center',
+    },
+
+    register_subtitle:{
+      textAlign: 'center',
+      fontSize: 14
+    },
+
+    switch_login:{
+      color: '$LinkBlue',
+    },
+
+    label:{
+      color: '$LinkBlue',
+      fontSize: 16
+    },
+
+    login_button:{
+      backgroundColor: '$LinkBlue',
+      marginTop:30
+    },
+
+    login_text:{
+      color: '$MainWhite',
+    },
+
+    half:{
+      width: '50%'
+    },
+
+
+    /* ==========================================================================
     Home Page
     ========================================================================== */
 

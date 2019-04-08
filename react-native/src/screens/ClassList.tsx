@@ -15,20 +15,26 @@ import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 
+import { firebase } from '../utils/FirebaseWrapper';
+let itemsRef = firebase.database.ref('/drugs');
+
 import styles from '../style';
 
 
 export class ClassList extends Component {
 
   static navigationOptions = {
-        header: null
+    header: null
+  }
+  state:{
+    items: any[];
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [],
+      data:[],
     };
   }
 
@@ -37,9 +43,20 @@ export class ClassList extends Component {
   componentDidMount() {
     this.getClassList();
     // this.refs.searchBar.focus();
+    itemsRef.on('value', snapshot => {
+      let data = snapshot.val();
+      // console.log(data['0'])
+      // let items = Object.values(data);
+      let class_names = Object.keys(data);
+      console.log(class_names);
+      // this.setState({ items });
+      // console.log(this.state.items['0']) 
+      // this.getClassList(class_names);
+    });
   }
 
-   getClassList(){
+   getClassList(class_names){
+     // console.log(class_names);
      const content = [{key: 'Anticid'}, {key: 'Antiarrhythmic'}, {key: 'Anticoagulant'},{key: 'Antiemetic'},{key: 'Antihypertensive'}, {key: 'Antipsychotic'}, {key: 'Anticonvulsant'}, {key: 'Benzodiazepines'},{key: 'Blood Products'}, {key: 'Bronchodilator'}, {key: 'Coagulation Reversal Products'}, {key: 'Insulin'}, {key: 'Hyperosmolar Therapy'}, {key: 'Non-opioid Analgesics'}, {key: 'Opioids'},{key: 'Sedation'}, {key: 'Steroids'}, {key: 'Vasoperssors'}, {key: 'Misc'}];
      this.setState({
           data: [...this.state.data, ...content]

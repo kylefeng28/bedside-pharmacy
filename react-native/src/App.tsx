@@ -54,8 +54,8 @@ export default class App extends Component {
     }
 
     // return <DrugList />;
-    // return <AppContainer />;
-    return <UserSignup />;
+    return <AppContainer />;
+    // return <UserSignup />;
     // return <Subclass/>
   }
 }

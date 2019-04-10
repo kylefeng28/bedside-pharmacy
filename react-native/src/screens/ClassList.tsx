@@ -39,6 +39,10 @@ export class ClassList extends Component {
   }
 
   componentDidMount() {
+    this.getClassList();
+  }
+
+  getClassList(){
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
       let class_names = Object.keys(data);
@@ -60,10 +64,10 @@ export class ClassList extends Component {
   }
 
  
-
-  _clickClass = () => {
-    this.props.navigation.navigate('InsertNavigator',{key:'key'});
-  };
+ // Maybe extracct the clickClass functionlater
+  // _clickClass = () => {
+  //   this.props.navigation.navigate('InsertNavigator',{key:'key'});
+  // };
   
 
   render() {

@@ -11,9 +11,12 @@ import {
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem } from 'native-base';
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
-
 import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
+
+//Load Firebase
+import { firebase } from '../utils/FirebaseWrapper';
+let itemsRef = firebase.database.ref('/drugs');
 
 import styles from '../style';
 
@@ -21,34 +24,50 @@ import styles from '../style';
 export class ClassList extends Component {
 
   static navigationOptions = {
-        header: null
+    header: null
+  }
+  state:{
+    items: any[];
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [],
+      data:[],
     };
   }
 
-  // search1: SearchBar
-
   componentDidMount() {
     this.getClassList();
-    // this.refs.searchBar.focus();
   }
 
-   getClassList(){
-     const content = [{key: 'Anticid'}, {key: 'Antiarrhythmic'}, {key: 'Anticoagulant'},{key: 'Antiemetic'},{key: 'Antihypertensive'}, {key: 'Antipsychotic'}, {key: 'Anticonvulsant'}, {key: 'Benzodiazepines'},{key: 'Blood Products'}, {key: 'Bronchodilator'}, {key: 'Coagulation Reversal Products'}, {key: 'Insulin'}, {key: 'Hyperosmolar Therapy'}, {key: 'Non-opioid Analgesics'}, {key: 'Opioids'},{key: 'Sedation'}, {key: 'Steroids'}, {key: 'Vasoperssors'}, {key: 'Misc'}];
-     this.setState({
-          data: [...this.state.data, ...content]
-        });
+  getClassList(){
+    itemsRef.on('value', snapshot => {
+      let data = snapshot.val();
+      let class_names = Object.keys(data);
+      var class_array = [];
+
+      for (i = 0; i < class_names.length; i++) {
+        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "")};
+        class_array.push(a);
+      }
+
+      // Placeholder value, delete later, need to change keys into value in the rendering below
+
+      // const content = [{key: 'Anticid'}, {key: 'Antiarrhythmic'}, {key: 'Anticoagulant'},{key: 'Antiemetic'},{key: 'Antihypertensive'}, {key: 'Antipsychotic'}, {key: 'Anticonvulsant'}, {key: 'Benzodiazepines'},{key: 'Blood Products'}, {key: 'Bronchodilator'}, {key: 'Coagulation Reversal Products'}, {key: 'Insulin'}, {key: 'Hyperosmolar Therapy'}, {key: 'Non-opioid Analgesics'}, {key: 'Opioids'},{key: 'Sedation'}, {key: 'Steroids'}, {key: 'Vasoperssors'}, {key: 'Misc'}];
+
+      this.setState({
+        data:[...class_array]
+      })
+    });
   }
 
-  _clickClass = () => {
-    this.props.navigation.navigate('InsertNavigator');
-  };
+ 
+ // Maybe extracct the clickClass functionlater
+  // _clickClass = () => {
+  //   this.props.navigation.navigate('InsertNavigator',{key:'key'});
+  // };
   
 
   render() {
@@ -76,9 +95,9 @@ export class ClassList extends Component {
                 //need a data extractor here
                 renderItem={({item}) => 
                   <ListItem noIndent
-                  onPress={() => this._clickClass()}>
+                  onPress={() => this.props.navigation.navigate('InsertNavigator',{key: item.value})}>
                     <Left>
-                      <Text style={styles.class_list_item}>{item.key}</Text>
+                      <Text style={styles.class_list_item}>{item.value}</Text>
                     </Left>
                     <Right>
                       <Ionicons name="ios-arrow-forward" style={styles.forward_icon}></Ionicons>

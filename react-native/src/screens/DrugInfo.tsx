@@ -23,7 +23,7 @@ import { AppLoading, Font } from 'expo';
 
 import styles from '../style';
 import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
+let itemsRef = firebase.database.ref('/drugs_test');
 
 
 const BACON_IPSUM =

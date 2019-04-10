@@ -38,30 +38,24 @@ export class ClassList extends Component {
     };
   }
 
-  // search1: SearchBar
-
   componentDidMount() {
-    this.getClassList();
-    // this.refs.searchBar.focus();
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
-      // console.log(data['0'])
-      // let items = Object.values(data);
       let class_names = Object.keys(data);
-      console.log(class_names);
-      // this.setState({ items });
-      // console.log(this.state.items['0']) 
-      // this.getClassList(class_names);
+      var class_array = [];
+
+      for (i = 0; i < class_names.length; i++) {
+        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "")};
+        class_array.push(a);
+      }
+
+      this.setState({
+        data:[...class_array]
+      })
     });
   }
 
-   getClassList(class_names){
-     // console.log(class_names);
-     const content = [{key: 'Anticid'}, {key: 'Antiarrhythmic'}, {key: 'Anticoagulant'},{key: 'Antiemetic'},{key: 'Antihypertensive'}, {key: 'Antipsychotic'}, {key: 'Anticonvulsant'}, {key: 'Benzodiazepines'},{key: 'Blood Products'}, {key: 'Bronchodilator'}, {key: 'Coagulation Reversal Products'}, {key: 'Insulin'}, {key: 'Hyperosmolar Therapy'}, {key: 'Non-opioid Analgesics'}, {key: 'Opioids'},{key: 'Sedation'}, {key: 'Steroids'}, {key: 'Vasoperssors'}, {key: 'Misc'}];
-     this.setState({
-          data: [...this.state.data, ...content]
-        });
-  }
+ 
 
   _clickClass = () => {
     this.props.navigation.navigate('InsertNavigator');
@@ -95,7 +89,7 @@ export class ClassList extends Component {
                   <ListItem noIndent
                   onPress={() => this._clickClass()}>
                     <Left>
-                      <Text style={styles.class_list_item}>{item.key}</Text>
+                      <Text style={styles.class_list_item}>{item.value}</Text>
                     </Left>
                     <Right>
                       <Ionicons name="ios-arrow-forward" style={styles.forward_icon}></Ionicons>

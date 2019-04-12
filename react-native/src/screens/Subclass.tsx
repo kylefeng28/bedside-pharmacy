@@ -27,7 +27,7 @@ export class Subclass extends Component {
     // console.log(props.navigation.getParam('key', ''));
 
     this.state = {
-      classKey: props.navigation.getParam('key', ''),
+      class_key: props.navigation.getParam('class_key', ''),
       data: [],
     };
   }
@@ -36,26 +36,27 @@ export class Subclass extends Component {
 
   componentDidMount() {
     this.getSubclassList();
+    console.log('hello2')
     // this.refs.searchBar.focus();
   }
 
   getSubclassList(){
-      itemsRef.on('value', snapshot => {
+    itemsRef.on('value', snapshot => {
       let data = snapshot.val();
 
       // slice the last element as it is the label info as default
-      let subclass_names = Object.keys(data[this.state.classKey]).slice(0, -1);
+      let subclass_names = Object.keys(data[this.state.class_key]).slice(0, -1);
 
       // console.log(class_names);
       var subclass_array = [];
 
-      for (i = 0; i < subclass_names.length; i++) {
+      for (var i = 0; i < subclass_names.length; i++) {
         let a = {key:JSON.stringify(subclass_names[i]).replace(/\"/g, ""),value:JSON.stringify(subclass_names[i]).replace(/\"/g, "")};
         subclass_array.push(a);
 
       }
 
-       console.log(subclass_array)
+       // console.log(subclass_array)
        this.setState({
           data: [...subclass_array]
         });
@@ -68,8 +69,8 @@ export class Subclass extends Component {
      //    });
   }
 
-  _clickSubclass = () => {
-    this.props.navigation.navigate('DrugList');
+  _clickSubclass(subclass_key){
+    this.props.navigation.navigate('DrugList',{class_key: this.state.class_key, subclass_key: subclass_key });
   };
   
 
@@ -77,7 +78,7 @@ export class Subclass extends Component {
     return (
        <Container>
          <Content padder>
-           <Text style={styles.title}>{this.state.classKey}</Text>
+           <Text style={styles.title}>{this.state.class_key}</Text>
          
             <View style={styles.subclass_list}>
               <FlatList
@@ -85,10 +86,10 @@ export class Subclass extends Component {
                 //need a data extractor here
                 renderItem={({item}) => 
                   <ListItem noIndent style={styles.subclass_list_item}
-                  			onPress={() => this._clickSubclass()}>
+                  			onPress={() => this._clickSubclass(item.key)}>
                     
                     <MaterialCommunityIcons name="circle-outline" style={styles.circle_icon}></MaterialCommunityIcons>  
-                    <Text style={styles.subclass_list_item_text}>{item.key}</Text>  
+                    <Text style={styles.subclass_list_item_text}>{item.value}</Text>  
                     
                  </ListItem>
               }

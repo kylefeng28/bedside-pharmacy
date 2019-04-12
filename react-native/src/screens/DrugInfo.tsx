@@ -67,7 +67,7 @@ export class DrugInfo extends Component {
         content: BACON_IPSUM,
       },
     ];
-
+    console.log(content)
     return content;
   }
 

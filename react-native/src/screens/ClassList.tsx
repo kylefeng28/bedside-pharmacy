@@ -48,8 +48,9 @@ export class ClassList extends Component {
       let class_names = Object.keys(data);
       var class_array = [];
 
+      // Replace '*' with '/' for class value
       for (i = 0; i < class_names.length; i++) {
-        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "")};
+        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "").replace('*',' / ')};
         class_array.push(a);
       }
 
@@ -66,9 +67,37 @@ export class ClassList extends Component {
  
  // Maybe extracct the clickClass functionlater
   // _clickClass = () => {
-  //   this.props.navigation.navigate('InsertNavigator',{key:'key'});
+  //   this.props.navigation.navigate('InsertNavigator',{key: item.value});
   // };
   
+  _clickClass(class_key){
+    itemsRef.on('value', snapshot => {
+      let data = snapshot.val();
+
+      // slice the last element as it is the label info as default
+      let subclass_key = Object.keys(data[class_key])[0];
+      if (subclass_key == '_'){
+        this.props.navigation.navigate('InsertNavigator2',{class_key: class_key, subclass_key: subclass_key });
+      } else{
+        this.props.navigation.navigate('InsertNavigator',{class_key: class_key});
+      }
+
+      // console.log(class_names);
+      // var subclass_array = [];
+
+      // for (var i = 0; i < subclass_names.length; i++) {
+      //   let a = {key:JSON.stringify(subclass_names[i]).replace(/\"/g, ""),value:JSON.stringify(subclass_names[i]).replace(/\"/g, "")};
+      //   subclass_array.push(a);
+
+      // }
+
+      //  console.log(subclass_array)
+      });
+
+  
+    // console.log(class_key);
+
+  };
 
   render() {
     return (
@@ -95,7 +124,7 @@ export class ClassList extends Component {
                 //need a data extractor here
                 renderItem={({item}) => 
                   <ListItem noIndent
-                  onPress={() => this.props.navigation.navigate('InsertNavigator',{key: item.value})}>
+                  onPress={() => this._clickClass(item.key)}>
                     <Left>
                       <Text style={styles.class_list_item}>{item.value}</Text>
                     </Left>

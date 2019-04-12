@@ -23,65 +23,101 @@ import { AppLoading, Font } from 'expo';
 
 import styles from '../style';
 import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs_test');
+// let itemsRef = firebase.database.ref('/drugs_test');
+let itemsRef = firebase.database.ref('/drugs');
 
 
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
 
 export class DrugInfo extends Component {
-  state: {
-    items: any[];
-    activeSections: any[];
-    collapsed: boolean;
-    multipleSelect: boolean;
-  };
+  // state: {
+  //   class_key: any;
+  //   subclass_key: any;
+  //   drug_key: any;
+  //   data: any[];
+  //   activeSections: any[];
+  //   collapsed: boolean;
+  //   multipleSelect: boolean;
+  // };
 
   constructor(props) {
     super(props);
     this.state = {
-      // items: null,
+      class_key: props.navigation.getParam('class_key',''),
+      subclass_key: props.navigation.getParam('subclass_key',''),
+      drug_key: props.navigation.getParam('drug_key',''),
+      data: [],
       activeSections: [],
       collapsed: true,
       multipleSelect: true,
     };
   }
 
-  makeContents() {
-      let loaded = !!this.state.items;
-      const content = [
-      {
-        title: 'Onset/Duration',
-        content: loaded ? this.state.items['0']['_coordinate'] : BACON_IPSUM,
-      },
-      {
-        title: 'Dose',
-        content: BACON_IPSUM,
-      },
-      {
-        title: 'Metabolism/Excretion',
-        content: BACON_IPSUM,
-      },
-      {
-        title: 'Warnings',
-        content: BACON_IPSUM,
-      },
-    ];
+  getDrugInfo(){
+    var content = [];
+    itemsRef.on('value', snapshot =>{
+        let data = snapshot.val();
 
+        // slice out brand name and desciption
+        let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
+
+        // console.log(data[this.state.class_key][this.state.subclass_key][this.state.drug_key]['0'])
+
+        let labels = data[this.state.class_key]['labels'];
+
+        for (var i = 0; i < labels.length; i++) {
+          let a = {title:JSON.stringify(labels[i]).replace(/\"/g, ""),content:JSON.stringify((drug_info[JSON.stringify(i)]==null) ? "Data not inserted":drug_info[JSON.stringify(i)] ).replace(/\"/g, "")};
+          content.push(a);
+        }
+        // console.log(content);
+        var drug_array = [];
+
+        // for (var i = 0; i < drug_names.length; i++) {
+        //   let a = {key:JSON.stringify(drug_names[i]).replace(/\"/g, ""),value:JSON.stringify(drug_names[i]).replace(/\"/g, "")};
+        //   drug_array.push(a);
+        // }
+
+        // this.setState({
+        //   data: [...drug_array]
+        // });
+        // return content
+
+     });
+    // return content;
+
+
+
+    // const content = [
+    //   {
+    //     title: 'Onset/Duration',
+    //     content: BACON_IPSUM,
+    //   },
+    //   {
+    //     title: 'Dose',
+    //     content: BACON_IPSUM,
+    //   },
+    //   {
+    //     title: 'Metabolism/Excretion',
+    //     content: BACON_IPSUM,
+    //   },
+    //   {
+    //     title: 'Warnings',
+    //     content: BACON_IPSUM,
+    //   },
+    // ];
     return content;
   }
 
-  componentWillMount() {
-    // console.log(itemsRef);
-  }
 
   componentDidMount(){
-    itemsRef.on('value', snapshot => {
-      let data = snapshot.val();
-      let items = Object.values(data);
-      this.setState({ items });
-      // console.log(this.state.items['0']['_coordinate']) 
-    });
+    this.getDrugInfo();
+    // itemsRef.on('value', snapshot => {
+    //   // let data = snapshot.val();
+    //   // let data = Object.values(data);
+    //   // this.setState({ data });
+    //   // console.log(this.state.data['0']['_coordinate']) 
+    // });
   }
 
   _setSections = sections => {
@@ -143,7 +179,7 @@ export class DrugInfo extends Component {
 
         <Content padder style={styles.body}>
           <View style={styles.inline}>
-            <Text style={styles.title}>Lorazepam
+            <Text style={styles.title}>{this.state.drug_key}
               <Text style={styles.brand_name}> (Ativan)</Text>
             </Text>
             <Right>
@@ -159,7 +195,7 @@ export class DrugInfo extends Component {
           <Accordion
             // containerStyle={styles.container}
             activeSections={activeSections}
-            sections={this.makeContents()}
+            sections={this.getDrugInfo()}
             touchableComponent={TouchableOpacity}
             expandMultiple={multipleSelect}
             renderHeader={this._renderHeader}

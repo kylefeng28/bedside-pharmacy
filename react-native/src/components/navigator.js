@@ -22,13 +22,25 @@ const InsertNavigator = createStackNavigator(
     {
       headerMode: 'none'
     }
-
   )
+
+// Navigator for class without subclass
+const InsertNavigator2 = createStackNavigator(
+    {
+      DrugList,
+      DrugInfo
+    },
+    {
+      headerMode: 'none'
+    }
+  )
+
 
 const ReferenceNavigator = createStackNavigator(
     {
       ClassList,
-      InsertNavigator
+      InsertNavigator,
+      InsertNavigator2
     }
   )
 

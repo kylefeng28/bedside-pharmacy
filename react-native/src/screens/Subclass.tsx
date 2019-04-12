@@ -36,7 +36,6 @@ export class Subclass extends Component {
 
   componentDidMount() {
     this.getSubclassList();
-    console.log('hello2')
     // this.refs.searchBar.focus();
   }
 

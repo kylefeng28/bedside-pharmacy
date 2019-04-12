@@ -77,7 +77,6 @@ export class ClassList extends Component {
       // slice the last element as it is the label info as default
       let subclass_key = Object.keys(data[class_key])[0];
       if (subclass_key == '_'){
-        console.log('hello')
         this.props.navigation.navigate('InsertNavigator2',{class_key: class_key, subclass_key: subclass_key });
       } else{
         this.props.navigation.navigate('InsertNavigator',{class_key: class_key});

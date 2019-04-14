@@ -91,7 +91,7 @@ const fuse = (function() {
     maxPatternLength: 32,
     minMatchCharLength: 1,
     keys: [
-      "name",
+      'name', 'Brand Name', 'path'
     ]
   };
   const fuse = new Fuse(data, options);
@@ -108,11 +108,16 @@ function printResults(results) {
     console.log("Sorry, couldn't find any results");
     return;
   }
-  console.log('Found ' + (results.length) + 'results!');
+  console.log('Found ' + (results.length) + ' results!');
   for (let i = 0; i < results.length; i++) {
     const result = results[i];
     console.log('Result #' + (i+1));
-    console.log(result.item.name);
+    console.log('\t' + result.item.name + ' (' + result.item.type + ')');
+    if (result.item.type == 'drug') {
+      console.log('\t' + 'Brand name: ' + result.item['Brand Name']);
+      console.log('\t' + 'Found in: ' + result.item.path.join(' > '));
+    }
+
     console.log();
   }
 }
@@ -123,6 +128,4 @@ while(true) {
 	const results = search(data, query);
 
   printResults(results);
-
-	console.log();
 }

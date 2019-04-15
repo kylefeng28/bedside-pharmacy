@@ -13,13 +13,13 @@ import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, 
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
+import * as SearchUtil from '../utils/SearchUtil';
 
 //Load Firebase
 import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 import styles from '../style';
-
 
 export class ClassList extends Component {
 
@@ -99,6 +99,14 @@ export class ClassList extends Component {
 
   };
 
+  // NOTE: must be async (or return a Promise)
+  async onChangeText(searchText: string) {
+    const searchResults = SearchUtil.search(searchText);
+    console.log('user searched for ' + searchText);
+
+    SearchUtil.printResults(searchResults);
+  }
+
   render() {
     return (
        <Container>
@@ -115,6 +123,7 @@ export class ClassList extends Component {
                 // iconSearch = {<Ionicons name="ios-search" style={styles.search_icon}></Ionicons>}
                 iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
                 middleWidth = {100}
+                onChangeText = {(searchText) => this.onChangeText(searchText)}
               />
             </View>
             <View style={styles.class_list}>

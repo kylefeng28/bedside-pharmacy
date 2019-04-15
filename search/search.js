@@ -17,11 +17,27 @@ class SearchResult {
 }
  */
 
+const antibioticsSection =  'Antibiotics And Organisms';
+const ignored = [antibioticsSection,  'Bacteria', 'labels' ]
+
 // Process data for search
 // Returns SearchResult[]
 function processData(rawData) {
   let data = [];
-  const ignored = [ 'Antibiotics',  'Bacteria', 'labels' ]
+
+  // Loop through antibiotics
+  const antibioticsData = rawData['drugs'][antibioticsSection];
+  for (let antibioticName in antibioticsData['Antibiotics']) {
+    data.push(processAntibiotic(antibioticName));
+  }
+
+  // Loop through bugs
+  for (let bugClassName in antibioticsData['Bacteria']) {
+    const bugClass = antibioticsData['Bacteria'][bugClassName];
+    for (let bugName in bugClass) {
+      data.push(processBug(bugName, bugClassName));
+    }
+  }
 
   // Loop through classes
   for (let drugClassName in rawData['drugs']) {
@@ -57,12 +73,30 @@ function processData(rawData) {
   return data;
 }
 
+function processAntibiotic(antibioticName) {
+  console.log('\t' + antibioticName)
+  return {
+    name: antibioticName,
+    type: 'antibiotic',
+    path: [ antibioticsSection, 'Antibiotics', antibioticName ],
+  }
+}
 
-function processDrugClass(classname, isSubclass) {
-  console.log(classname);
+function processBug(bugName, bugClassName) {
+  console.log('\t' + bugName)
+  return {
+    name: bugName,
+    bugClass: bugClassName,
+    type: 'bug',
+    path: [ antibioticsSection, 'Bacteria', bugName ],
+  }
+}
+
+function processDrugClass(className, isSubclass) {
+  console.log(className);
 
   return {
-    name: classname,
+    name: className,
     type: 'drugClass',
     isSubclass: isSubclass
     // TODO should this show parent class?
@@ -70,11 +104,12 @@ function processDrugClass(classname, isSubclass) {
 }
 
 function processDrug(path, drugName, drug) {
-  console.log('    ' + drugName)
+  console.log('\t' + drugName)
   return {
     name: drugName,
     type: 'drug',
     path: path,
+    data_: JSON.stringify(drug.data),
     ...drug
   }
 }
@@ -91,7 +126,7 @@ const fuse = (function() {
     maxPatternLength: 32,
     minMatchCharLength: 1,
     keys: [
-      'name', 'Brand Name', 'path'
+      'name', 'path', 'Brand Name', 'Description'
     ]
   };
   const fuse = new Fuse(data, options);
@@ -116,6 +151,9 @@ function printResults(results) {
     if (result.item.type == 'drug') {
       console.log('\t' + 'Brand name: ' + result.item['Brand Name']);
       console.log('\t' + 'Found in: ' + result.item.path.join(' > '));
+    }
+    if (result.item.type == 'bug') {
+      console.log('\t' + 'Found in: ' + result.item.bugClass);
     }
 
     console.log();

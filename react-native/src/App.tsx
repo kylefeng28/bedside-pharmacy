@@ -20,6 +20,8 @@ let itemsRef = firebase.database.ref('/drugs');
 import { Subclass } from './screens/Subclass';
 import { DrugList } from './screens/DrugList';
 import { UserSignup } from './screens/UserSignup';
+import { Antibiotics } from './screens/Antibiotics';
+import { Test } from './screens/test';
 
 export default class App extends Component {
   state: {
@@ -52,7 +54,8 @@ export default class App extends Component {
     if (!this.state.font_loaded) {
       return <AppLoading />;
     }
-
+    // return <Test/>
+    // return <Antibiotics/>;
     // return <DrugList />;
     return <AppContainer />;
     // return <UserSignup />;

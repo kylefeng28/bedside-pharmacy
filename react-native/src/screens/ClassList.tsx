@@ -100,21 +100,24 @@ export class ClassList extends Component {
     // SearchUtil.printResults(searchResults);
   }
 
+  // render result item when on search and hide when not
   _renderList(){
     if(this.state.onSearch){
+      let path = this.state.data2[0].path;
+      console.log(path)
       return(
-        <View style={{ flex: 1}}>
+        <View>
           <FlatList
               data={this.state.data2}
               //need a data extractor here
               renderItem={({item}) => 
-                <ListItem noIndent>
-                  <Left>
-                    <Text>{item.name}</Text>
-                    <Text>{item.key}</Text>
-                  </Left>
+                <ListItem noIndent>          
+                    <Text style={styles.search_title}>{item.name}</Text>
+                    <Text style={styles.search_path}>  in </Text>
+                    <Text style={styles.search_path}>{item.path}</Text>
+   
                </ListItem>
-            }
+             }
             />
 
         </View>
@@ -135,12 +138,11 @@ export class ClassList extends Component {
                 titleCancelColor='#007FAE'
                 tintColorSearch='#151515'
                 inputHeight={40}
-                // iconSearch = {<Ionicons name="ios-search" style={styles.search_icon}></Ionicons>}
                 iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
                 middleWidth = {100}
                 onFocus = {() => this.setState({ onSearch: true})}
-                // onSearch = {(searchText) => this.onChangeText(searchText)}
-                // onFocus = {() => this._renderList()}
+                onCancel = {() => this.setState({ onSearch: false})}
+                onSearch = {(searchText) => this.onChangeText(searchText)}
               />
             </View>
             <View>{this._renderList()}</View>

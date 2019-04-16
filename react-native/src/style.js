@@ -65,6 +65,18 @@ export default EStyleSheet.create({
         color: '$DarkGray',
     },
 
+    search_title:{
+        fontFamily: 'Open-Sans-SemiBold',
+        fontSize: 16,
+        color: '$MainBlack'
+    },
+
+    search_path:{
+        fontFamily: 'Open-Sans-Regular',
+        fontSize: 16,
+        color: '$DarkGray',
+    },
+
     footer: {
         backgroundColor: '$LightGray'
     },
@@ -73,6 +85,7 @@ export default EStyleSheet.create({
         fontSize: 32,
         // color: '$LinkBlue'
     },
+
 
     /* ==========================================================================
     Register/Login page

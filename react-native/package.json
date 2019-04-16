@@ -16,6 +16,7 @@
     "expo": "^32.0.6",
     "expokit": "^32.0.7",
     "firebase": "^5.9.2",
+    "fuse.js": "^3.4.4",
     "native-base": "^2.12.1",
     "patch-package": "^6.1.0",
     "prop-types": "^15.7.2",
@@ -36,8 +37,10 @@
     "react-navigation": "^3.5.1",
     "react-navigation-material-bottom-tabs": "^1.0.0",
     "react-scripts": "^2.1.8",
+    "readline-sync": "^1.4.9",
     "redux": "^4.0.1",
-    "redux-form": "^8.1.0"
+    "redux-form": "^8.1.0",
+    "typescript-require": "^0.2.10"
   },
   "devDependencies": {
     "@types/react": "^16.8.10",

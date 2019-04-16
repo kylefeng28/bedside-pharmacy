@@ -9,17 +9,20 @@ import {
 } from 'react-native';
 
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem, Item, Input} from 'native-base';
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 import * as SearchUtil from '../utils/SearchUtil';
+import AtoZListView from 'react-native-atoz-listview';
 
 //Load Firebase
 import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 import styles from '../style';
+
+const rowHeight = 40;
 
 export class ClassList extends Component {
 
@@ -28,6 +31,7 @@ export class ClassList extends Component {
   }
   state:{
     items: any[];
+    onSearch: boolean
   }
 
   constructor(props) {
@@ -35,6 +39,10 @@ export class ClassList extends Component {
 
     this.state = {
       data:[],
+      data2: [{key:'1', name: 'Anticid',type: 'drug', path:['hello','hello']}, 
+        {key:'2', name: 'Anticid',type: 'drug', path:['hello','hello']}, 
+        {key:'3', name: 'Anticid',type: 'drug', path:['hello','hello']}],
+      onSearch: false,
     };
   }
 
@@ -54,15 +62,13 @@ export class ClassList extends Component {
         class_array.push(a);
       }
 
-      // Placeholder value, delete later, need to change keys into value in the rendering below
-
-      // const content = [{key: 'Anticid'}, {key: 'Antiarrhythmic'}, {key: 'Anticoagulant'},{key: 'Antiemetic'},{key: 'Antihypertensive'}, {key: 'Antipsychotic'}, {key: 'Anticonvulsant'}, {key: 'Benzodiazepines'},{key: 'Blood Products'}, {key: 'Bronchodilator'}, {key: 'Coagulation Reversal Products'}, {key: 'Insulin'}, {key: 'Hyperosmolar Therapy'}, {key: 'Non-opioid Analgesics'}, {key: 'Opioids'},{key: 'Sedation'}, {key: 'Steroids'}, {key: 'Vasoperssors'}, {key: 'Misc'}];
-
       this.setState({
         data:[...class_array]
       })
     });
   }
+
+ 
 
  
  // Maybe extracct the clickClass functionlater
@@ -82,20 +88,7 @@ export class ClassList extends Component {
         this.props.navigation.navigate('InsertNavigator',{class_key: class_key});
       }
 
-      // console.log(class_names);
-      // var subclass_array = [];
-
-      // for (var i = 0; i < subclass_names.length; i++) {
-      //   let a = {key:JSON.stringify(subclass_names[i]).replace(/\"/g, ""),value:JSON.stringify(subclass_names[i]).replace(/\"/g, "")};
-      //   subclass_array.push(a);
-
-      // }
-
-      //  console.log(subclass_array)
-      });
-
-  
-    // console.log(class_key);
+    });
 
   };
 
@@ -103,9 +96,31 @@ export class ClassList extends Component {
   async onChangeText(searchText: string) {
     const searchResults = SearchUtil.search(searchText);
     console.log('user searched for ' + searchText);
-
-    SearchUtil.printResults(searchResults);
+    console.log(searchResults)
+    // SearchUtil.printResults(searchResults);
   }
+
+  _renderList(){
+    if(this.state.onSearch){
+      return(
+        <View style={{ flex: 1}}>
+          <FlatList
+              data={this.state.data2}
+              //need a data extractor here
+              renderItem={({item}) => 
+                <ListItem noIndent>
+                  <Left>
+                    <Text>{item.name}</Text>
+                    <Text>{item.key}</Text>
+                  </Left>
+               </ListItem>
+            }
+            />
+
+        </View>
+         )
+      }
+    }
 
   render() {
     return (
@@ -123,9 +138,12 @@ export class ClassList extends Component {
                 // iconSearch = {<Ionicons name="ios-search" style={styles.search_icon}></Ionicons>}
                 iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
                 middleWidth = {100}
-                onChangeText = {(searchText) => this.onChangeText(searchText)}
+                onFocus = {() => this.setState({ onSearch: true})}
+                // onSearch = {(searchText) => this.onChangeText(searchText)}
+                // onFocus = {() => this._renderList()}
               />
             </View>
+            <View>{this._renderList()}</View>
             <View style={styles.class_list}>
               <Text style={styles.by_class}>By Class</Text>
               <FlatList

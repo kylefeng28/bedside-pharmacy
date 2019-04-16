@@ -80,7 +80,7 @@ const ignored = [antibioticsSection,  'Bacteria', 'labels' ];
 }
 
 function processAntibiotic(antibioticName)/*: SearchResult*/ {
-  console.log('\t' + antibioticName);
+  // console.log('\t' + antibioticName);
   return {
     name: antibioticName,
     type: SearchResultType.ANTIBIOTIC,
@@ -89,7 +89,7 @@ function processAntibiotic(antibioticName)/*: SearchResult*/ {
 }
 
 function processBug(bugName, bugClassName)/*: SearchResult*/ {
-  console.log('\t' + bugName)
+  // console.log('\t' + bugName)
   return {
     name: bugName,
     type: SearchResultType.BUG,
@@ -98,7 +98,7 @@ function processBug(bugName, bugClassName)/*: SearchResult*/ {
 }
 
 function processDrugClass(className, parentClass)/*: SearchResult*/ {
-  console.log(className);
+  // console.log(className);
 
   return {
     name: className,
@@ -108,7 +108,7 @@ function processDrugClass(className, parentClass)/*: SearchResult*/ {
 }
 
 function processDrug(path, drugName, drug)/*: SearchResult*/ {
-  console.log('\t' + drugName);
+  // console.log('\t' + drugName);
   return {
     name: drugName,
     type: 'drug',

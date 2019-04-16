@@ -65,18 +65,6 @@ export default EStyleSheet.create({
         color: '$DarkGray',
     },
 
-    search_title:{
-        fontFamily: 'Open-Sans-SemiBold',
-        fontSize: 16,
-        color: '$MainBlack'
-    },
-
-    search_path:{
-        fontFamily: 'Open-Sans-Regular',
-        fontSize: 16,
-        color: '$DarkGray',
-    },
-
     footer: {
         backgroundColor: '$LightGray'
     },
@@ -85,47 +73,6 @@ export default EStyleSheet.create({
         fontSize: 32,
         // color: '$LinkBlue'
     },
-
-
-    /* ==========================================================================
-    Register/Login page
-    ========================================================================== */
-
-    register_container:{
-      width: '80%',
-    },
-
-    register_title:{
-      textAlign: 'center',
-    },
-
-    register_subtitle:{
-      textAlign: 'center',
-      fontSize: 14
-    },
-
-    switch_login:{
-      color: '$LinkBlue',
-    },
-
-    label:{
-      color: '$LinkBlue',
-      fontSize: 16
-    },
-
-    login_button:{
-      backgroundColor: '$LinkBlue',
-      marginTop:30
-    },
-
-    login_text:{
-      color: '$MainWhite',
-    },
-
-    half:{
-      width: '50%'
-    },
-
 
     /* ==========================================================================
     Register/Login page

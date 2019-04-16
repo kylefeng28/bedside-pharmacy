@@ -106,7 +106,7 @@ export class ClassList extends Component {
       let path = this.state.data2[0].path;
       console.log(path)
       return(
-        <View>
+        <View style={{ flex: 1}}>
           <FlatList
               data={this.state.data2}
               //need a data extractor here

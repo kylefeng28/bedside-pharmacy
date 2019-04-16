@@ -4,14 +4,12 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 /*
-enum SearchResultType {
-  DRUG_CLASS = 'drug',
-  ANTIBIOTIC = 'antibiotic',
-  BUG = 'bug'
-}
+export enum SearchResultType
 */
-const SearchResultType = {
-  DRUG_CLASS: 'drug',
+export const SearchResultType = {
+  DRUG: 'drug',
+  DRUG_CLASS: 'class',
+  SUBCLASS: 'subclass',
   ANTIBIOTIC: 'antibiotic',
   BUG: 'bug'
 };
@@ -57,21 +55,20 @@ const ignored = [antibioticsSection,  'Bacteria', 'labels' ];
       if (ignored.includes(subclassName)) { continue; }
 
       const subclass = drugClass[subclassName];
-      const isSubclass = subclassName !== '_';
+      const isSubclass = subclassName === '_';
 
-      const path = isSubclass ? [ drugClassName, subclassName ] : [ drugClassName ];
+      const subclassPath = [ drugClassName, subclassName ];
 
       // Add entry
-      if (isSubclass) {
-        data.push(processDrugClass(subclassName, drugClassName));
-      } else {
-        data.push(processDrugClass(drugClassName, null));
-      }
+      data.push(processSubclass(subclassName, subclassPath, isSubclass));
 
       // Loop through drugs
       for (let drugName in subclass) {
         const drug = subclass[drugName];
-        data.push(processDrug(path, drugName, drug));
+        data.push(processDrug(drugName, subclassPath, {
+          'Brand Name': drug['Brand Name'],
+          'Description': drug['Description'],
+        }));
       }
     }
   }
@@ -97,24 +94,23 @@ function processBug(bugName, bugClassName)/*: SearchResult*/ {
   };
 }
 
-function processDrugClass(className, parentClass)/*: SearchResult*/ {
-  // console.log(className);
+function processSubclass(subclassName, subclassPath, isSubclass)/*: SearchResult*/ {
+  // console.log(subclassName);
 
   return {
-    name: className,
-    type: SearchResultType.DRUG_CLASS,
-    path: parentClass ? [ parentClass ] : []
+    name: subclassName,
+    type: isSubclass ? SearchResultType.SUBCLASS : SearchResultType.DRUG_CLASS,
+    path: subclassPath
   };
 }
 
-function processDrug(path, drugName, drug)/*: SearchResult*/ {
+function processDrug(drugName, subclassPath, additionalData)/*: SearchResult*/ {
   // console.log('\t' + drugName);
   return {
     name: drugName,
-    type: 'drug',
-    path: path,
-    data_: JSON.stringify(drug.data),
-    ...drug
+    type: SearchResultType.DRUG,
+    path: [ ...subclassPath, drugName ],
+    ...additionalData
   };
 }
 
@@ -148,32 +144,42 @@ function getData()/*: SearchResult[]*/ {
   return data;
 }
 
-// TODO use FuseResult?? we use .item
+// TODO separate search antibiotic and drug search?
 export function search(query/*: string*/)/*: SearchResult[]*/ {
   const data = getData();
   const fuse = makeFuse(data);
   const fuseResult = fuse.search(query);
-  return fuseResult;
+
+  // unnest into array of fuseResultEntry.item and discard fuseResultEntry.matches
+  // also add key
+  const result = fuseResult.map((r, i) => {
+    return { ...r.item, key: i };
+  });
+
+  return result;
 }
 
 export function printResults(results) {
   if (results.length == 0) {
-    console.log("Sorry, couldn't find any results");
     return;
   }
-  console.log('Found ' + (results.length) + ' results!');
+  // console.log('Found ' + (results.length) + ' results!');
   for (let i = 0; i < results.length; i++) {
     const result = results[i];
+    // const item = result.item; // we're not doing this for now
+    const item = result;
     console.log('Result #' + (i+1));
-    console.log('\t' + result.item.name + ' (' + result.item.type + ')');
-    if (result.item.type == 'drug') {
-      console.log('\t' + 'Brand name: ' + result.item['Brand Name']);
-      console.log('\t' + 'Found in: ' + result.item.path.join(' > '));
+    console.log('\t' + item.name + ' (' + item.type + ')');
+    if (item.type == 'drug') {
+      console.log('\t' + 'Brand name: ' + item['Brand Name']);
+      console.log('\t' + 'Found in: ' + item.path.join(' > '));
     }
-    if (result.item.type == 'bug') {
-      console.log('\t' + 'Found in: ' + result.item.bugClass);
+    if (item.type == 'bug') {
+      console.log('\t' + 'Found in: ' + item.bugClass);
     }
 
     console.log();
   }
+
+  console.log(results);
 }

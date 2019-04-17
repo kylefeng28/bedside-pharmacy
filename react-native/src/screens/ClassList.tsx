@@ -97,8 +97,10 @@ export class ClassList extends Component {
     console.log(path.length);
     if(path.length == 1){
        this.props.navigation.navigate('InsertNavigator',{class_key: path[0]});
-     } else{
+     } else if (path.length == 2){
       this.props.navigation.navigate('InsertNavigator2',{class_key: path[0], subclass_key: path[1] });
+     } else if(path.length == 3){
+       this.props.navigation.navigate('InsertNavigator3',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
     }
   }
 

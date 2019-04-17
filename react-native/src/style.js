@@ -160,6 +160,24 @@ export default EStyleSheet.create({
         color: '$MediumGray'
     },
 
+    result_title:{
+        fontFamily: 'Open-Sans-SemiBold',
+        fontSize: 16,
+        color: '$MainBlack'
+    },
+
+    result_path:{
+        fontFamily: 'Open-Sans-Regular',
+        fontSize: 16,
+        color: '$DarkGray',
+    },
+
+    result_box:{
+        // height: 100
+    },
+
+
+
     /* ==========================================================================
      Subclass Page
      ========================================================================== */

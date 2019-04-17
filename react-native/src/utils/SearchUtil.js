@@ -153,7 +153,7 @@ export function search(query/*: string*/)/*: SearchResult[]*/ {
   // unnest into array of fuseResultEntry.item and discard fuseResultEntry.matches
   // also add key
   const result = fuseResult.map((r, i) => {
-    return { ...r.item, key: i };
+    return { ...r.item, key: '' + i };
   });
 
   return result;

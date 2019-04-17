@@ -39,9 +39,7 @@ export class ClassList extends Component {
 
     this.state = {
       data:[],
-      data2: [{key:'1', name: 'Anticid',type: 'drug', path:['hello','hello']}, 
-        {key:'2', name: 'Anticid',type: 'drug', path:['hello','hello']}, 
-        {key:'3', name: 'Anticid',type: 'drug', path:['hello','hello']}],
+      data2: [],
       onSearch: false,
     };
   }
@@ -68,14 +66,17 @@ export class ClassList extends Component {
     });
   }
 
- 
+    // NOTE: must be async (or return a Promise)
+  async onChangeText(searchText: string) {
+    const searchResults = SearchUtil.search(searchText);
+    console.log('user searched for ' + searchText);
+    console.log(searchResults)
+    this.setState({
+      data2: searchResults
+    });
+    // SearchUtil.printResults(searchResults);
+  }
 
- 
- // Maybe extracct the clickClass functionlater
-  // _clickClass = () => {
-  //   this.props.navigation.navigate('InsertNavigator',{key: item.value});
-  // };
-  
   _clickClass(class_key){
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
@@ -92,32 +93,40 @@ export class ClassList extends Component {
 
   };
 
-  // NOTE: must be async (or return a Promise)
-  async onChangeText(searchText: string) {
-    const searchResults = SearchUtil.search(searchText);
-    console.log('user searched for ' + searchText);
-    console.log(searchResults)
-    // SearchUtil.printResults(searchResults);
+  _clickResult(path){
+    console.log(path.length);
+    if(path.length == 1){
+       this.props.navigation.navigate('InsertNavigator',{class_key: path[0]});
+     } else if (path.length == 2){
+      this.props.navigation.navigate('InsertNavigator2',{class_key: path[0], subclass_key: path[1] });
+     } else if(path.length == 3){
+       this.props.navigation.navigate('InsertNavigator3',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
+    }
   }
 
+
+  // render result item when on search and hide when not
   _renderList(){
     if(this.state.onSearch){
+      // let path = this.state.data2[0].path;
+      // console.log(path)
       return(
-        <View style={{ flex: 1}}>
+        <ScrollView style={styles.result_box}>
           <FlatList
               data={this.state.data2}
-              //need a data extractor here
+              // right now only display class name, need to fix later
+              // check whether three are _, get rid of the last element
               renderItem={({item}) => 
-                <ListItem noIndent>
-                  <Left>
-                    <Text>{item.name}</Text>
-                    <Text>{item.key}</Text>
-                  </Left>
+                <ListItem noIndent
+                    onPress={() => this._clickResult(item.path)}>          
+                    <Text style={styles.result_title}>{item.name}</Text>
+                    <Text style={styles.result_path}>  in </Text>
+                    <Text style={styles.result_path}>{item.path[0]}</Text>
                </ListItem>
-            }
+             }
             />
 
-        </View>
+        </ScrollView>
          )
       }
     }
@@ -135,12 +144,11 @@ export class ClassList extends Component {
                 titleCancelColor='#007FAE'
                 tintColorSearch='#151515'
                 inputHeight={40}
-                // iconSearch = {<Ionicons name="ios-search" style={styles.search_icon}></Ionicons>}
                 iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
                 middleWidth = {100}
                 onFocus = {() => this.setState({ onSearch: true})}
-                // onSearch = {(searchText) => this.onChangeText(searchText)}
-                // onFocus = {() => this._renderList()}
+                onCancel = {() => this.setState({ onSearch: false, data2:[]})}
+                onChangeText = {(searchText) => this.onChangeText(searchText)}
               />
             </View>
             <View>{this._renderList()}</View>

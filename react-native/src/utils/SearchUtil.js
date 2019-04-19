@@ -146,7 +146,20 @@ function getData()/*: SearchResult[]*/ {
 
 // TODO separate search antibiotic and drug search?
 export function search(query/*: string*/)/*: SearchResult[]*/ {
-  const data = getData();
+  // Return if query is too short
+  if (query.length < 3) {
+    return [];
+  }
+
+  let data = getData();
+
+  // Filter data to only contain results that start with the same first letter as the query
+  // TODO not sure if the clients want this
+  data = data.filter((el) => {
+    return el.name[0].toLowerCase() === query[0].toLowerCase();
+  });
+
+  // Perform search using Fuse.js
   const fuse = makeFuse(data);
   const fuseResult = fuse.search(query);
 

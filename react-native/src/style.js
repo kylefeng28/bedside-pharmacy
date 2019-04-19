@@ -3,9 +3,9 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 EStyleSheet.build({
 
-    /* ==========================================================================
+    /*==========================================================================
      Global styles
-     ========================================================================== */
+    ========================================================================== */
 
     // Global colors
     $CarolinaBlue: '#4B9CD3',
@@ -159,6 +159,24 @@ export default EStyleSheet.create({
         fontSize: 20,
         color: '$MediumGray'
     },
+
+    result_title:{
+        fontFamily: 'Open-Sans-SemiBold',
+        fontSize: 16,
+        color: '$MainBlack'
+    },
+
+    result_path:{
+        fontFamily: 'Open-Sans-Regular',
+        fontSize: 16,
+        color: '$DarkGray',
+    },
+
+    result_box:{
+        // height: 100
+    },
+
+
 
     /* ==========================================================================
      Subclass Page

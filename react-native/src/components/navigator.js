@@ -35,12 +35,22 @@ const InsertNavigator2 = createStackNavigator(
     }
   )
 
+const InsertNavigator3 = createStackNavigator(
+    {
+      DrugInfo
+    },
+    {
+      headerMode: 'none'
+    }
+  )
+
 
 const ReferenceNavigator = createStackNavigator(
     {
       ClassList,
       InsertNavigator,
-      InsertNavigator2
+      InsertNavigator2,
+      InsertNavigator3,
     }
   )
 

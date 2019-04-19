@@ -117,6 +117,19 @@ export class UserSignup extends Component {
                 </Picker>
               </Item>
 
+              {/* TODO add name */}
+              {/* TODO add 
+              Attending Physician
+              Fellow
+              Resident Physician
+              Medical Student
+              Nurse
+              Pharmacist
+              Pharmacy Student
+              Other
+
+              */}
+              {/* TODO add password strength meter */}
               <Item stackedLabel style={styles.half}>
               <Label style={styles.label}>Profession</Label>
                 <Picker name="profession"

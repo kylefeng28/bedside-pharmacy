@@ -173,7 +173,7 @@ export default EStyleSheet.create({
     },
 
     result_box:{
-        flex:1
+        height: 500
     },
 
 

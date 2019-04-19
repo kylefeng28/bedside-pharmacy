@@ -25,46 +25,6 @@ import styles from '../style';
 
 
 
-class SectionHeader extends Component {
-  render() {
-    // inline styles used for brevity, use a stylesheet when possible
-    var textStyle = {
-      textAlign:'center',
-      color:'#fff',
-      fontWeight:'700',
-      fontSize:16
-    };
-
-    var viewStyle = {
-      backgroundColor: '#ccc'
-    };
-    return (
-      <View style={viewStyle}>
-        <Text style={textStyle}>{this.props.title}</Text>
-      </View>
-    );
-  }
-}
-
-class SectionItem extends Component {
-  render() {
-    return (
-      <Text style={{color:'#f00'}}>{this.props.title}</Text>
-    );
-  }
-}
-
-class Cell extends Component {
-  render() {
-    return (
-      <View style={{height:30}}>
-        <Text>{this.props.item}</Text>
-      </View>
-    );
-  }
-}
-
-
 export class Antibiotics extends Component {
 
   constructor(props, context) {
@@ -72,67 +32,62 @@ export class Antibiotics extends Component {
 
     this.state = {
       class_key: 'Antibiotics And Organisms',
-      subclass_key: 'Antibiotics',
-      data: {
-        // {title: 'Title1', data: ['item1', 'item2']},
-        // {title: 'Title2', data: ['item3', 'item4']},
-        // {title: 'Title3', data: ['item5', 'item6']},
-        A: ['some','entries','are here'],
-        B: ['some','entries','are here'],
-        C: ['some','entries','are here'],
-        D: ['some','entries','are here'],
-        E: ['some','entries','are here'],
-        F: ['some','entries','are here'],
-        G: ['some','entries','are here'],
-        H: ['some','entries','are here'],
-        I: ['some','entries','are here'],
-        J: ['some','entries','are here'],
-        K: ['some','entries','are here'],
-        L: ['some','entries','are here'],
-        M: ['some','entries','are here'],
-        N: ['some','entries','are here'],
-        O: ['some','entries','are here'],
-        P: ['some','entries','are here'],
-        Q: ['some','entries','are here'],
-        R: ['some','entries','are here'],
-        S: ['some','entries','are here'],
-        T: ['some','entries','are here'],
-        U: ['some','entries','are here'],
-        V: ['some','entries','are here'],
-        W: ['some','entries','are here'],
-        X: ['some','entries','are here'],
-        Y: ['some','entries','are here'],
-        Z: ['some','entries','are here'],
-      }
+      subclass_key: 'Bacteria',
+      data: [
+        {header: 'Title1', value: [{item:'item5'}, {item:'item2'}, {item:'item2'}]},
+        {header: 'Title2', value: [{item:'item1'}, {item:'item2'}]},
+        {header: 'Title3', value: [{item:'item1'}, {item:'item2'}]},
+      ],
+      data_loaded: false,
     };
   }
 
   // search1: SearchBar
 
   componentDidMount() {
-    // this.getDrugList();
+    this.getAntibioticsList();
   }
 
-   getDrugList(){
+   getAntibioticsList(){
      itemsRef.on('value', snapshot =>{
-        let data = snapshot.val();
-        let drug_names = Object.keys(data[this.state.class_key][this.state.subclass_key]);
-        var drug_array = [];
+        var data = snapshot.val();
+        var bacterias = data[this.state.class_key][this.state.subclass_key];
+        var header_names = Object.keys(bacterias);
+        var header_array = [];
 
-        for (var i = 0; i < drug_names.length; i++) {
-          let a = {key:JSON.stringify(drug_names[i]).replace(/\"/g, ""),value:JSON.stringify(drug_names[i]).replace(/\"/g, "")};
-          drug_array.push(a);
+        // console.log(header_names)
+        // console.log(Object.keys(bacterias['Aerobic - cell wall-deficient']))
+
+        for (var i = 0; i < header_names.length; i++) {
+          var items = Object.keys(bacterias['Aerobic - cell wall-deficient']);
+            for (var j = 0; j < items.length; j++){
+              var value = [];
+              let tmp = {item1: items[j]}
+              value.push(tmp);
+              this.setState({
+                data_loaded: true,
+              });
+            }
+
+           if(this.state.dataLoaded){
+               var data_output = [];
+               let tmp2 = {header: items[i], value: value};
+               data_output.push(tmp2);
+               this.setState({
+                 data_loaded: false,
+               });
+           }
+          // console.log()
+          // console.log(bacterias[header_names[i]])
+          // let a = {key:JSON.stringify(drug_names[i]).replace(/\"/g, ""),value:JSON.stringify(drug_names[i]).replace(/\"/g, "")};
+          // drug_array.push(a);
         }
 
         this.setState({
-          data: [...drug_array]
+          data: [...data_output]
         });
 
      });
-     // const content = [{key: 'Alprazolam'}, {key: 'Chlordiazepoxide'}, {key: 'Clonazepam'},{key: 'Diazepam'},{key: 'Lorazepam'},{key: 'Midazolam'}, {key: 'Oxazepam'}, {key: 'Temazepam'}];
-     // this.setState({
-     //      data: [...this.state.data, ...content]
-     //    });
   }
 
   _clickDrugList(drug_key){
@@ -147,20 +102,31 @@ export class Antibiotics extends Component {
        <Container>
          <Content padder>
            <Text style={styles.title}>{(this.state.subclass_key == '_') ? this.state.class_key:this.state.subclass_key}</Text>
-         
             <View style={styles.drug_list}>
-
-            
-
-           <AlphabetListView
-              data={this.state.data}
-              cell={Cell}
-              cellHeight={30}
-              sectionListItem={SectionItem}
-              sectionHeader={SectionHeader}
-              sectionHeaderHeight={22.5}
-            />
-
+              <FlatList
+                data={this.state.data}
+                renderItem={({item}) => 
+                  <View>
+                    <ListItem itemDivider>          
+                        <Text style={styles.result_title}>{item.header}</Text>
+                    </ListItem>
+                    <FlatList
+                      data={item.value}
+                     // Nested flatlist
+                      renderItem={({item}) => 
+                        <View>
+                          <ListItem noIndent>          
+                              <Text style={styles.result_title}>{item.item}</Text>                  
+                          </ListItem>
+                          
+                        </View>
+                     }
+                     keyExtractor={(item, index) => index.toString()}
+                    />   
+                  </View>
+               }
+               keyExtractor={(item, index) => index.toString()}
+              />     
             </View>
           </Content>
       </Container>

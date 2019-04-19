@@ -11,10 +11,12 @@ import {
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem, Item, Input} from 'native-base';
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
-import SearchBar from 'react-native-search-bar'
+// import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 import * as SearchUtil from '../utils/SearchUtil';
 import AtoZListView from 'react-native-atoz-listview';
+
+import { SearchBar } from 'react-native-elements';
 
 //Load Firebase
 import { firebase } from '../utils/FirebaseWrapper';
@@ -173,6 +175,7 @@ export class ClassList extends Component {
        <Container>
          <Content padder>
            <Text style={[styles.title,styles.main_title]}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
+
            <View styles = {styles.seach_box}>
              <Search
                 ref='search_box'

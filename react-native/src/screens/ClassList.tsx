@@ -97,10 +97,13 @@ export class ClassList extends Component {
 
       // slice the last element as it is the label info as default
       let subclass_key = Object.keys(data[class_key])[0];
-      if (subclass_key == '_'){
-        this.props.navigation.navigate('InsertNavigator2',{class_key: class_key, subclass_key: subclass_key });
-      } else{
-        this.props.navigation.navigate('InsertNavigator',{class_key: class_key});
+
+      if(class_key == 'Antibiotics And Organisms'){
+        this.props.navigation.navigate('ToAntibiotics')
+      } else if (subclass_key == '_'){
+        this.props.navigation.navigate('ToDrugList',{class_key: class_key, subclass_key: subclass_key });
+      }else{ 
+        this.props.navigation.navigate('ToSubclass',{class_key: class_key});
       }
 
     });
@@ -110,11 +113,11 @@ export class ClassList extends Component {
   _clickResult(path){
     console.log(path.length);
     if(path.length == 1){
-       this.props.navigation.navigate('InsertNavigator',{class_key: path[0]});
+       this.props.navigation.navigate('ToSubclass',{class_key: path[0]});
      } else if (path.length == 2){
-      this.props.navigation.navigate('InsertNavigator2',{class_key: path[0], subclass_key: path[1] });
+      this.props.navigation.navigate('ToDrugList',{class_key: path[0], subclass_key: path[1] });
      } else if(path.length == 3){
-       this.props.navigation.navigate('InsertNavigator3',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
+       this.props.navigation.navigate('toDrugInfo',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
     }
   }
 

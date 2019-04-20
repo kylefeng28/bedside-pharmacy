@@ -45,10 +45,10 @@ export class Antibiotics extends Component {
   // search1: SearchBar
 
   componentDidMount() {
-    this.getAntibioticsList();
+    this.getBacteriaList();
   }
 
-  async getAntibioticsList(){
+  async getBacteriaList(){
      itemsRef.on('value', snapshot =>{
         var data = snapshot.val();
         var bacterias = data[this.state.class_key][this.state.subclass_key];
@@ -73,19 +73,13 @@ export class Antibiotics extends Component {
      });
   }
 
-
-  _clickDrugList(drug_key){
-    this.props.navigation.navigate('DrugInfo',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, drug_key: drug_key});
-  };
-
-
   
-
   render() {
     return (
        <Container>
          <Content padder>
            <Text style={styles.title}>{(this.state.subclass_key == '_') ? this.state.class_key:this.state.subclass_key}</Text>
+           <Text style={styles.switch}>Switch to antibiotics search</Text>
             <View style={styles.drug_list}>
               <FlatList
                 data={this.state.data}

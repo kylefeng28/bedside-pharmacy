@@ -11,10 +11,12 @@ import {
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem, Item, Input} from 'native-base';
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
-import SearchBar from 'react-native-search-bar'
+// import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 import * as SearchUtil from '../utils/SearchUtil';
 import AtoZListView from 'react-native-atoz-listview';
+
+import { SearchBar } from 'react-native-elements';
 
 //Load Firebase
 import { firebase } from '../utils/FirebaseWrapper';
@@ -30,8 +32,9 @@ export class ClassList extends Component {
     header: null
   }
   state:{
-    items: any[];
-    onSearch: boolean
+    items: any[],
+    onSearch: boolean,
+    showClassList: boolean,
   }
 
   constructor(props) {
@@ -39,13 +42,34 @@ export class ClassList extends Component {
 
     this.state = {
       data:[],
-      data2: [],
+      searchResult: [],
       onSearch: false,
+      showClassList: true,
     };
   }
 
   componentDidMount() {
     this.getClassList();
+  }
+
+    // NOTE: must be async (or return a Promise)
+  async _onSearch(searchText: string) {
+    const searchResults = SearchUtil.search(searchText);
+    // console.log('user searched for ' + searchText);
+    // console.log(searchResults)
+    this.setState({
+      searchResult: searchResults,
+      onSearch: true,
+      showClassList: false
+    });
+  }
+
+  _cancelSearch(){
+    this.setState({ 
+      onSearch: false, 
+      searchResult:[],
+      showClassList: true,
+    });
   }
 
   getClassList(){
@@ -66,16 +90,6 @@ export class ClassList extends Component {
     });
   }
 
-    // NOTE: must be async (or return a Promise)
-  async onChangeText(searchText: string) {
-    const searchResults = SearchUtil.search(searchText);
-    console.log('user searched for ' + searchText);
-    console.log(searchResults)
-    this.setState({
-      data2: searchResults
-    });
-    // SearchUtil.printResults(searchResults);
-  }
 
   _clickClass(class_key){
     itemsRef.on('value', snapshot => {
@@ -83,10 +97,13 @@ export class ClassList extends Component {
 
       // slice the last element as it is the label info as default
       let subclass_key = Object.keys(data[class_key])[0];
-      if (subclass_key == '_'){
-        this.props.navigation.navigate('InsertNavigator2',{class_key: class_key, subclass_key: subclass_key });
-      } else{
-        this.props.navigation.navigate('InsertNavigator',{class_key: class_key});
+
+      if(class_key == 'Antibiotics And Organisms'){
+        this.props.navigation.navigate('ToAntibiotics')
+      } else if (subclass_key == '_'){
+        this.props.navigation.navigate('ToDrugList',{class_key: class_key, subclass_key: subclass_key });
+      }else{ 
+        this.props.navigation.navigate('ToSubclass',{class_key: class_key});
       }
 
     });
@@ -96,24 +113,24 @@ export class ClassList extends Component {
   _clickResult(path){
     console.log(path.length);
     if(path.length == 1){
-       this.props.navigation.navigate('InsertNavigator',{class_key: path[0]});
+       this.props.navigation.navigate('ToSubclass',{class_key: path[0]});
      } else if (path.length == 2){
-      this.props.navigation.navigate('InsertNavigator2',{class_key: path[0], subclass_key: path[1] });
+      this.props.navigation.navigate('ToDrugList',{class_key: path[0], subclass_key: path[1] });
      } else if(path.length == 3){
-       this.props.navigation.navigate('InsertNavigator3',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
+       this.props.navigation.navigate('toDrugInfo',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
     }
   }
 
 
   // render result item when on search and hide when not
-  _renderList(){
+  _renderResult(){
     if(this.state.onSearch){
-      // let path = this.state.data2[0].path;
+      // let path = this.state.searchResult[0].path;
       // console.log(path)
       return(
         <ScrollView style={styles.result_box}>
           <FlatList
-              data={this.state.data2}
+              data={this.state.searchResult}
               // right now only display class name, need to fix later
               // check whether three are _, get rid of the last element
               renderItem={({item}) => 
@@ -131,28 +148,10 @@ export class ClassList extends Component {
       }
     }
 
-  render() {
-    return (
-       <Container>
-         <Content padder>
-           <Text style={[styles.title,styles.main_title]}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
-           <View styles = {styles.seach_box}>
-             <Search
-                ref='search_box'
-                backgroundColor= '#FFFFFF'
-                cancelTitle='Cancel'     
-                titleCancelColor='#007FAE'
-                tintColorSearch='#151515'
-                inputHeight={40}
-                iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
-                middleWidth = {100}
-                onFocus = {() => this.setState({ onSearch: true})}
-                onCancel = {() => this.setState({ onSearch: false, data2:[]})}
-                onChangeText = {(searchText) => this.onChangeText(searchText)}
-              />
-            </View>
-            <View>{this._renderList()}</View>
-            <View style={styles.class_list}>
+   _renderClassList(){
+     if(this.state.showClassList){
+       return(
+         <View style={styles.class_list}>
               <Text style={styles.by_class}>By Class</Text>
               <FlatList
                 data={this.state.data}
@@ -170,6 +169,35 @@ export class ClassList extends Component {
               }
               />
             </View>
+         )
+     }
+   }
+
+  render() {
+    return (
+       <Container>
+         <Content padder>
+           <Text style={[styles.title,styles.main_title]}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
+
+           <View styles = {styles.seach_box}>
+             <Search
+                ref='search_box'
+                backgroundColor= '#FFFFFF'
+                cancelTitle='Cancel'     
+                titleCancelColor='#007FAE'
+                tintColorSearch='#151515'
+                inputHeight={40}
+                iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
+                middleWidth = {100}
+                // onFocus = {() => this.setState({ onSearch: true})}
+                onCancel = {() => this._cancelSearch()}
+                onChangeText = {(searchText) => this._onSearch(searchText)}
+              />
+            </View>
+            <View>{this._renderResult()}</View>
+
+            <View>{this._renderClassList()}</View>
+            
           </Content>
       </Container>
     );

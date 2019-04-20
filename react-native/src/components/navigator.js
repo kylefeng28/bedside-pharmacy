@@ -9,11 +9,12 @@ import { Subclass } from '../screens/Subclass';
 import { DrugList } from '../screens/DrugList';
 import { DrugInfo } from '../screens/DrugInfo';
 import { Compare } from '../screens/Compare';
+import { Antibiotics } from '../screens/Antibiotics';
 
 import styles from '../style';
 
 
-const InsertNavigator = createStackNavigator(
+const ToSubclass = createStackNavigator(
     {
       Subclass,
       DrugList,
@@ -25,7 +26,7 @@ const InsertNavigator = createStackNavigator(
   )
 
 // Navigator for class without subclass
-const InsertNavigator2 = createStackNavigator(
+const ToDrugList = createStackNavigator(
     {
       DrugList,
       DrugInfo
@@ -35,7 +36,7 @@ const InsertNavigator2 = createStackNavigator(
     }
   )
 
-const InsertNavigator3 = createStackNavigator(
+const ToDrugInfo = createStackNavigator(
     {
       DrugInfo
     },
@@ -45,12 +46,22 @@ const InsertNavigator3 = createStackNavigator(
   )
 
 
+const ToAntibiotics = createStackNavigator(
+  {
+    Antibiotics  
+  },{
+    headerMode: 'none'
+  }
+)
+
+
 const ReferenceNavigator = createStackNavigator(
     {
       ClassList,
-      InsertNavigator,
-      InsertNavigator2,
-      InsertNavigator3,
+      ToSubclass,
+      ToDrugList,
+      ToDrugInfo,
+      ToAntibiotics
     }
   )
 

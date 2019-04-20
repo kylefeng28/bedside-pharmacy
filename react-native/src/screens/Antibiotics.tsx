@@ -34,9 +34,9 @@ export class Antibiotics extends Component {
       class_key: 'Antibiotics And Organisms',
       subclass_key: 'Bacteria',
       data: [
-        {header: 'Title1', value: [{item:'item5'}, {item:'item2'}, {item:'item2'}]},
-        {header: 'Title2', value: [{item:'item1'}, {item:'item2'}]},
-        {header: 'Title3', value: [{item:'item1'}, {item:'item2'}]},
+        // {header: 'Title1', value: [{item:'item5'}, {item:'item2'}, {item:'item2'}]},
+        // {header: 'Title2', value: [{item:'item1'}, {item:'item2'}]},
+        // {header: 'Title3', value: [{item:'item1'}, {item:'item2'}]},
       ],
       data_loaded: false,
     };
@@ -48,40 +48,23 @@ export class Antibiotics extends Component {
     this.getAntibioticsList();
   }
 
-   getAntibioticsList(){
+  async getAntibioticsList(){
      itemsRef.on('value', snapshot =>{
         var data = snapshot.val();
         var bacterias = data[this.state.class_key][this.state.subclass_key];
         var header_names = Object.keys(bacterias);
-        var header_array = [];
-
-        // console.log(header_names)
-        // console.log(Object.keys(bacterias['Aerobic - cell wall-deficient']))
-
-        for (var i = 0; i < header_names.length; i++) {
-          var items = Object.keys(bacterias['Aerobic - cell wall-deficient']);
-            for (var j = 0; j < items.length; j++){
-              var value = [];
-              let tmp = {item1: items[j]}
-              value.push(tmp);
-              this.setState({
-                data_loaded: true,
-              });
-            }
-
-           if(this.state.dataLoaded){
-               var data_output = [];
-               let tmp2 = {header: items[i], value: value};
-               data_output.push(tmp2);
-               this.setState({
-                 data_loaded: false,
-               });
-           }
-          // console.log()
-          // console.log(bacterias[header_names[i]])
-          // let a = {key:JSON.stringify(drug_names[i]).replace(/\"/g, ""),value:JSON.stringify(drug_names[i]).replace(/\"/g, "")};
-          // drug_array.push(a);
-        }
+        
+        var data_output = [];
+        header_names.forEach(function(value){
+          var items = Object.keys(bacterias[value]);
+          var items_array = [];
+          items.forEach(function(item){
+            var tmp = {item: item}
+            items_array.push(tmp);
+          })
+          let single_category = {header: value, value: items_array};
+          data_output.push(single_category);
+        });
 
         this.setState({
           data: [...data_output]
@@ -89,6 +72,7 @@ export class Antibiotics extends Component {
 
      });
   }
+
 
   _clickDrugList(drug_key){
     this.props.navigation.navigate('DrugInfo',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, drug_key: drug_key});

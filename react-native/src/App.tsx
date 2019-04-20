@@ -55,9 +55,9 @@ export default class App extends Component {
       return <AppLoading />;
     }
     // return <Test/>
-    // return <Antibiotics/>;
+    return <Antibiotics/>;
     // return <DrugList />;
-    return <AppContainer />;
+    // return <AppContainer />;
     // return <UserSignup />;
     // return <Subclass/>
   }

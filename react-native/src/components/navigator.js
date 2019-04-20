@@ -10,6 +10,7 @@ import { DrugList } from '../screens/DrugList';
 import { DrugInfo } from '../screens/DrugInfo';
 import { Compare } from '../screens/Compare';
 import { Antibiotics } from '../screens/Antibiotics';
+import { Bacteria } from '../screens/Bacteria';
 
 import styles from '../style';
 
@@ -48,7 +49,16 @@ const ToDrugInfo = createStackNavigator(
 
 const ToAntibiotics = createStackNavigator(
   {
-    Antibiotics  
+    Antibiotics,
+    Bacteria
+  },{
+    headerMode: 'none'
+  }
+)
+
+const ToBacteria = createStackNavigator(
+  {
+    Bacteria
   },{
     headerMode: 'none'
   }
@@ -61,7 +71,8 @@ const ReferenceNavigator = createStackNavigator(
       ToSubclass,
       ToDrugList,
       ToDrugInfo,
-      ToAntibiotics
+      ToAntibiotics,
+      ToBacteria
     }
   )
 

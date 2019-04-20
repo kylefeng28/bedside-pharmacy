@@ -32,81 +32,55 @@ export class Antibiotics extends Component {
 
     this.state = {
       class_key: 'Antibiotics And Organisms',
-      subclass_key: 'Bacteria',
-      data: [
-        // {header: 'Title1', value: [{item:'item5'}, {item:'item2'}, {item:'item2'}]},
-        // {header: 'Title2', value: [{item:'item1'}, {item:'item2'}]},
-        // {header: 'Title3', value: [{item:'item1'}, {item:'item2'}]},
-      ],
-      data_loaded: false,
+      subclass_key: 'Antibiotics',
+      data: [],
     };
   }
 
   // search1: SearchBar
 
   componentDidMount() {
-    this.getBacteriaList();
+    this.getAntibiotics();
   }
 
-  async getBacteriaList(){
+  async getAntibiotics(){
      itemsRef.on('value', snapshot =>{
         var data = snapshot.val();
-        var bacterias = data[this.state.class_key][this.state.subclass_key];
-        var header_names = Object.keys(bacterias);
-        
         var data_output = [];
-        header_names.forEach(function(value){
-          var items = Object.keys(bacterias[value]);
-          var items_array = [];
-          items.forEach(function(item){
-            var tmp = {item: item}
-            items_array.push(tmp);
+        var antibiotics = Object.keys(data[this.state.class_key][this.state.subclass_key]);
+          antibiotics.forEach(function(value){
+            let single_item = {key: value, value:value}
+            data_output.push(single_item);
           })
-          let single_category = {header: value, value: items_array};
-          data_output.push(single_category);
-        });
-
-        this.setState({
-          data: [...data_output]
-        });
+          this.setState({
+            data: [...data_output],
+          });
 
      });
   }
-
-  
+ 
   render() {
     return (
        <Container>
          <Content padder>
            <Text style={styles.title}>{(this.state.subclass_key == '_') ? this.state.class_key:this.state.subclass_key}</Text>
-           <Text style={styles.switch}>Switch to antibiotics search</Text>
-            <View style={styles.drug_list}>
-              <FlatList
+           <View>
+            <Text style={styles.switch}
+                   onPress={() => this.props.navigation.navigate('Bacteria')}>Switch to bacteria search</Text>
+            <FlatList
                 data={this.state.data}
+               // Nested flatlist
                 renderItem={({item}) => 
                   <View>
-                    <ListItem itemDivider>          
-                        <Text style={styles.result_title}>{item.header}</Text>
-                    </ListItem>
-                    <FlatList
-                      data={item.value}
-                     // Nested flatlist
-                      renderItem={({item}) => 
-                        <View>
-                          <ListItem noIndent>          
-                              <Text style={styles.result_title}>{item.item}</Text>                  
-                          </ListItem>
-                          
-                        </View>
-                     }
-                     keyExtractor={(item, index) => index.toString()}
-                    />   
+                    <ListItem noIndent>          
+                        <Text style={styles.category_item}>{item.value}</Text>                  
+                    </ListItem>           
                   </View>
                }
                keyExtractor={(item, index) => index.toString()}
-              />     
-            </View>
-          </Content>
+             />    
+          </View>
+        </Content>
       </Container>
     );
   }

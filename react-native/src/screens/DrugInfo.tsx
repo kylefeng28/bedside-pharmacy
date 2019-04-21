@@ -124,16 +124,28 @@ export class DrugInfo extends Component {
   _renderContent(section, _, isActive) {
     // var obj = JSON.parse(section);
     // console.log(obj);
-    console.log(section.content)
-    var obj = JSON.parse(section.content)
-    console.log(obj)
+    // console.log(section.content)
+    var content = JSON.parse(section.content);
+    var subtitles = Object.keys(content);
+    var spec = Object.values(content);
+    var output = [];
+    for (let i = 0; i< subtitles.length; i++){
+      var item = (
+        <View key = {100-i}>
+          <Text key={i} style={styles.accordion_subtitle}>{subtitles[i]}</Text>
+          <Text key={-1-i} style={styles.accordion_spec}>{spec}</Text>
+        </View>
+        );
+      output.push(item);
+    }
     return (
       <Animatable.View
         duration={400}
         style={styles.indication_content}
         transition="backgroundColor"
       >
-      <Animatable.Text> {section.content} </Animatable.Text>
+
+      {output}
      
       </Animatable.View>
     );

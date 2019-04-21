@@ -4,11 +4,12 @@ import {
   StyleSheet,
   Text,
   View,
+  FlatList,
   TouchableOpacity,
 } from 'react-native';
 
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, ListItem, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Constants } from 'expo';
@@ -31,16 +32,6 @@ const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
 
 export class DrugInfo extends Component {
-  // state: {
-  //   class_key: any;
-  //   subclass_key: any;
-  //   drug_key: any;
-  //   data: any[];
-  //   activeSections: any[];
-  //   collapsed: boolean;
-  //   multipleSelect: boolean;
-  // };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -61,6 +52,7 @@ export class DrugInfo extends Component {
 
         // slice out brand name and desciption
         let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
+        console.log(drug_info)
 
         // console.log(data[this.state.class_key][this.state.subclass_key][this.state.drug_key]['0'])
 
@@ -73,51 +65,37 @@ export class DrugInfo extends Component {
         // console.log(content);
         var drug_array = [];
 
-        // for (var i = 0; i < drug_names.length; i++) {
-        //   let a = {key:JSON.stringify(drug_names[i]).replace(/\"/g, ""),value:JSON.stringify(drug_names[i]).replace(/\"/g, "")};
-        //   drug_array.push(a);
-        // }
-
-        // this.setState({
-        //   data: [...drug_array]
-        // });
-        // return content
 
      });
-    // return content;
-
-
+    return content;
 
     // const content = [
     //   {
     //     title: 'Onset/Duration',
-    //     content: BACON_IPSUM,
+    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
     //   },
     //   {
     //     title: 'Dose',
-    //     content: BACON_IPSUM,
+    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
     //   },
     //   {
     //     title: 'Metabolism/Excretion',
-    //     content: BACON_IPSUM,
+    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
     //   },
     //   {
     //     title: 'Warnings',
-    //     content: BACON_IPSUM,
+    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
     //   },
     // ];
+    // this.setState({
+    //   data: [...content],
+    // })
     return content;
   }
 
 
   componentDidMount(){
-    this.getDrugInfo();
-    // itemsRef.on('value', snapshot => {
-    //   // let data = snapshot.val();
-    //   // let data = Object.values(data);
-    //   // this.setState({ data });
-    //   // console.log(this.state.data['0']['_coordinate']) 
-    // });
+    // this.getDrugInfo();
   }
 
   _setSections = sections => {
@@ -146,9 +124,9 @@ export class DrugInfo extends Component {
         style={styles.indication_content}
         transition="backgroundColor"
       >
-        <Animatable.Text>
-          {section.content}
-        </Animatable.Text>
+      <Animatable.Text> {section.content} </Animatable.Text>
+       
+
       </Animatable.View>
     );
   }

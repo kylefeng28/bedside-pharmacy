@@ -63,6 +63,7 @@ export class Bacteria extends Component {
 
         });
 
+        console.log(data_output)
         this.setState({
           data: [...data_output],
         });

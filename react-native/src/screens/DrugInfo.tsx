@@ -18,7 +18,7 @@ import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import EStyleSheet from 'react-native-extended-stylesheet'; 
 
-import {AccordionList} from "accordion-collapse-react-native";
+import { AccordionList } from "accordion-collapse-react-native";
 import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
@@ -38,7 +38,11 @@ export class DrugInfo extends Component {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
       drug_key: props.navigation.getParam('drug_key',''),
-      data: [],
+     data: [
+        {header: 'Title1', value: [{item:'item5'}, {item:'item2'}, {item:'item2'}]},
+        {header: 'Title2', value: [{item:'item1'}, {item:'item2'}]},
+        {header: 'Title3', value: [{item:'item1'}, {item:'item2'}]},
+      ],
       activeSections: [],
       collapsed: true,
       multipleSelect: true,
@@ -52,14 +56,14 @@ export class DrugInfo extends Component {
 
         // slice out brand name and desciption
         let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
-        console.log(drug_info)
+        // console.log(drug_info)
 
         // console.log(data[this.state.class_key][this.state.subclass_key][this.state.drug_key]['0'])
 
         let labels = data[this.state.class_key]['labels'];
 
         for (var i = 0; i < labels.length; i++) {
-          let a = {title:JSON.stringify(labels[i]).replace(/\"/g, ""),content:JSON.stringify((drug_info[JSON.stringify(i)]==null) ? "Data not inserted":drug_info[JSON.stringify(i)] ).replace(/\"/g, "")};
+          let a = {title:JSON.stringify(labels[i]).replace(/\"/g, ""),content:JSON.stringify((drug_info[JSON.stringify(i)]==null) ? " ":drug_info[JSON.stringify(i)] )};
           content.push(a);
         }
         // console.log(content);
@@ -118,15 +122,31 @@ export class DrugInfo extends Component {
   };
 
   _renderContent(section, _, isActive) {
+    // var obj = JSON.parse(section);
+    // console.log(obj);
+    // console.log(section.content)
+    var content = JSON.parse(section.content);
+    var subtitles = Object.keys(content);
+    var spec = Object.values(content);
+    var output = [];
+    for (let i = 0; i< subtitles.length; i++){
+      var item = (
+        <View key = {100-i}>
+          <Text key={i} style={styles.accordion_subtitle}>{subtitles[i]}</Text>
+          <Text key={-1-i} style={styles.accordion_spec}>{spec}</Text>
+        </View>
+        );
+      output.push(item);
+    }
     return (
       <Animatable.View
         duration={400}
         style={styles.indication_content}
         transition="backgroundColor"
       >
-      <Animatable.Text> {section.content} </Animatable.Text>
-       
 
+      {output}
+     
       </Animatable.View>
     );
   }

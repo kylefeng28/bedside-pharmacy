@@ -258,7 +258,7 @@ export default EStyleSheet.create({
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: '$MediumGray',
-        alignItems: 'center',
+        // alignItems: 'Left',
     },
 
     indication_active: {
@@ -277,6 +277,20 @@ export default EStyleSheet.create({
 
     indication_header_inactive: {
         color: '$LinkBlue'
+    },
+
+    accordion_subtitle: {
+        fontFamily: 'Open-Sans-SemiBold',
+        color: '$MainBlack',
+        fontSize: 16,
+        marginBottom: 4
+    },
+
+    accordion_text:{
+        fontFamily: 'Open-Sans-Regular',
+        color: '$MainBlack',
+        fontSize: 16,
+         marginBottom: 10
     },
 
     /* ==========================================================================

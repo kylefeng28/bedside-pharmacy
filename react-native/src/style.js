@@ -287,7 +287,31 @@ export default EStyleSheet.create({
         backgroundColor: '$LinkBlue'
     },
 
-    /* ==========================================================================
+    switch:{
+        fontFamily: 'Open-Sans-Regular',
+        color: '$LinkBlue',
+        fontSize: 13,
+        textAlign: 'right',
+        marginBottom: 10
+    },
+
+    divider:{
+        backgroundColor: 'rgba(225, 225, 225, 0.5)',
+    },
+
+    divider_content:{
+        fontFamily: 'Open-Sans-Bold',
+        color: '$MainBlack',
+        fontSize: 15,
+    },
+
+    category_item:{
+        fontFamily: 'Open-Sans-Regular',
+        color: '$MainBlack',
+        fontSize: 15,
+    },
+
+    /* result_title==========================================================================
      Compare Page
      ========================================================================== */
     compare_title_container: {

@@ -21,7 +21,7 @@ import { Subclass } from './screens/Subclass';
 import { DrugList } from './screens/DrugList';
 import { UserSignup } from './screens/UserSignup';
 import { Antibiotics } from './screens/Antibiotics';
-import { Test } from './screens/test';
+import { Bacteria } from './screens/Bacteria';
 
 export default class App extends Component {
   state: {
@@ -57,6 +57,7 @@ export default class App extends Component {
     // return <Test/>
     // return <Antibiotics/>;
     // return <DrugList />;
+    // return <Bacteria />;
     return <AppContainer />;
     // return <UserSignup />;
     // return <Subclass/>

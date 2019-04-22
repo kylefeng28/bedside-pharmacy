@@ -123,6 +123,7 @@ function makeFuse(data/*: SearchResult[]*/) {
     distance: 50,
     maxPatternLength: 32,
     minMatchCharLength: 1,
+    // TODO why doesn't path work?
     keys: [
       'name', 'path', 'Brand Name', 'Description'
     ]
@@ -147,7 +148,7 @@ function getData()/*: SearchResult[]*/ {
 // TODO separate search antibiotic and drug search?
 export function search(query/*: string*/)/*: SearchResult[]*/ {
   // Return if query is too short
-  if (query.length < 3) {
+  if (query.length < 2) {
     return [];
   }
 

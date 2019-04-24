@@ -61,8 +61,14 @@ export default EStyleSheet.create({
     },
 
     add_comparison: {
-        fontSize: 32,
+        fontSize: 35,
+        color: '$LinkBlue',
+    },
+
+    selected_comparison: {
+        fontSize: 35,
         color: '$DarkGray',
+        flex: 1,
     },
 
     footer: {
@@ -228,13 +234,14 @@ export default EStyleSheet.create({
         color: '$MainBlack',
     },
 
-    subclass_name: {
+    description_name: {
         fontSize: 14,
         fontFamily: 'Open-Sans-Italic',
         width: '95%',
         color: '$DarkGray',
         marginBottom: 20
     },
+
 
     indication_header: {
         padding: 25,
@@ -286,11 +293,11 @@ export default EStyleSheet.create({
         marginBottom: 4
     },
 
-    accordion_text:{
+    accordion_spec:{
         fontFamily: 'Open-Sans-Regular',
         color: '$MainBlack',
         fontSize: 16,
-         marginBottom: 10
+        marginBottom: 10
     },
 
     /* ==========================================================================
@@ -325,7 +332,7 @@ export default EStyleSheet.create({
         fontSize: 15,
     },
 
-    /* result_title==========================================================================
+    /*==========================================================================
      Compare Page
      ========================================================================== */
     compare_title_container: {

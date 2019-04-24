@@ -38,15 +38,27 @@ export class DrugInfo extends Component {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
       drug_key: props.navigation.getParam('drug_key',''),
-     data: [
-        {header: 'Title1', value: [{item:'item5'}, {item:'item2'}, {item:'item2'}]},
-        {header: 'Title2', value: [{item:'item1'}, {item:'item2'}]},
-        {header: 'Title3', value: [{item:'item1'}, {item:'item2'}]},
-      ],
+      breadcum: [],
+      description: "",
+      selected: false,
       activeSections: [],
       collapsed: true,
       multipleSelect: true,
     };
+  }
+
+  getDescription(){
+    itemsRef.on('value', snapshot =>{
+        let data = snapshot.val();
+
+        // slice out brand name and desciption
+        let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
+        let drug_description = drug_info['Description'];
+        this.setState({
+          description:  drug_description     
+        })
+
+     });
   }
 
   getDrugInfo(){
@@ -56,9 +68,6 @@ export class DrugInfo extends Component {
 
         // slice out brand name and desciption
         let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
-        // console.log(drug_info)
-
-        // console.log(data[this.state.class_key][this.state.subclass_key][this.state.drug_key]['0'])
 
         let labels = data[this.state.class_key]['labels'];
 
@@ -66,40 +75,15 @@ export class DrugInfo extends Component {
           let a = {title:JSON.stringify(labels[i]).replace(/\"/g, ""),content:JSON.stringify((drug_info[JSON.stringify(i)]==null) ? " ":drug_info[JSON.stringify(i)] )};
           content.push(a);
         }
-        // console.log(content);
-        var drug_array = [];
-
 
      });
-    return content;
 
-    // const content = [
-    //   {
-    //     title: 'Onset/Duration',
-    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
-    //   },
-    //   {
-    //     title: 'Dose',
-    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
-    //   },
-    //   {
-    //     title: 'Metabolism/Excretion',
-    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
-    //   },
-    //   {
-    //     title: 'Warnings',
-    //     content: [{title2: 'hello',value2: 'hello'}, {title2: 'hello',value2: 'hello'}],
-    //   },
-    // ];
-    // this.setState({
-    //   data: [...content],
-    // })
     return content;
   }
 
 
   componentDidMount(){
-    // this.getDrugInfo();
+    this.getDescription();
   }
 
   _setSections = sections => {
@@ -132,7 +116,7 @@ export class DrugInfo extends Component {
     for (let i = 0; i< subtitles.length; i++){
       var item = (
         <View key = {100-i}>
-          <Text key={i} style={styles.accordion_subtitle}>{subtitles[i]}</Text>
+          <Text key={i} style={styles.accordion_subtitle}>{(subtitles[i] == '_') ? "" : subtitles[i]}</Text>
           <Text key={-1-i} style={styles.accordion_spec}>{spec}</Text>
         </View>
         );
@@ -151,20 +135,23 @@ export class DrugInfo extends Component {
     );
   }
 
+  _changeIcon(){
+    this.setState({
+      selected: !this.state.selected
+    })
+  }
+
   _renderIcon(){
-    // console.log(this.refs)
-    return(
-         <Ionicons name="ios-add-circle-outline" style={styles.add_comparison}></Ionicons>
+    if (this.state.selected){ 
+      return(
+         <Ionicons name="ios-checkmark-circle" style={styles.selected_comparison} ></Ionicons>
       )
-    // if (isActive){
-    //   return(
-    //      <Ionicons name="ios-checkmark-circle" style={styles.add_comparison} ></Ionicons>
-    //   )
-    // }else{
-    //   return(
-    //      <Ionicons name="ios-add-circle-outline" style={styles.add_comparison} ></Ionicons>
-    //     )
-    // }
+    }else{
+      return(
+         <Ionicons name="ios-add-circle-outline" style={styles.add_comparison} ></Ionicons>
+        )
+    }
+
   }
 
 
@@ -182,13 +169,13 @@ export class DrugInfo extends Component {
             </Text>
             <Right>
               <Button transparent>
-              <TouchableOpacity onPress={() => this._renderIcon()}>
-                <Ionicons name="ios-checkmark-circle" style={styles.add_comparison}></Ionicons>
+              <TouchableOpacity onPress={() => this._changeIcon()}>
+                {this._renderIcon()}
                </TouchableOpacity>
                </Button>
              </Right>
            </View>
-           <Text style={styles.subclass_name}>Benzodiazepines</Text>
+           <Text style={styles.description_name}>{this.state.description}</Text>
            
           <Accordion
             // containerStyle={styles.container}

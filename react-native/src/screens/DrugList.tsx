@@ -30,6 +30,7 @@ export class DrugList extends Component {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
       data: [],
+      selected: false,
     };
   }
 
@@ -55,10 +56,26 @@ export class DrugList extends Component {
         });
 
      });
-     // const content = [{key: 'Alprazolam'}, {key: 'Chlordiazepoxide'}, {key: 'Clonazepam'},{key: 'Diazepam'},{key: 'Lorazepam'},{key: 'Midazolam'}, {key: 'Oxazepam'}, {key: 'Temazepam'}];
-     // this.setState({
-     //      data: [...this.state.data, ...content]
-     //    });
+  }
+
+  _changeIcon(){
+    console.log(this.state.selected)
+    this.setState({
+      selected: !this.state.selected
+    })
+  }
+
+  _renderIcon(){
+    if (this.state.selected){ 
+      return(
+         <Ionicons name="ios-checkmark-circle" style={[styles.selected_comparison, styles.add_icon]} ></Ionicons>
+      )
+    }else{
+      return(
+         <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>
+        )
+    }
+
   }
 
   _clickDrugList(drug_key){
@@ -81,7 +98,11 @@ export class DrugList extends Component {
                   <ListItem noIndent style={styles.drug_list_item}
                             onPress={() => this._clickDrugList(item.key)}>
                     
-                    <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>  
+                  <Button transparent>
+                    <TouchableOpacity onPress={() => this._changeIcon()}>
+                      {this._renderIcon()}
+                     </TouchableOpacity>
+                   </Button>
                     <Text style={styles.drug_list_item_text}>{item.value}</Text>  
                  </ListItem>
               }

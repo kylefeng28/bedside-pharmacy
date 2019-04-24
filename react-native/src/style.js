@@ -128,7 +128,7 @@ export default EStyleSheet.create({
         fontSize: 30,
         fontFamily: 'Open-Sans-Bold',
         marginTop: 30,
-        marginBottom: 10,
+        // marginBottom: 10,
         color: '$MainBlack'
     },
 

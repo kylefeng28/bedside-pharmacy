@@ -39,7 +39,7 @@ const ToDrugList = createStackNavigator(
 
 const ToDrugInfo = createStackNavigator(
     {
-      DrugInfo
+      DrugInfo,
     },
     {
       headerMode: 'none'

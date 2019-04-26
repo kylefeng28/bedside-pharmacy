@@ -28,6 +28,7 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 
+
 export class AntibioBac extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +37,7 @@ export class AntibioBac extends Component {
       subclass_key: 'Antibiotics',
       drug_key: 'Amikacin',
       breadcum: [],
+      data: [],
       description: "",
       active: [],
       recommend:[],
@@ -46,58 +48,50 @@ export class AntibioBac extends Component {
     };
   }
 
-  // getDescription(){
-  //   itemsRef.on('value', snapshot =>{
-  //       let data = snapshot.val();
-
-  //       // slice out brand name and desciption
-  //       let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
-  //       console.log(drug_info);
-  //       this.setState({
-  //         description:  drug_description     
-  //       })
-
-  //    });
-  // }
-
-  getDrugInfo(){
+  getData(){
     var content = [];
     itemsRef.on('value', snapshot =>{
         let data = snapshot.val();
 
-        // slice out brand name and desciption
-        let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
-        let active = drug_info['Active'];
-        let recommend = drug_info['Recommended']
-        console.log(recommend);
-        let recommend_dic = {title: 'Recommended', content: recommend};
-        let active_dic = {title: 'Active', content: active};
-        content.push(recommend_dic);
-        content.push(active_dic);
-        // console.log(content)
+        let category_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
+        
+        let recommend = {title: 'Recommend',content: category_info['Recommended']};
+        let active = {title: 'Active', content: category_info['Active']};
+        
+        content.push(recommend);
+        content.push(active);
 
-
-        // let labels = data[this.state.class_key]['labels'];
-
-        // for (var i = 0; i < labels.length; i++) {
-        //   let a = {title:JSON.stringify(labels[i]).replace(/\"/g, ""),content:JSON.stringify((drug_info[JSON.stringify(i)]==null) ? " ":drug_info[JSON.stringify(i)] )};
-        //   content.push(a);
-        // }
-
-        // this.setState({
-        //   active: active_list,
-        //   reccomend: recommend_list,
-        // });
+        this.setState({
+          data: content,     
+        })
 
      });
+  }
 
+  renderData(){   
+    var content = [];
+    content = this.state.data;
+    // itemsRef.on('value', snapshot =>{
+    //     let data = snapshot.val();
+
+    //     // slice out brand name and desciption
+    //     // let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
+
+    //     // let labels = data[this.state.class_key]['labels'];
+
+    //     for (var i = 0; i < 2; i++) {
+    //       let a = {title:'heel',content:'go'};
+    //       content.push(a);
+    //     }
+
+    //  });
     return content;
   }
 
 
   componentDidMount(){
-    // this.getDescription();
-    // this.getDrugInfo();
+    this.getData();
+    // this.renderData();
   }
 
   _setSections = sections => {
@@ -109,13 +103,8 @@ export class AntibioBac extends Component {
   _renderHeader = (section, _, isActive) => {
     // console.log(section);
     return (
-      <View
-        // duration={400}
-        style={[styles.indication_header, isActive ? styles.indication_active : styles.indication_inactive]}
-        transition="backgroundColor"
-      >
-        <Text style={[styles.indication_headerText,isActive ? styles.indication_header_active : styles.indication_header_inactive]}>{section.title}</Text>
-
+      <View style={styles.header}>
+        <Text style={styles.headerText}>{section.title}</Text>
       </View>
     );
   };
@@ -151,9 +140,7 @@ export class AntibioBac extends Component {
         style={styles.indication_content}
         transition="backgroundColor"
       >
-
-    
-     
+      <Text> {section.content} </Text>
       </Animatable.View>
     );
   }
@@ -201,8 +188,8 @@ export class AntibioBac extends Component {
 
          <Accordion
           // containerStyle={styles.container}
-          activeSections={activeSections}
-          sections={this.getDrugInfo()}
+          activeSections={this.state.activeSections}
+          sections={this.renderData()}
           touchableComponent={TouchableOpacity}
           expandMultiple={multipleSelect}
           renderHeader={this._renderHeader}

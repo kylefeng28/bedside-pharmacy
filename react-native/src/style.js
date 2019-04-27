@@ -333,6 +333,23 @@ export default EStyleSheet.create({
     },
 
     /*==========================================================================
+    AntibioBac Page
+    ========================================================================== */
+
+    antibioBac_list:{
+        borderBottomWidth: 0,
+        height:45,
+        marginBottom: 0,
+        marginTop:0,
+        padding:0
+    },
+
+    antiboBac_icon:{
+        fontSize: 20,
+        color: '$LinkBlue'
+    },
+
+    /*==========================================================================
      Compare Page
      ========================================================================== */
     compare_title_container: {

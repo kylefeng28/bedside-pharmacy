@@ -33,7 +33,8 @@ export class AntibioBac extends Component {
     this.state = {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
-      drug_key: props.navigation.getParam('drug_key',''),
+      header_key : props.navigation.getParam('header_key', ''), //only applicable to bacteria
+      item_key: props.navigation.getParam('item_key',''),
       breadcum: [],
       data: [],
       description: "",
@@ -46,7 +47,15 @@ export class AntibioBac extends Component {
     var content = [];
     itemsRef.on('value', snapshot =>{
         let data = snapshot.val();
-        let category_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
+
+        // Antibiotics and Bacteria data structure are slightly different
+        // Bacteria has an extra layer of header information
+        if(this.state.subclass_key == 'Antibiotics'){
+          var category_info = data[this.state.class_key][this.state.subclass_key][this.state.item_key];
+        }else{
+          var category_info = data[this.state.class_key][this.state.subclass_key][this.state.header_key][this.state.item_key];
+          console.log(category_info)
+        }
 
         let recommend_list = category_info['Recommended']
         let active_list = category_info['Active']
@@ -139,7 +148,7 @@ export class AntibioBac extends Component {
 
         <Content padder style={styles.body}>
           <View style={styles.inline}>
-            <Text style={styles.title}>{this.state.drug_key}
+            <Text style={styles.title}>{this.state.item_key}
               <Text style={styles.brand_name}>{this.state.active}</Text>
             </Text>
            </View>

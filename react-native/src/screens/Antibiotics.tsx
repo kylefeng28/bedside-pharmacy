@@ -64,8 +64,7 @@ export class Antibiotics extends Component {
   }
 
   _clickItem(item){
-    console.log(item);
-    this.props.navigation.navigate('AntibioBac',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, drug_key: item });
+    this.props.navigation.navigate('AntibioBac',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, item_key: item });
   }
  
   render() {

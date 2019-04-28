@@ -62,12 +62,25 @@ export class Bacteria extends Component {
           data_output.push(single_category);
 
         });
-
-        console.log(data_output)
         this.setState({
           data: [...data_output],
         });
      });
+  }
+
+  _clickItem(value){
+    // console.log(this.state.data)
+    var list = this.state.data;
+    for ( let i = 0; i < list.length; i++){
+      for( let j = 0; j < list[i].value.length; j++){
+        if (list[i].value[j].item == value){
+          var header = list[i].header;
+          break;
+        }
+      }
+    }
+    console.log(header);
+    this.props.navigation.navigate('AntibioBac',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, header_key: header, item_key: value });
   }
 
 
@@ -127,7 +140,7 @@ export class Bacteria extends Component {
                          // Nested flatlist
                           renderItem={({item}) => 
                             <View>
-                              <ListItem noIndent>          
+                              <ListItem noIndent onPress={()=> this._clickItem(item.item)}>          
                                   <Text style={styles.category_item}>{item.item}</Text>                  
                               </ListItem>           
                             </View>

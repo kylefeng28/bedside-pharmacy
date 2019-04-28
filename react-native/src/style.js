@@ -80,6 +80,25 @@ export default EStyleSheet.create({
         // color: '$LinkBlue'
     },
 
+    bread_inline:{
+        marginTop: 30,
+    },
+
+    bread:{
+        fontFamily: 'Open-Sans-Regular',
+        fontSize: 14,
+        color: '$MainBlack'
+    },
+
+    bread_active:{
+        color:'$LinkBlue'
+    },
+
+    insert_title:{
+        marginTop:0
+    },
+
+
     /* ==========================================================================
     Register/Login page
     ========================================================================== */
@@ -323,13 +342,13 @@ export default EStyleSheet.create({
     divider_content:{
         fontFamily: 'Open-Sans-Bold',
         color: '$MainBlack',
-        fontSize: 15,
+        fontSize: 18,
     },
 
     category_item:{
         fontFamily: 'Open-Sans-Regular',
         color: '$MainBlack',
-        fontSize: 15,
+        fontSize: 18,
     },
 
     /* ==========================================================================

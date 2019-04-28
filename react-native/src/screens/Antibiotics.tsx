@@ -81,7 +81,7 @@ export class Antibiotics extends Component {
                 renderItem={({item}) => 
                   <View>
                     <ListItem noIndent onPress={() => this._clickItem(item.key)}>          
-                        <Text style={styles.category_item}>{item.value}</Text>                  
+                        <Text style={styles.category_item}>{item.value.replace('*','/')}</Text>                  
                     </ListItem>           
                   </View>
                }

@@ -11,6 +11,7 @@ import { DrugInfo } from '../screens/DrugInfo';
 import { Compare } from '../screens/Compare';
 import { Antibiotics } from '../screens/Antibiotics';
 import { Bacteria } from '../screens/Bacteria';
+import { AntibioBac } from '../screens/AntibioBac';
 
 import styles from '../style';
 
@@ -39,7 +40,7 @@ const ToDrugList = createStackNavigator(
 
 const ToDrugInfo = createStackNavigator(
     {
-      DrugInfo
+      DrugInfo,
     },
     {
       headerMode: 'none'
@@ -50,7 +51,8 @@ const ToDrugInfo = createStackNavigator(
 const ToAntibiotics = createStackNavigator(
   {
     Antibiotics,
-    Bacteria
+    Bacteria,
+    AntibioBac
   },{
     headerMode: 'none'
   }

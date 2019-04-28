@@ -42,7 +42,7 @@ export class DrugInfo extends Component {
       description: "",
       selected: false,
       activeSections: [],
-      collapsed: true,
+      collapsed: false,
       multipleSelect: true,
     };
   }
@@ -106,9 +106,6 @@ export class DrugInfo extends Component {
   };
 
   _renderContent(section, _, isActive) {
-    // var obj = JSON.parse(section);
-    // console.log(obj);
-    // console.log(section.content)
     var content = JSON.parse(section.content);
     var subtitles = Object.keys(content);
     var spec = Object.values(content);
@@ -178,14 +175,12 @@ export class DrugInfo extends Component {
            <Text style={styles.description_name}>{this.state.description}</Text>
            
           <Accordion
-            // containerStyle={styles.container}
-            activeSections={activeSections}
+            activeSections={this.state.activeSections}
             sections={this.getDrugInfo()}
             touchableComponent={TouchableOpacity}
             expandMultiple={multipleSelect}
             renderHeader={this._renderHeader}
             renderContent={this._renderContent}
-            // duration={400}
             onChange={this._setSections}
           />
         </Content>

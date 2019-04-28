@@ -128,7 +128,7 @@ export default EStyleSheet.create({
         fontSize: 30,
         fontFamily: 'Open-Sans-Bold',
         marginTop: 30,
-        marginBottom: 10,
+        // marginBottom: 10,
         color: '$MainBlack'
     },
 
@@ -330,6 +330,26 @@ export default EStyleSheet.create({
         fontFamily: 'Open-Sans-Regular',
         color: '$MainBlack',
         fontSize: 15,
+    },
+
+    /* ==========================================================================
+    AntibioBac Page
+    ========================================================================== */
+
+    antibioBac_list:{
+        borderBottomWidth: 0,
+        // height:45,
+        marginBottom: 5,
+        marginTop:0,
+        padding:0,
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
+    },
+
+    antiboBac_icon:{
+        fontSize: 20,
+        color: '$LinkBlue'
     },
 
     /*==========================================================================

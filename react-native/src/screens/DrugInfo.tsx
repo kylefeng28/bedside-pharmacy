@@ -28,9 +28,6 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 
-const BACON_IPSUM =
-  'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
-
 export class DrugInfo extends Component {
   constructor(props) {
     super(props);
@@ -38,8 +35,9 @@ export class DrugInfo extends Component {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
       drug_key: props.navigation.getParam('drug_key',''),
-      breadcum: [],
+      breadcrumb: [],
       description: "",
+      brand: "",
       selected: false,
       activeSections: [],
       collapsed: false,
@@ -54,8 +52,10 @@ export class DrugInfo extends Component {
         // slice out brand name and desciption
         let drug_info = data[this.state.class_key][this.state.subclass_key][this.state.drug_key];
         let drug_description = drug_info['Description'];
+        let drug_brand = drug_info['Brand Name'];
         this.setState({
-          description:  drug_description     
+          description:  drug_description,
+          brand: drug_brand     
         })
 
      });
@@ -109,11 +109,12 @@ export class DrugInfo extends Component {
     var content = JSON.parse(section.content);
     var subtitles = Object.keys(content);
     var spec = Object.values(content);
+    console.log(spec);
     var output = [];
     for (let i = 0; i< subtitles.length; i++){
       var item = (
         <View key = {100-i}>
-          <Text key={i} style={styles.accordion_subtitle}>{(subtitles[i] == '_') ? "" : subtitles[i]}</Text>
+          <Text key={i} style={styles.accordion_subtitle}>{(subtitles[i] == '_') ? "" : subtitles[i].replace('*','/')}</Text>
           <Text key={-1-i} style={styles.accordion_spec}>{spec}</Text>
         </View>
         );
@@ -160,9 +161,14 @@ export class DrugInfo extends Component {
        <Container>         
 
         <Content padder style={styles.body}>
+        <View style={[styles.inline, styles.bread_inline]}>
+          <Text style={styles.bread}>{this.state.class_key +' • '}</Text>
+          <Text style={styles.bread}>{this.state.subclass_key == '_'? "" : this.state.subclass_key +' • '}</Text>
+          <Text style={[styles.bread, styles.bread_active]}>{this.state.drug_key}</Text>
+         </View>
           <View style={styles.inline}>
-            <Text style={styles.title}>{this.state.drug_key}
-              <Text style={styles.brand_name}> (Ativan)</Text>
+            <Text style={[styles.title, styles.insert_title]}>{this.state.drug_key}
+              <Text style={styles.brand_name}>{' (' + this.state.brand +')'}</Text>
             </Text>
             <Right>
               <Button transparent>

@@ -60,12 +60,6 @@ export class Subclass extends Component {
           data: [...subclass_array]
         });
       });
-
-     // Placeholder value,
-     // const content = [{key: 'Barbiturates'}, {key: 'Benzodiazepines'}, {key: 'Dexmedetomidine'},{key: 'Phenobarbital'},{key: 'Propofol'},{key: 'Ketamine'}];
-     // this.setState({
-     //      data: [...this.state.data, ...content]
-     //    });
   }
 
   _clickSubclass(subclass_key){
@@ -77,8 +71,12 @@ export class Subclass extends Component {
     return (
        <Container>
          <Content padder>
-           <Text style={styles.title}>{this.state.class_key}</Text>
-         
+           <View style={[styles.inline, styles.bread_inline]}>
+            <Text style={[styles.bread, styles.bread_active]}>{this.state.class_key.replace('*','/')}</Text>
+           </View>
+
+           <Text style={[styles.title, styles.insert_title]}>{this.state.class_key.replace('*','/')}</Text>
+    
             <View style={styles.subclass_list}>
               <FlatList
                 data={this.state.data}

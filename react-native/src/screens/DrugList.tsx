@@ -88,7 +88,11 @@ export class DrugList extends Component {
     return (
        <Container>
          <Content padder>
-           <Text style={styles.title}>{(this.state.subclass_key == '_') ? this.state.class_key:this.state.subclass_key}</Text>
+          <View style={[styles.inline, styles.bread_inline]}>
+            <Text style={[styles.bread, styles.bread_active]}>{this.state.class_key.replace('*','/')}</Text>
+            <Text style={[styles.bread]}>{this.state.subclass_key == '_'? "" : ' • ' + this.state.subclass_key}</Text>
+           </View>
+           <Text style={[styles.title, styles.insert_title]}>{(this.state.subclass_key == '_') ? this.state.class_key:this.state.subclass_key}</Text>
          
             <View style={styles.drug_list}>
               <FlatList

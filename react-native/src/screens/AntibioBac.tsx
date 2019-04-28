@@ -54,7 +54,6 @@ export class AntibioBac extends Component {
           var category_info = data[this.state.class_key][this.state.subclass_key][this.state.item_key];
         }else{
           var category_info = data[this.state.class_key][this.state.subclass_key][this.state.header_key][this.state.item_key];
-          console.log(category_info)
         }
 
         let recommend_list = category_info['Recommended']
@@ -110,9 +109,6 @@ export class AntibioBac extends Component {
   };
 
   _renderContent(section, _, isActive) {
-    // var class_type = this.state.class_key;
-    // console.log(section.class);
-    console.log(section)
     var list = []
     for (let i = 0; i < section.content.length; i++){
       let tmp = {key: 'key'+i, value: section.content[i]}

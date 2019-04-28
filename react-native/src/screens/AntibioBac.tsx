@@ -31,17 +31,13 @@ export class AntibioBac extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      class_key: 'Antibiotics And Organisms',
-      subclass_key: 'Antibiotics',
-      drug_key: 'Amikacin',
+      class_key: props.navigation.getParam('class_key',''),
+      subclass_key: props.navigation.getParam('subclass_key',''),
+      drug_key: props.navigation.getParam('drug_key',''),
       breadcum: [],
       data: [],
       description: "",
-      active: [],
-      recommend:[],
-      selected: false,
       activeSections: [0, 1],
-      collapsed: false,
       multipleSelect: true,
     };
   }
@@ -54,10 +50,18 @@ export class AntibioBac extends Component {
 
         let recommend_list = category_info['Recommended']
         let active_list = category_info['Active']
+        if (recommend_list == null){
+           var recommend = {title: 'Recommend',content: ['None'], subclass: this.state.subclass_key};
+        }else{
+           var recommend = {title: 'Recommend',content: recommend_list, subclass: this.state.subclass_key};
+        }
 
-        let recommend = {title: 'Recommend',content: recommend_list, subclass: this.state.subclass_key};
-        let active = {title: 'Active', content: active_list, subclass: this.state.subclass_key};
-        
+        if (active_list == null){
+          var active = {title: 'Active', content:['None'], subclass: this.state.subclass_key};
+        } else {
+          var active = {title: 'Active', content: active_list, subclass: this.state.subclass_key};
+        }
+ 
         content.push(recommend);
         content.push(active);
 
@@ -98,7 +102,8 @@ export class AntibioBac extends Component {
 
   _renderContent(section, _, isActive) {
     // var class_type = this.state.class_key;
-    console.log(section.class);
+    // console.log(section.class);
+    console.log(section)
     var list = []
     for (let i = 0; i < section.content.length; i++){
       let tmp = {key: 'key'+i, value: section.content[i]}
@@ -114,10 +119,10 @@ export class AntibioBac extends Component {
         <FlatList
           data={list}
           renderItem={({item}) => 
-            <ListItem style={styles.antibioBac_list}>
+            <View style={styles.antibioBac_list}>
               {section.subclass =='Antibiotics'? <FontAwesome name="bug" style={styles.antiboBac_icon}></FontAwesome> : <MaterialCommunityIcons name='pill' style={styles.antiboBac_icon}></MaterialCommunityIcons> }
               <Text style={styles.drug_list_item_text}>{item.value}</Text>
-            </ListItem>  
+            </View>  
           }
         />
      

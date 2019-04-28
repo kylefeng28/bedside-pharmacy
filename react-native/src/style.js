@@ -332,16 +332,19 @@ export default EStyleSheet.create({
         fontSize: 15,
     },
 
-    /*==========================================================================
+    /* ==========================================================================
     AntibioBac Page
     ========================================================================== */
 
     antibioBac_list:{
         borderBottomWidth: 0,
-        height:45,
-        marginBottom: 0,
+        // height:45,
+        marginBottom: 5,
         marginTop:0,
-        padding:0
+        padding:0,
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
     },
 
     antiboBac_icon:{

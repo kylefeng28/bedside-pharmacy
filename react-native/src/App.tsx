@@ -51,7 +51,7 @@ export default class App extends Component {
     if (!this.state.font_loaded) {
       return <AppLoading />;
     }
-    // return <AppContainer />;
-    return <AntibioBac/>;
+    return <AppContainer />;
+    // return <AntibioBac/>;
   }
 }

@@ -62,6 +62,11 @@ export class Antibiotics extends Component {
 
      });
   }
+
+  _clickItem(item){
+    console.log(item);
+    this.props.navigation.navigate('AntibioBac',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, drug_key: item });
+  }
  
   render() {
     return (
@@ -76,11 +81,12 @@ export class Antibiotics extends Component {
                // Nested flatlist
                 renderItem={({item}) => 
                   <View>
-                    <ListItem noIndent>          
+                    <ListItem noIndent onPress={() => this._clickItem(item.key)}>          
                         <Text style={styles.category_item}>{item.value}</Text>                  
                     </ListItem>           
                   </View>
                }
+
                keyExtractor={(item, index) => index.toString()}
              />    
           </View>

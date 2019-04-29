@@ -29,17 +29,12 @@ $ npm install
 ```
 
 ### Running the project
-**Mobile**:
+**Expo**:
 ```
 npm start
 ```
 
 The first time you run this, it should ask you to login to your Expo account. It should start a dev server, and you can then scan the QR code with your phone to see changes appear on your phone.
-
-**Web**:
-```
-npm run start:web
-```
 
 See `package.json` to see what these commands do.
 

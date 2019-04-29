@@ -61,8 +61,14 @@ export default EStyleSheet.create({
     },
 
     add_comparison: {
-        fontSize: 32,
+        fontSize: 35,
+        color: '$LinkBlue',
+    },
+
+    selected_comparison: {
+        fontSize: 35,
         color: '$DarkGray',
+        flex: 1,
     },
 
     footer: {
@@ -73,6 +79,25 @@ export default EStyleSheet.create({
         fontSize: 32,
         // color: '$LinkBlue'
     },
+
+    bread_inline:{
+        marginTop: 30,
+    },
+
+    bread:{
+        fontFamily: 'Open-Sans-Regular',
+        fontSize: 14,
+        color: '$MainBlack'
+    },
+
+    bread_active:{
+        color:'$LinkBlue'
+    },
+
+    insert_title:{
+        marginTop:0
+    },
+
 
     /* ==========================================================================
     Register/Login page
@@ -122,7 +147,7 @@ export default EStyleSheet.create({
         fontSize: 30,
         fontFamily: 'Open-Sans-Bold',
         marginTop: 30,
-        marginBottom: 10,
+        // marginBottom: 10,
         color: '$MainBlack'
     },
 
@@ -173,7 +198,7 @@ export default EStyleSheet.create({
     },
 
     result_box:{
-        // height: 100
+        height: 500
     },
 
 
@@ -228,13 +253,14 @@ export default EStyleSheet.create({
         color: '$MainBlack',
     },
 
-    subclass_name: {
+    description_name: {
         fontSize: 14,
         fontFamily: 'Open-Sans-Italic',
         width: '95%',
         color: '$DarkGray',
         marginBottom: 20
     },
+
 
     indication_header: {
         padding: 25,
@@ -258,7 +284,7 @@ export default EStyleSheet.create({
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: '$MediumGray',
-        alignItems: 'center',
+        // alignItems: 'Left',
     },
 
     indication_active: {
@@ -279,6 +305,20 @@ export default EStyleSheet.create({
         color: '$LinkBlue'
     },
 
+    accordion_subtitle: {
+        fontFamily: 'Open-Sans-SemiBold',
+        color: '$MainBlack',
+        fontSize: 16,
+        marginBottom: 4
+    },
+
+    accordion_spec:{
+        fontFamily: 'Open-Sans-Regular',
+        color: '$MainBlack',
+        fontSize: 16,
+        marginBottom: 10
+    },
+
     /* ==========================================================================
     Antibiotics Screen
     ========================================================================== */
@@ -287,7 +327,51 @@ export default EStyleSheet.create({
         backgroundColor: '$LinkBlue'
     },
 
+    switch:{
+        fontFamily: 'Open-Sans-Regular',
+        color: '$LinkBlue',
+        fontSize: 13,
+        textAlign: 'right',
+        marginBottom: 10
+    },
+
+    divider:{
+        backgroundColor: 'rgba(225, 225, 225, 0.5)',
+    },
+
+    divider_content:{
+        fontFamily: 'Open-Sans-Bold',
+        color: '$MainBlack',
+        fontSize: 18,
+    },
+
+    category_item:{
+        fontFamily: 'Open-Sans-Regular',
+        color: '$MainBlack',
+        fontSize: 18,
+    },
+
     /* ==========================================================================
+    AntibioBac Page
+    ========================================================================== */
+
+    antibioBac_list:{
+        borderBottomWidth: 0,
+        // height:45,
+        marginBottom: 5,
+        marginTop:0,
+        padding:0,
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
+    },
+
+    antiboBac_icon:{
+        fontSize: 20,
+        color: '$LinkBlue'
+    },
+
+    /*==========================================================================
      Compare Page
      ========================================================================== */
     compare_title_container: {

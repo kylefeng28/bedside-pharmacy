@@ -35,7 +35,7 @@ export class DrugList extends Component {
       // class_key: "Antiacid",
       // subclass_key: "_",
       data: [],
-      selected: false
+      selected: false,
     };
 
     // console.log(Cache.set("selected", ["one"]))
@@ -70,10 +70,26 @@ export class DrugList extends Component {
         // console.log(data);
 
      });
-     // const content = [{key: 'Alprazolam'}, {key: 'Chlordiazepoxide'}, {key: 'Clonazepam'},{key: 'Diazepam'},{key: 'Lorazepam'},{key: 'Midazolam'}, {key: 'Oxazepam'}, {key: 'Temazepam'}];
-     // this.setState({
-     //      data: [...this.state.data, ...content]
-     //    });
+  }
+
+  _changeIcon(){
+    console.log(this.state.selected)
+    this.setState({
+      selected: !this.state.selected
+    })
+  }
+
+  _renderIcon(){
+    if (this.state.selected){ 
+      return(
+         <Ionicons name="ios-checkmark-circle" style={[styles.selected_comparison, styles.add_icon]} ></Ionicons>
+      )
+    }else{
+      return(
+         <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>
+        )
+    }
+
   }
 
   _clickDrugList(drug_key){
@@ -128,7 +144,11 @@ export class DrugList extends Component {
     return (
        <Container>
          <Content padder>
-           <Text style={styles.title}>{(this.state.subclass_key == '_') ? this.state.class_key:this.state.subclass_key}</Text>
+          <View style={[styles.inline, styles.bread_inline]}>
+            <Text style={[styles.bread, styles.bread_active]}>{this.state.class_key.replace('*','/')}</Text>
+            <Text style={[styles.bread]}>{this.state.subclass_key == '_'? "" : ' • ' + this.state.subclass_key}</Text>
+           </View>
+           <Text style={[styles.title, styles.insert_title]}>{(this.state.subclass_key == '_') ? this.state.class_key:this.state.subclass_key}</Text>
          
             <View style={styles.drug_list}>
               <FlatList

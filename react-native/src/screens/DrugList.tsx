@@ -20,6 +20,9 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 import styles from '../style';
+import { createNavigationContainer } from 'react-navigation';
+
+var Cache = require('global-cache');
 
 export class DrugList extends Component {
 
@@ -29,15 +32,24 @@ export class DrugList extends Component {
     this.state = {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
+      // class_key: "Antiacid",
+      // subclass_key: "_",
       data: [],
       selected: false,
     };
+
+    // console.log(Cache.set("selected", ["one"]))
+    // console.log(Cache.get("selected"));
   }
 
   // search1: SearchBar
 
   componentDidMount() {
     this.getDrugList();
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.selected);
   }
 
    getDrugList(){
@@ -52,8 +64,10 @@ export class DrugList extends Component {
         }
 
         this.setState({
-          data: [...drug_array]
+          data: [...drug_array],
         });
+
+        // console.log(data);
 
      });
   }
@@ -82,7 +96,49 @@ export class DrugList extends Component {
     this.props.navigation.navigate('DrugInfo',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, drug_key: drug_key});
   };
 
-  
+  _renderIcon() {
+    console.log(this.state.selected);
+    if (this.state.selected) {
+      return (<Ionicons name="ios-checkmark-circle"></Ionicons>)
+    } else {
+      return (<SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>)
+    }
+  }
+
+  _changeIcon(class_key, subclass_key, item_key) {
+    // if (subclass_key === undefined) {
+    //   subclass_key = "_";
+    // }
+
+    // check cache - if exists: remove; else: add to cache
+    var exists = false;
+    var idx = 0;
+    for (var i=0; i<Cache.get("selected").length; i++) {
+      if (Cache.get("selected")[i][2] == item_key) {
+        exists = true;
+        idx = i;
+      }
+    }
+
+    if (exists) { // get rid
+      var temp = Cache.get("selected");
+      temp.splice(idx, 1);
+      Cache.set("selected", temp);
+      // console.log(Cache.get("selected"));
+    } else { // add
+      var temp = Cache.get("selected");
+      temp.push([class_key, subclass_key, item_key]);
+      Cache.set("selected", temp);
+      // console.log(Cache.get("selected"));
+    }
+
+    this.setState({
+      selected: !this.state.selected
+    })
+    // this._renderIcon();
+    // this.render();
+    // this.forceUpdate();
+  }
 
   render() {
     return (
@@ -102,11 +158,14 @@ export class DrugList extends Component {
                   <ListItem noIndent style={styles.drug_list_item}
                             onPress={() => this._clickDrugList(item.key)}>
                     
-                  <Button transparent>
-                    <TouchableOpacity onPress={() => this._changeIcon()}>
+                    {/* <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>   */}
+
+                    <Button transparent>
+                    <TouchableOpacity onPress={() => this._changeIcon(this.state.class_key, this.state.subclass_key, item.key)}>
                       {this._renderIcon()}
-                     </TouchableOpacity>
-                   </Button>
+                    </TouchableOpacity>
+                    </Button>
+
                     <Text style={styles.drug_list_item_text}>{item.value}</Text>  
                  </ListItem>
               }

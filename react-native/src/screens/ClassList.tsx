@@ -22,6 +22,11 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 import styles from '../style';
+import { DrugList } from './DrugList';
+
+// var cache = require('global-cache');
+// import { Cache } from "global-cache";
+var Cache = require('global-cache');
 
 const rowHeight = 40;
 
@@ -45,6 +50,8 @@ export class ClassList extends Component {
       onSearch: false,
       showClassList: true,
     };
+
+    Cache.set("selected", []);
   }
 
   componentDidMount() {

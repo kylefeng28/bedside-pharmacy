@@ -21,6 +21,11 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 import styles from '../style';
+import { DrugList } from './DrugList';
+
+// var cache = require('global-cache');
+// import { Cache } from "global-cache";
+var Cache = require('global-cache');
 
 const rowHeight = 40;
 
@@ -42,6 +47,8 @@ export class ClassList extends Component {
       data2: [],
       onSearch: false,
     };
+
+    Cache.set("selected", []);
   }
 
   componentDidMount() {
@@ -135,6 +142,7 @@ export class ClassList extends Component {
     return (
        <Container>
          <Content padder>
+           {/* <DrugList/> */}
            <Text style={[styles.title,styles.main_title]}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
            <View styles = {styles.seach_box}>
              <Search

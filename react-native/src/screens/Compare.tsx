@@ -16,6 +16,12 @@ import { Ionicons, MaterialCommunityIcons, Entypo, SimpleLineIcons} from '@expo/
 import styles from '../style';
 import RNPickerSelect from 'react-native-picker-select';
 
+//Load Firebase
+import { firebase } from '../utils/FirebaseWrapper';
+let itemsRef = firebase.database.ref('/drugs');
+
+var Cache = require('global-cache');
+
 // let colors = ['#d9b3ff', '#b3e0ff'];
 let colors = ['#ffffff', '#f2f2f2']
 
@@ -31,58 +37,74 @@ export class Compare extends Component {
     };
 
     this.state = {
-      data: [
-        {
-          label: 'Onset',
-          value: 'Onset'
-        },
-        {
-          label: 'Duration',
-          value: 'Duration'
-        },
-        {
-          label: 'Metabolism',
-          value: 'Metabolism'
-        }
-      ],
-      numbers: [
-        {
-          name:  'Lorazepam',
-          onset: '15-20 minutes',
-          duration: '8 to 15 hours',
-          metabolism: 'Hepatic'
-        },
-        {
-          name:  'Midazolam',
-          onset: '15-20 minutes',
-          duration: '8 to 15 hours',
-          metabolism: 'Hepatic'
-        },
-        {
-          name:  'Lorazepam',
-          onset: '15-20 minutes',
-          duration: '8 to 15 hours',
-          metabolism: 'Hepatic'
-        },
-      ],
-
-      favSport0: undefined,
-      favSport1: undefined,
-      favSport2: undefined,
-      favSport3: undefined,
-      favSport4: 'baseball',
-      favNumber: undefined,
+      data: [],
+      // labels: [],
+      date: new Date()
       };
   }
 
-  // search1: SearchBar
-
-  componentDidMount() {
-   
+  componentWillReceiveProps() {
+    console.log('rerender here');
+    this.getCompareList();
   }
 
- 
+  componentDidMount() {
+    this.getCompareList();
+  }
+
+  getCompareList() {
+    var all_content = [];
+    let labels = [];
+
+    itemsRef.on('value', snapshot =>{
+      let data = snapshot.val();
+
+      console.log(Cache.get("selected").length);
+      if (Cache.get("selected").length > 0) {
+        labels = data[Cache.get("selected")[0][0]]['labels'];
+      } else {
+        labels = [];
+      }
+        
+      var drug_array = [];
+
+      for (var i = 0; i < Cache.get("selected").length; i++) {
+        // drug_array.push(Object.keys(data[Cache.get("selected")[i][0]][Cache.get("selected")[i][1]][Cache.get("selected")[i][2]]));
+        // console.log(Cache.get("selected")[i][0]);
+        // console.log(Cache.get("selected")[i][1]);
+        // console.log(Cache.get("selected")[i][2]);
+        
+        drug_array.push(data[Cache.get("selected")[i][0]][Cache.get("selected")[i][1]][Cache.get("selected")[i][2]]);
+      
+        var content = [];
+        for (var j = 0; j < labels.length; j++) {
+          let a = {title:JSON.stringify(labels[j]).replace(/\"/g, ""),content:JSON.stringify((drug_array[i][j]==null) ? "Data not inserted":drug_array[i][j] ).replace(/\"/g, "")};
+          content.push(a);
+        }
+        // content.push({});
+        all_content.push({name: Cache.get("selected")[i][2], content: content});
+      }
+
+      if (Cache.get("selected").length > 0) {
+        drug_array.push(data[Cache.get("selected")[0][0]][Cache.get("selected")[0][1]][Cache.get("selected")[0][2]]);
+      } else {
+        drug_array = drug_array;
+      }
+    });
+
+    this.setState({
+      // data: [...drug_array],
+      data: all_content,
+      // labels: labels
+    }, function() {console.log(this.state.data);});
+  }
   
+  _deleteItem(idx) {
+    var temp = Cache.get("selected");
+    temp.splice(idx, 1);
+    Cache.set("selected", temp);
+    this.getCompareList();
+  }
 
   render() {
     return (
@@ -146,40 +168,44 @@ export class Compare extends Component {
                 // data={[{name: 'Lorazepam', onset: '15-20 minutes', duration: '8 to 15 hours', metabolism: 'Hepatic'},
                 //   {name: 'Midazolam', onset: '15 minutes', duration: '<2 hours', metabolism: 'Urine metabolites'}]},
                 // tslint:disable-next-line:jsx-no-lambda
-                data={this.state.numbers}
+                data={this.state.data}
                 renderItem={({item, index}) => 
                   <View style={{ backgroundColor: colors[index % colors.length] }}>
                     <ListItem noIndent>
                       <View style={styles.container}>
 
                         <View style={styles.compare_drug}>
-                          <Text style={styles.column_header_text}>{item.name}</Text>
+                          <Text style={styles.column_header_text}>{item["name"]}</Text>
                         </View>
                         
-                        <View style={styles.compare_item}>
-                          <Text style={styles.compare_column_name}>{this.state.data[0].label}</Text>
+                        {/* <View style={styles.compare_item}>
+                          <Text style={styles.compare_column_name}>{item["content"][0]["title"]}</Text>
                         </View>
-                        <View><Text style={styles.compare_column_value}>{item.onset}</Text></View>
-
-                        <View style={styles.compare_item}>
-                          <Text style={styles.compare_column_name}>{this.state.data[1].label}</Text>
-                        </View>
-                        <View><Text style={styles.compare_column_value}>{item.duration}</Text></View>
-
+                        <View><Text style={styles.compare_column_value}>{item["content"][0]["content"]}</Text></View> */}
 
                         <View style={styles.compare_item}>
-                          <Text style={styles.compare_column_name}>{this.state.data[2].label}</Text>
+                          <Text style={styles.compare_column_name}>{item["content"][1]["title"]}</Text>
                         </View>
-                        <View><Text style={styles.compare_column_value}>{item.metabolism}</Text></View>
+                        <View><Text style={styles.compare_column_value}>{item["content"][1]["content"]}</Text></View>
+
+                        <View style={styles.compare_item}>
+                          <Text style={styles.compare_column_name}>{item["content"][2]["title"]}</Text>
+                        </View>
+                        <View><Text style={styles.compare_column_value}>{item["content"][2]["content"]}</Text></View>
+
+                        <View style={styles.compare_item}>
+                          <Text style={styles.compare_column_name}>{item["content"][3]["title"]}</Text>
+                        </View>
+                        <View><Text style={styles.compare_column_value}>{item["content"][3]["content"]}</Text></View>
 
                         </View>
 
-
-
-                      <Ionicons name="ios-close" style={[styles.close_icon, {paddingRight: 15}]}></Ionicons>
+                      <Ionicons name="ios-close" onPress={() => this._deleteItem(index)} style={[styles.close_icon, {paddingRight: 15}]}></Ionicons>
                     </ListItem>
                   </View>
                 }
+
+                keyExtractor={(item, index) => index.toString()}
               />
             </View>
 
@@ -188,6 +214,3 @@ export class Compare extends Component {
     );
   }
 }
-
-// TODO: CONNECT TO ACTUAL BACKEND
-// Yujie will fix font styles

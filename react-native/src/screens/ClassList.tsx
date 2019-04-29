@@ -11,7 +11,6 @@ import {
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem, Item, Input} from 'native-base';
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
-// import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 import * as SearchUtil from '../utils/SearchUtil';
 import AtoZListView from 'react-native-atoz-listview';
@@ -23,6 +22,11 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 import styles from '../style';
+import { DrugList } from './DrugList';
+
+// var cache = require('global-cache');
+// import { Cache } from "global-cache";
+var Cache = require('global-cache');
 
 const rowHeight = 40;
 
@@ -46,6 +50,8 @@ export class ClassList extends Component {
       onSearch: false,
       showClassList: true,
     };
+
+    Cache.set("selected", []);
   }
 
   componentDidMount() {
@@ -55,8 +61,6 @@ export class ClassList extends Component {
     // NOTE: must be async (or return a Promise)
   async _onSearch(searchText: string) {
     const searchResults = SearchUtil.search(searchText);
-    // console.log('user searched for ' + searchText);
-    // console.log(searchResults)
     this.setState({
       searchResult: searchResults,
       onSearch: true,
@@ -111,13 +115,12 @@ export class ClassList extends Component {
   };
 
   _clickResult(path){
-    console.log(path.length);
     if(path.length == 1){
        this.props.navigation.navigate('ToSubclass',{class_key: path[0]});
      } else if (path.length == 2){
       this.props.navigation.navigate('ToDrugList',{class_key: path[0], subclass_key: path[1] });
      } else if(path.length == 3){
-       this.props.navigation.navigate('toDrugInfo',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
+       this.props.navigation.navigate('ToDrugInfo',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
     }
   }
 
@@ -125,14 +128,11 @@ export class ClassList extends Component {
   // render result item when on search and hide when not
   _renderResult(){
     if(this.state.onSearch){
-      // let path = this.state.searchResult[0].path;
-      // console.log(path)
+
       return(
         <ScrollView style={styles.result_box}>
           <FlatList
               data={this.state.searchResult}
-              // right now only display class name, need to fix later
-              // check whether three are _, get rid of the last element
               renderItem={({item}) => 
                 <ListItem noIndent
                     onPress={() => this._clickResult(item.path)}>          

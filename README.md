@@ -38,16 +38,19 @@ The first time you run this, it should ask you to login to your Expo account. It
 
 See `package.json` to see what these commands do.
 
-## File structure
+## Directory structure
 - `package.json`: contains a list of dependencies and scripts used by the project
 - **Entry points**:
     - `App.ts` (not `src/App.tsx`) is the entry point for mobile (used by Expo)
-    - `src/index.js` is the entry point for web (used by react-scripts)
+- `__tests__`: contains automated Jest tests
 
-## Troubleshooting
-**react-native StyleSheet problems**:
-The `patches` directory has patches in a few things for the react-native typescript bindings. If npm doesn't patch it for you automatically, run this:
+### Running tests
+To run the automated Jest tests:
+```
+npm test
+```
 
-```
-npx patch-package @types/react-native
-```
+### Writing tests
+The automated tests are written in Jest, and are located in the `__tests__` directory, and must end in the extension `.test.ts`.
+Note that these are TypeScript files, since our project primarily uses TypeScript. If you use a `.test.js` extension,
+Jest will try to use Babel (and most likely fail, because Babel is not explicitly set up in this project).

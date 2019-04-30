@@ -26,8 +26,8 @@ const ignored = [antibioticsSection,  'Bacteria', 'labels' ];
 
 // Process data for search
 // Returns SearchResult[]
-/*export*/ function processData(rawData)/*: SearchResult[]*/ {
-  const data/*: SearchResult[]*/ = [];
+function processData(rawData): any[] /*: SearchResult[]*/ {
+  const data: any[] /*: SearchResult[]*/ = [];
 
   // Loop through antibiotics
   const antibioticsData = rawData[antibioticsSection];
@@ -75,13 +75,13 @@ const ignored = [antibioticsSection,  'Bacteria', 'labels' ];
   return data;
 }
 
-function processAntibiotic(antibioticName): any /*: SearchResult*/ {
+function processAntibiotic(antibioticName)/*: SearchResult*/ {
   // console.log('\t' + antibioticName);
   return {
     name: antibioticName,
     type: SearchResultType.ANTIBIOTIC,
     path: [ antibioticsSection, 'Antibiotics', antibioticName ],
-  }
+  };
 }
 
 function processBug(bugName, bugClassName)/*: SearchResult*/ {
@@ -132,8 +132,8 @@ function makeFuse(data/*: SearchResult[]*/) {
 }
 
 // TODO use global-cache
-let _rawData = null;
-let _data = null;
+let _rawData: any = null;
+let _data: any = null;
 
 // Load raw data to be processed and cached
 // USES GLOBAL STATE

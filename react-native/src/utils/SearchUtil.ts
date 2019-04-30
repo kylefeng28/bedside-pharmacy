@@ -1,7 +1,6 @@
 import Fuse from 'fuse.js';
-
-import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
+// TODO use global-cache
+// const Cache = require('global-cache');
 
 /*
 export enum SearchResultType
@@ -76,7 +75,7 @@ const ignored = [antibioticsSection,  'Bacteria', 'labels' ];
   return data;
 }
 
-function processAntibiotic(antibioticName)/*: SearchResult*/ {
+function processAntibiotic(antibioticName): any /*: SearchResult*/ {
   // console.log('\t' + antibioticName);
   return {
     name: antibioticName,
@@ -132,17 +131,19 @@ function makeFuse(data/*: SearchResult[]*/) {
   return fuse;
 }
 
-// Fetch data from Firebase
-let rawData = null;
-let data = null;
-// TODO refactor into a separate class to be used by anything that gets data
-itemsRef.on('value', snapshot => {
-  rawData = snapshot.val();
-  data = processData(rawData);
-});
+// TODO use global-cache
+let _rawData = null;
+let _data = null;
+
+// Load raw data to be processed and cached
+// USES GLOBAL STATE
+export function loadRawData(rawData) {
+  _rawData = rawData;
+  _data = processData(rawData);
+}
 
 function getData()/*: SearchResult[]*/ {
-  return data;
+  return _data;
 }
 
 // TODO separate search antibiotic and drug search?
@@ -166,7 +167,7 @@ export function search(query/*: string*/)/*: SearchResult[]*/ {
 
   // unnest into array of fuseResultEntry.item and discard fuseResultEntry.matches
   // also add key
-  const result = fuseResult.map((r, i) => {
+  const result = fuseResult.map((r: any, i) => {
     return { ...r.item, key: '' + i };
   });
 

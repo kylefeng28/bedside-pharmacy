@@ -68,9 +68,7 @@
     "not op_mini all"
   ],
   "jest": {
-    "transform": {
-      ".(ts|tsx)": "ts-jest"
-    },
+    "preset": "ts-jest/presets/js-with-babel",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": ["ts", "tsx", "js"]
   }

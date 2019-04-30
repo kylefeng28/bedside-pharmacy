@@ -4,7 +4,6 @@ const projectId = 'drug-reference-f3c33';
 const databaseName = 'drug-reference-f3c33';
 const bucket = 'drug-reference-f3c33';
 
-import Firebase from 'firebase';
 export const config = {
 	apiKey: apiKey,
 	authDomain: projectId + '.firebaseapp.com',

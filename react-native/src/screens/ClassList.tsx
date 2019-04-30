@@ -79,6 +79,7 @@ export class ClassList extends Component {
   getClassList(){
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
+      SearchUtil.loadRawData(data);
       let class_names = Object.keys(data);
       var class_array = [];
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 // import firebaseConfig from './config/firebase';
 import { config as firebaseConfig } from '../config/firebase';
 import app from 'firebase/app';
@@ -8,6 +6,11 @@ import 'firebase/database';
 
 let initialized = false;
 export class FirebaseWrapper {
+  public app: any; // firebase.app.App doesn't work
+  public auth: firebase.auth.Auth;
+  public database: firebase.database.Database;
+  public drugsDbRef: firebase.database.Reference;
+
   constructor() {
     app.initializeApp(firebaseConfig);
     this.app = app;

@@ -53,4 +53,4 @@ npm test
 ### Writing tests
 The automated tests are written in Jest, and are located in the `__tests__` directory, and must end in the extension `.test.ts`.
 Note that these are TypeScript files, since our project primarily uses TypeScript. If you use a `.test.js` extension,
-Jest will try to use Babel (and most likely fail, because Babel is not explicitly set up in this project).
+Jest will try to use Babel and fail, since we haven't set it up.

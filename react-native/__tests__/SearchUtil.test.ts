@@ -7,22 +7,48 @@ function testSearch(query) {
   // Perform the search
   const results = SearchUtil.search(query);
 
+  // Print results
+  // SearchUtil.printResutlts(results);
+  console.log(results);
+
   return results;
 }
 
-test('SearchUtil test', () => {
+// https://medium.com/@andrei.pfeiffer/jest-matching-objects-in-array-50fe2f4d6b98
+function expectMatchResult(results, expected) {
+  expect(results).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining(expected)
+    ])
+  );
+}
+
+test('SearchUtil search drugs and classes', () => {
   // Load data to be used for search
   SearchUtil.loadRawData(mockDrugData);
 
   let results;
+  let expected;
 
   results = testSearch('benzo');
-  expect(results[0].name).toBe('Benzonate');
-  expect(results[0].type).toBe(SearchUtil.SearchResultType.DRUG);
-  expect(results[1].name).toBe('Benzodiazepines');
-  expect(results[1].type).toBe(SearchUtil.SearchResultType.DRUG_CLASS);
+  expected = { name: 'Benzodiazepines', type: 'subclass', path: [ 'Sedation', 'Benzodiazepines' ] };
+  expectMatchResult(results, expected);
+  expected = { name: 'Benzonate', type: 'drug', path: [ 'Antitussive', '_', 'Benzonate' ] };
+  expectMatchResult(results, expected);
 
   results = testSearch('amoxicillin');
-  expect(results[1].name).toBe('Amoxicillin');
-  expect(results[1].type).toBe(SearchUtil.SearchResultType.ANTIBIOTIC);
+  expected = { name: 'Amoxicillin', type: 'antibiotic', path: [ 'Antibiotics And Organisms', 'Antibiotics', 'Amoxicillin' ] };
+  expectMatchResult(results, expected);
+});
+
+test('SearchUtil search antibiotics', () => {
+  // Load data to be used for search
+  SearchUtil.loadRawData(mockDrugData);
+
+  let results;
+  let expected;
+
+  results = testSearch('amoxicillin');
+  expected = { name: 'Amoxicillin', type: 'antibiotic', path: [ 'Antibiotics And Organisms', 'Antibiotics', 'Amoxicillin' ] };
+  expectMatchResult(results, expected);
 });

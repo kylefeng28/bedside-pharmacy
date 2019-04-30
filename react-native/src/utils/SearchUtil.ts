@@ -49,17 +49,28 @@ function processData(rawData): any[] /*: SearchResult[]*/ {
 
     let drugClass = rawData[drugClassName];
 
+    let drugClassAdded = false;
+
     // Loop through subclasses
     for (let subclassName in drugClass) {
       if (ignored.includes(subclassName)) { continue; }
 
       const subclass = drugClass[subclassName];
-      const isSubclass = subclassName === '_';
+      const isSubclass = !(subclassName === '_');
 
       const subclassPath = [ drugClassName, subclassName ];
 
       // Add entry
-      data.push(processSubclass(subclassName, subclassPath, isSubclass));
+      if (isSubclass) {
+        data.push(processSubclass(subclassName, subclassPath, true));
+        // Only add the parent class once
+        if (!drugClassAdded) {
+          data.push(processSubclass(drugClassName, [drugClassName], false));
+          drugClassAdded = true;
+        }
+      } else {
+        data.push(processSubclass(drugClassName, subclassPath, false));
+      }
 
       // Loop through drugs
       for (let drugName in subclass) {
@@ -142,7 +153,8 @@ export function loadRawData(rawData) {
   _data = processData(rawData);
 }
 
-function getData()/*: SearchResult[]*/ {
+// TODO remove export
+export function getData()/*: SearchResult[]*/ {
   return _data;
 }
 

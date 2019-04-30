@@ -15,13 +15,13 @@
     "@unpourtous/react-native-search-list": "^2.1.0",
     "accordion-collapse-react-native": "^0.1.9",
     "expo": "^32.0.6",
-    "expo-cli": "^2.15.3",
-    "expokit": "^32.0.7",
-    "firebase": "^5.9.2",
+    "expo-cli": "^2.15.4",
+    "expokit": "^32.1.1",
+    "firebase": "^5.10.1",
     "fuse.js": "^3.4.4",
     "global-cache": "^1.2.1",
     "native-base": "^2.12.1",
-    "patch-package": "^6.1.0",
+    "patch-package": "^6.1.2",
     "prop-types": "^15.7.2",
     "react": "16.5.0",
     "react-art": "^16.8.6",
@@ -34,31 +34,31 @@
     "react-native-collapsible": "^1.4.0",
     "react-native-elements": "^1.1.0",
     "react-native-extended-stylesheet": "^0.11.1",
-    "react-native-paper": "^2.15.0",
+    "react-native-paper": "^2.15.2",
     "react-native-picker-select": "^6.1.0",
     "react-native-search-bar": "^3.4.2",
     "react-native-search-box": "0.0.19",
     "react-native-searchbar": "^1.15.0",
     "react-native-web": "^0.10.1",
-    "react-navigation": "^3.5.1",
+    "react-navigation": "^3.9.1",
     "react-navigation-material-bottom-tabs": "^1.0.0",
-    "react-redux": "^7.0.2",
+    "react-redux": "^7.0.3",
     "react-scripts": "^2.1.8",
     "readline-sync": "^1.4.9",
     "redux": "^4.0.1",
-    "redux-form": "^8.1.0",
+    "redux-form": "^8.2.0",
     "typescript-require": "^0.2.10"
   },
   "devDependencies": {
     "@types/jest": "^24.0.12",
-    "@types/react": "^16.8.10",
-    "@types/react-dom": "^16.8.3",
-    "@types/react-native": "^0.57.42",
+    "@types/react": "^16.8.15",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-native": "^0.57.51",
     "jest": "^24.7.1",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.14.0",
+    "tslint": "^5.16.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.4.5"
   },
   "private": true,
   "browserslist": [
@@ -70,6 +70,10 @@
   "jest": {
     "preset": "ts-jest/presets/js-with-babel",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

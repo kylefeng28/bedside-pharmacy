@@ -21,8 +21,6 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 var Cache = require('global-cache');
-
-// let colors = ['#d9b3ff', '#b3e0ff'];
 let colors = ['#ffffff', '#f2f2f2']
 
 export class Compare extends Component {
@@ -68,7 +66,6 @@ export class Compare extends Component {
         labels = [];
       }
 
-      // console.log(labels);
       for (var i=0; i<labels.length; i++) {
         var str = labels[i];
         if (str != ""){
@@ -76,17 +73,10 @@ export class Compare extends Component {
           newlabels.push(obj);
         }
       }
-
-      // console.log("AHAHAHAHAHAHAHAHA");
-      console.log(newlabels);
         
       var drug_array = [];
 
       for (var i = 0; i < Cache.get("selected").length; i++) {
-        // drug_array.push(Object.keys(data[Cache.get("selected")[i][0]][Cache.get("selected")[i][1]][Cache.get("selected")[i][2]]));
-        // console.log(Cache.get("selected")[i][0]);
-        // console.log(Cache.get("selected")[i][1]);
-        // console.log(Cache.get("selected")[i][2]);
         
         drug_array.push(data[Cache.get("selected")[i][0]][Cache.get("selected")[i][1]][Cache.get("selected")[i][2]]);
       

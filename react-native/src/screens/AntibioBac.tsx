@@ -13,16 +13,10 @@ import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, ListIt
 import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 
 import * as Animatable from 'react-native-animatable';
-import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import EStyleSheet from 'react-native-extended-stylesheet'; 
-
-import { AccordionList } from "accordion-collapse-react-native";
-
 
 import styles from '../style';
 import { firebase } from '../utils/FirebaseWrapper';
-// let itemsRef = firebase.database.ref('/drugs_test');
 let itemsRef = firebase.database.ref('/drugs');
 
 

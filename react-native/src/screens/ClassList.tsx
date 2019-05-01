@@ -116,17 +116,18 @@ export class ClassList extends Component {
   };
 
   _clickResult(path){
-    console.log(path);
     if(path.length == 1){
        this.props.navigation.navigate('ToSubclass',{class_key: path[0]});
      } else if (path.length == 2){
       this.props.navigation.navigate('ToDrugList',{class_key: path[0], subclass_key: path[1] });
      } else if(path.length == 3){
-       if(path[1]=='Antibiotics' || path[1] == 'Bacteria'){
+       if(path[1]=='Antibiotics'){
          this.props.navigation.navigate('ToAntibioBac',{class_key: path[0], subclass_key: path[1], item_key: path[2]});
        }else{
           this.props.navigation.navigate('ToDrugInfo',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
        }
+     } else if(path.length == 4){
+      this.props.navigation.navigate('ToAntibioBac',{class_key: path[0], subclass_key: path[1], header_key: path[3], item_key: path[2]});
     }
   }
 

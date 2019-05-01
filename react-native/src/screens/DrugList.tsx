@@ -33,17 +33,11 @@ export class DrugList extends Component {
     this.state = {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
-      // class_key: "Antiacid",
-      // subclass_key: "_",
       data: [],
       selected: Cache.get("selected"),
     };
 
-    // console.log(Cache.set("selected", ["one"]))
-    // console.log(Cache.get("selected"));
   }
-
-  // search1: SearchBar
 
   componentDidMount() {
     this.getDrugList();
@@ -51,8 +45,6 @@ export class DrugList extends Component {
 
   componentDidUpdate() {
     console.log(this.state.selected);
-    // console.log("heyhey");
-    // this.forceUpdate();
   }
 
    getDrugList(){
@@ -111,7 +103,6 @@ export class DrugList extends Component {
       var temp = Cache.get("selected");
       temp.splice(idx, 1);
       Cache.set("selected", temp);
-      // console.log(Cache.get("selected"));
     } else { // add
       var temp = Cache.get("selected");
 
@@ -133,15 +124,11 @@ export class DrugList extends Component {
         }
       }
 
-      // console.log(Cache.get("selected"));
     }
 
     this.setState({
       selected: Cache.get("selected")
     })
-    // this._renderIcon();
-    // this.render();
-    // this.forceUpdate();
   }
 
   render() {

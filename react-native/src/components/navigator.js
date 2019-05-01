@@ -130,6 +130,12 @@ const ToBacteria = createStackNavigator({
     headerMode: 'none'
 })
 
+const ToAntibioBac= createStackNavigator({
+    AntibioBac
+}, {
+    headerMode: 'none'
+})
+
 
 const ReferenceNavigator = createStackNavigator({
     ClassList,
@@ -137,7 +143,8 @@ const ReferenceNavigator = createStackNavigator({
     ToDrugList,
     ToDrugInfo,
     ToAntibiotics,
-    ToBacteria
+    ToBacteria,
+    ToAntibioBac
 })
 
 const AppNavigator = createBottomTabNavigator({

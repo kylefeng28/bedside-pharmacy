@@ -1,4 +1,4 @@
-Follow the link here: https://docs.google.com/spreadsheets/d/1emlxlmceIF0n058nc2gCypeGPKAoU4xJyzAQ7F8rXYY/edit?usp=sharing 
+Follow the link here: https://docs.google.com/spreadsheets/d/1s6epRu9-mKUojsAcZIVxJlGpPSfK57BpxROsKkeQlLE/edit?usp=sharing
 The buttons will be on the custom menu. The test cases are different sorts of input into the excel sheet that we expect and
 inputs that we expect to fail. Simply go to Parse and Sync, and then Sync Current tab.
 Errors and Outputs should show up on the side. Errors and warnings are expected to happen, those are expected behaviors to help

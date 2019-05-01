@@ -8,10 +8,10 @@ COMP 523 Project Spring 2019
 ### Installing the tools
 First, install all necessary tools:
 
-- Node.js
+- [Node.js](https://nodejs.org)
 - [Expo](https://expo.io/): for easy testing on your phone
-    - [Register for an Expo account](https://expo.io/signup)
-    - Install the cli tool: `$ npm install -g expo-cli`
+    - [Register for an Expo account](https://expo.io/signup) (optional, but recommended)
+    - Install the Expo cli tool: `$ npm install -g expo-cli`
     - Download the Expo app for your phone as well
 
 These aren't required, but will make your life easier. Try to find plugins for your favorite editor for these things:
@@ -29,20 +29,25 @@ $ npm install
 ```
 
 ### Running the project
-**Expo**:
+**Expo**: (make sure you have `expo-cli` installed!)
+
 ```
 npm start
 ```
 
-The first time you run this, it should ask you to login to your Expo account. It should start a dev server, and you can then scan the QR code with your phone to see changes appear on your phone.
+The first time you run this, it should ask you to login to your Expo account.
+The command should start a dev server, and you can then scan the QR code with your phone to see changes appear on your phone.
 
-See `package.json` to see what these commands do.
+See the scripts section of `package.json` to see what these commands do.
 
 ## Directory structure
-- `package.json`: contains a list of dependencies and scripts used by the project
-- **Entry points**:
-    - `App.ts` (not `src/App.tsx`) is the entry point for mobile (used by Expo)
-- `__tests__`: contains automated Jest tests
+- `react-native`
+	- `package.json`: contains a list of dependencies and scripts used by the project
+	- `App.ts` (not `src/App.tsx`) is the entry point for used by Expo
+	- `src`: contains all the React Native source files
+	- `__tests__`: contains automated Jest tests
+- `Parser.gs`: Google Apps Script parser code
+- `appsscript.json`: used by Google Apps Script
 
 ### Running tests
 To run the automated Jest tests:

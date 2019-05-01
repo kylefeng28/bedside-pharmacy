@@ -80,22 +80,22 @@ export default EStyleSheet.create({
         // color: '$LinkBlue'
     },
 
-    bread_inline:{
+    bread_inline: {
         marginTop: 30,
     },
 
-    bread:{
+    bread: {
         fontFamily: 'Open-Sans-Regular',
         fontSize: 14,
         color: '$MainBlack'
     },
 
-    bread_active:{
-        color:'$LinkBlue'
+    bread_active: {
+        color: '$LinkBlue'
     },
 
-    insert_title:{
-        marginTop:0
+    insert_title: {
+        marginTop: 0
     },
 
 
@@ -103,39 +103,39 @@ export default EStyleSheet.create({
     Register/Login page
     ========================================================================== */
 
-    register_container:{
-      width: '80%',
+    register_container: {
+        width: '80%',
     },
 
-    register_title:{
-      textAlign: 'center',
+    register_title: {
+        textAlign: 'center',
     },
 
-    register_subtitle:{
-      textAlign: 'center',
-      fontSize: 14
+    register_subtitle: {
+        textAlign: 'center',
+        fontSize: 14
     },
 
-    switch_login:{
-      color: '$LinkBlue',
+    switch_login: {
+        color: '$LinkBlue',
     },
 
-    label:{
-      color: '$LinkBlue',
-      fontSize: 16
+    label: {
+        color: '$LinkBlue',
+        fontSize: 16
     },
 
-    login_button:{
-      backgroundColor: '$LinkBlue',
-      marginTop:30
+    login_button: {
+        backgroundColor: '$LinkBlue',
+        marginTop: 30
     },
 
-    login_text:{
-      color: '$MainWhite',
+    login_text: {
+        color: '$MainWhite',
     },
 
-    half:{
-      width: '50%'
+    half: {
+        width: '50%'
     },
 
 
@@ -151,9 +151,9 @@ export default EStyleSheet.create({
         color: '$MainBlack'
     },
 
-    main_title:{
-      marginTop: 70,
-      marginBottom:10
+    main_title: {
+        marginTop: 70,
+        marginBottom: 10
     },
 
     title_light: {
@@ -193,13 +193,13 @@ export default EStyleSheet.create({
         color: '$MediumGray'
     },
 
-    result_title:{
+    result_title: {
         fontFamily: 'Open-Sans-SemiBold',
         fontSize: 16,
         color: '$MainBlack'
     },
 
-    result_path:{
+    result_path: {
         fontFamily: 'Open-Sans-Regular',
         fontSize: 16,
         color: '$DarkGray',
@@ -320,7 +320,7 @@ export default EStyleSheet.create({
         marginBottom: 4
     },
 
-    accordion_spec:{
+    accordion_spec: {
         fontFamily: 'Open-Sans-Regular',
         color: '$MainBlack',
         fontSize: 16,
@@ -331,11 +331,11 @@ export default EStyleSheet.create({
     Antibiotics Screen
     ========================================================================== */
 
-    seperator:{
+    seperator: {
         backgroundColor: '$LinkBlue'
     },
 
-    switch:{
+    switch: {
         fontFamily: 'Open-Sans-Regular',
         color: '$LinkBlue',
         fontSize: 13,
@@ -343,17 +343,17 @@ export default EStyleSheet.create({
         marginBottom: 10
     },
 
-    divider:{
+    divider: {
         backgroundColor: 'rgba(225, 225, 225, 0.5)',
     },
 
-    divider_content:{
+    divider_content: {
         fontFamily: 'Open-Sans-Bold',
         color: '$MainBlack',
         fontSize: 18,
     },
 
-    category_item:{
+    category_item: {
         fontFamily: 'Open-Sans-Regular',
         color: '$MainBlack',
         fontSize: 18,
@@ -363,18 +363,18 @@ export default EStyleSheet.create({
     AntibioBac Page
     ========================================================================== */
 
-    antibioBac_list:{
+    antibioBac_list: {
         borderBottomWidth: 0,
         // height:45,
         marginBottom: 5,
-        marginTop:0,
-        padding:0,
-        flexWrap: 'wrap', 
+        marginTop: 0,
+        padding: 0,
+        flexWrap: 'wrap',
         alignItems: 'flex-start',
-        flexDirection:'row',
+        flexDirection: 'row',
     },
 
-    antiboBac_icon:{
+    antiboBac_icon: {
         fontSize: 20,
         color: '$LinkBlue'
     },
@@ -398,9 +398,9 @@ export default EStyleSheet.create({
         color: '$MainBlack'
     },
 
-    compare_by:{
-      fontSize: 13,
-      fontFamily: 'Open-Sans-Regular',
+    compare_by: {
+        fontSize: 13,
+        fontFamily: 'Open-Sans-Regular',
     },
 
     container: {
@@ -414,7 +414,9 @@ export default EStyleSheet.create({
     compare_item: {
         paddingTop: 2,
         paddingBottom: 2,
-        width: '50%',
+        // width: '50%',
+        display: 'flex',
+        flexDirection: 'row',
         // width: '50%'
     },
 
@@ -430,17 +432,18 @@ export default EStyleSheet.create({
         fontFamily: 'Open-Sans-SemiBold'
     },
 
-    compare_column_name:{
-      color:'$MainBlack',
-      fontSize: 16,
-      fontFamily: 'Open-Sans-SemiBold'
+    compare_column_name: {
+        color: '$MainBlack',
+        fontSize: 16,
+        fontFamily: 'Open-Sans-SemiBold',
+        width: '50%'
     },
 
-    compare_column_value:{
-      color: '$MainBlack',
-      fontSize: 16,
-      fontFamily: 'Open-Sans-Regular'
-
+    compare_column_value: {
+        color: '$MainBlack',
+        fontSize: 16,
+        fontFamily: 'Open-Sans-Regular',
+        width: '50%'
     },
 
     close_icon: {

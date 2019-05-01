@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 import React, { Component } from 'react';
@@ -35,7 +36,7 @@ export class DrugList extends Component {
       // class_key: "Antiacid",
       // subclass_key: "_",
       data: [],
-      selected: false,
+      selected: Cache.get("selected"),
     };
 
     // console.log(Cache.set("selected", ["one"]))
@@ -50,6 +51,8 @@ export class DrugList extends Component {
 
   componentDidUpdate() {
     console.log(this.state.selected);
+    // console.log("heyhey");
+    // this.forceUpdate();
   }
 
    getDrugList(){
@@ -72,44 +75,28 @@ export class DrugList extends Component {
      });
   }
 
-  _changeIcon(){
-    console.log(this.state.selected)
-    this.setState({
-      selected: !this.state.selected
-    })
-  }
-
-  _renderIcon(){
-    if (this.state.selected){ 
-      return(
-         <Ionicons name="ios-checkmark-circle" style={[styles.selected_comparison, styles.add_icon]} ></Ionicons>
-      )
-    }else{
-      return(
-         <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>
-        )
-    }
-
-  }
-
   _clickDrugList(drug_key){
     this.props.navigation.navigate('DrugInfo',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, drug_key: drug_key});
   };
 
-  _renderIcon() {
-    console.log(this.state.selected);
-    if (this.state.selected) {
-      return (<Ionicons name="ios-checkmark-circle"></Ionicons>)
+  _renderIcon(item_key) {
+    var exists = false;
+    for (var i=0; i<Cache.get("selected").length; i++) {
+      if (Cache.get("selected")[i][2] == item_key) {
+        exists = true;
+      }
+    }
+
+    // console.log(this.state.selected);
+    if (exists) {
+      // return (<SimpleLineIcons name="check" style={styles.add_icon}></SimpleLineIcons>)
+      return (<Ionicons name="ios-checkmark-circle" style={styles.selected_comparison} ></Ionicons>)
     } else {
       return (<SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>)
     }
   }
 
   _changeIcon(class_key, subclass_key, item_key) {
-    // if (subclass_key === undefined) {
-    //   subclass_key = "_";
-    // }
-
     // check cache - if exists: remove; else: add to cache
     var exists = false;
     var idx = 0;
@@ -127,13 +114,30 @@ export class DrugList extends Component {
       // console.log(Cache.get("selected"));
     } else { // add
       var temp = Cache.get("selected");
-      temp.push([class_key, subclass_key, item_key]);
-      Cache.set("selected", temp);
+
+      // check if already have 4 drugs in selected
+      if (temp.length == 4) {
+        Alert.alert("Already selected maximum amount of drugs for comparison.")
+      } else {
+        // check if classes match
+        if (temp.length > 0) {
+          if (temp[0][0] == class_key) {
+            temp.push([class_key, subclass_key, item_key]);
+            Cache.set("selected", temp);
+          } else {
+            Alert.alert("Could not add selected drug because is not within the same class.")
+          }
+        } else {
+          temp.push([class_key, subclass_key, item_key]);
+          Cache.set("selected", temp);
+        }
+      }
+
       // console.log(Cache.get("selected"));
     }
 
     this.setState({
-      selected: !this.state.selected
+      selected: Cache.get("selected")
     })
     // this._renderIcon();
     // this.render();
@@ -158,11 +162,11 @@ export class DrugList extends Component {
                   <ListItem noIndent style={styles.drug_list_item}
                             onPress={() => this._clickDrugList(item.key)}>
                     
-                    {/* <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>   */}
+                    {/* <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons> */}
 
                     <Button transparent>
                     <TouchableOpacity onPress={() => this._changeIcon(this.state.class_key, this.state.subclass_key, item.key)}>
-                      {this._renderIcon()}
+                      {this._renderIcon(item.key)}
                     </TouchableOpacity>
                     </Button>
 

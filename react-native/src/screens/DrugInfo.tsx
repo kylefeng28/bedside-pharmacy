@@ -10,7 +10,7 @@ import {
 
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, ListItem, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { SimpleLineIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Constants } from 'expo';
 import * as Animatable from 'react-native-animatable';
@@ -27,6 +27,7 @@ import { firebase } from '../utils/FirebaseWrapper';
 // let itemsRef = firebase.database.ref('/drugs_test');
 let itemsRef = firebase.database.ref('/drugs');
 
+var Cache = require('global-cache');
 
 export class DrugInfo extends Component {
   constructor(props) {
@@ -38,7 +39,8 @@ export class DrugInfo extends Component {
       breadcrumb: [],
       description: "",
       brand: "",
-      selected: false,
+      // selected: false,
+      selected: Cache.get("selected"),
       activeSections: [],
       collapsed: false,
       multipleSelect: true,
@@ -133,21 +135,70 @@ export class DrugInfo extends Component {
     );
   }
 
-  _changeIcon(){
+  _changeIcon(class_key, subclass_key, item_key){
+    // this.setState({
+    //   selected: !this.state.selected
+    // })
+
+    var exists = false;
+    var idx = 0;
+    for (var i=0; i<Cache.get("selected").length; i++) {
+      if (Cache.get("selected")[i][2] == item_key) {
+        exists = true;
+        idx = i;
+      }
+    }
+
+    if (exists) { // get rid
+      var temp = Cache.get("selected");
+      temp.splice(idx, 1);
+      Cache.set("selected", temp);
+      // console.log(Cache.get("selected"));
+    } else { // add
+      var temp = Cache.get("selected");
+
+      // check if already have 4 drugs in selected
+      if (temp.length == 4) {
+        Alert.alert("Already selected maximum amount of drugs for comparison.")
+      } else {
+        // check if classes match
+        if (temp.length > 0) {
+          if (temp[0][0] == class_key) {
+            temp.push([class_key, subclass_key, item_key]);
+            Cache.set("selected", temp);
+          } else {
+            Alert.alert("Could not add selected drug because is not within the same class.")
+          }
+        } else {
+          temp.push([class_key, subclass_key, item_key]);
+          Cache.set("selected", temp);
+        }
+      }
+
+      // console.log(Cache.get("selected"));
+    }
+
     this.setState({
-      selected: !this.state.selected
+      selected: Cache.get("selected")
     })
   }
 
-  _renderIcon(){
-    if (this.state.selected){ 
-      return(
-         <Ionicons name="ios-checkmark-circle" style={styles.selected_comparison} ></Ionicons>
-      )
-    }else{
-      return(
-         <Ionicons name="ios-add-circle-outline" style={styles.add_comparison} ></Ionicons>
-        )
+  _renderIcon(item_key){
+    console.log("egg");
+
+    var exists = false;
+    for (var i=0; i<Cache.get("selected").length; i++) {
+      if (Cache.get("selected")[i][2] == item_key) {
+        exists = true;
+      }
+    }
+
+    // console.log(this.state.selected);
+    if (exists) {
+      // return (<SimpleLineIcons name="check" style={styles.add_icon}></SimpleLineIcons>)
+      return (<Ionicons name="ios-checkmark-circle" style={styles.selected_comparison} ></Ionicons>)
+    } else {
+      return (<SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>)
     }
 
   }
@@ -172,8 +223,8 @@ export class DrugInfo extends Component {
             </Text>
             <Right>
               <Button transparent>
-              <TouchableOpacity onPress={() => this._changeIcon()}>
-                {this._renderIcon()}
+              <TouchableOpacity onPress={() => this._changeIcon(this.state.class_key, this.state.subclass_key, this.state.drug_key)}>
+                {this._renderIcon(this.state.drug_key)}
                </TouchableOpacity>
                </Button>
              </Right>

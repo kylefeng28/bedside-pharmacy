@@ -23,11 +23,8 @@ import { Separator } from 'native-base';
 import { AppLoading, Font } from 'expo';
 
 import styles from '../style';
-import { firebase } from '../utils/FirebaseWrapper';
-// let itemsRef = firebase.database.ref('/drugs_test');
-let itemsRef = firebase.database.ref('/drugs');
 
-
+const Cache = require('global-cache');
 
 export class Antibiotics extends Component {
 
@@ -48,8 +45,8 @@ export class Antibiotics extends Component {
   }
 
   async getAntibiotics(){
-     itemsRef.on('value', snapshot =>{
-        var data = snapshot.val();
+    Cache.get('is_data_loaded').then(() => {
+        var data = Cache.get('drugs_data');
         var data_output = [];
         var antibiotics = Object.keys(data[this.state.class_key][this.state.subclass_key]);
           antibiotics.forEach(function(value){

@@ -14,11 +14,9 @@ import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 
-//Load Firebase
-import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
-
 import styles from '../style';
+
+const Cache = require('global-cache');
 
 export class Subclass extends Component {
 
@@ -40,8 +38,8 @@ export class Subclass extends Component {
   }
 
   getSubclassList(){
-    itemsRef.on('value', snapshot => {
-      let data = snapshot.val();
+    Cache.get('is_data_loaded').then(() => {
+      let data = Cache.get('drugs_data');
 
       // slice the last element as it is the label info as default
       let subclass_names = Object.keys(data[this.state.class_key]).slice(0, -1);

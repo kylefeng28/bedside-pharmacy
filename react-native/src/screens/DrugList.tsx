@@ -15,14 +15,10 @@ import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 
 
-//Load Firebase
-import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
-
 import styles from '../style';
 import { createNavigationContainer } from 'react-navigation';
 
-var Cache = require('global-cache');
+const Cache = require('global-cache');
 
 export class DrugList extends Component {
 
@@ -53,8 +49,8 @@ export class DrugList extends Component {
   }
 
    getDrugList(){
-     itemsRef.on('value', snapshot =>{
-        let data = snapshot.val();
+     Cache.get('is_data_loaded').then(() => {
+        let data = Cache.get('drugs_data');
         let drug_names = Object.keys(data[this.state.class_key][this.state.subclass_key]);
         var drug_array = [];
 

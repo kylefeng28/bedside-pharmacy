@@ -8,6 +8,7 @@ Base Class:
 //Import package
 import React, { Component } from 'react';
 import { AppLoading, Font } from 'expo';
+import { AsyncStorage } from 'react-native';
 
 //Import components and utils
 import { AppContainer } from './components/navigator';
@@ -15,6 +16,9 @@ import { firebase } from './utils/FirebaseWrapper';
 
 //Reference data
 let itemsRef = firebase.database.ref('/drugs');
+
+// Global cache
+const Cache = require('global-cache');
 
 //Delete later, for development use only
 import { AntibioBac } from './screens/AntibioBac';
@@ -34,6 +38,23 @@ export default class App extends Component {
 
   componentWillMount() {
     this._loadFontsAsync();
+  }
+
+  componentDidMount() {
+    // Load data from Firebase into AsyncStorage and global cache
+    Cache.set('is_data_loaded', new Promise((resolve, reject) => {
+      itemsRef.on('value', async (snapshot) => {
+        if (!snapshot) {
+          reject();
+          throw new Error('could not fetch from Firebase');
+        }
+        resolve();
+
+        let drugs_data = snapshot.val();
+        Cache.set('drugs_data', drugs_data); // temporary cache
+        await AsyncStorage.setItem('drugs_data', JSON.stringify(drugs_data)); // persistent storage
+      });
+    }))
   }
 
    _loadFontsAsync = async () => {

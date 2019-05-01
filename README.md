@@ -41,13 +41,14 @@ The command should start a dev server, and you can then scan the QR code with yo
 See the scripts section of `package.json` to see what these commands do.
 
 ## Directory structure
-- `react-native`
+- `react-native`: React Native code
 	- `package.json`: contains a list of dependencies and scripts used by the project
 	- `App.ts` (not `src/App.tsx`) is the entry point for used by Expo
 	- `src`: contains all the React Native source files
 	- `__tests__`: contains automated Jest tests
-- `Parser.gs`: Google Apps Script parser code
-- `appsscript.json`: used by Google Apps Script
+- `parser`: Google Apps Script parser code
+	- `Parser.gs`
+	- `appsscript.json`: manifest file
 
 ### Running tests
 To run the automated Jest tests:

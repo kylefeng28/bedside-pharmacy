@@ -38,7 +38,8 @@ export class Compare extends Component {
 
     this.state = {
       data: [],
-      // labels: [],
+      labels: [],
+      currentLabel: [],
       date: new Date()
       };
   }
@@ -54,7 +55,8 @@ export class Compare extends Component {
 
   getCompareList() {
     var all_content = [];
-    let labels = [];
+    var labels = [];
+    let newlabels = [];
 
     itemsRef.on('value', snapshot =>{
       let data = snapshot.val();
@@ -65,6 +67,18 @@ export class Compare extends Component {
       } else {
         labels = [];
       }
+
+      // console.log(labels);
+      for (var i=0; i<labels.length; i++) {
+        var str = labels[i];
+        if (str != ""){
+          var obj = {label:str, value:str}; // not bad vscode
+          newlabels.push(obj);
+        }
+      }
+
+      // console.log("AHAHAHAHAHAHAHAHA");
+      console.log(newlabels);
         
       var drug_array = [];
 
@@ -95,7 +109,8 @@ export class Compare extends Component {
     this.setState({
       // data: [...drug_array],
       data: all_content,
-      // labels: labels
+      labels: newlabels,
+      currentLabel: newlabels,
     }, function() {console.log(this.state.data);});
   }
   
@@ -115,11 +130,11 @@ export class Compare extends Component {
               <View style={styles.inline}>
                <Text style={[styles.title,styles.main_title]}>Compare</Text>
               <Right>
-                <Button transparent>
+                {/* <Button transparent>
                 <TouchableOpacity>
                    <SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons> 
                  </TouchableOpacity>
-                 </Button>
+                 </Button> */}
                </Right>
              </View>
 
@@ -132,13 +147,14 @@ export class Compare extends Component {
                     // placeholder={{
                     //   label: 'Select a number or add another...',
                     // }}
-                    items={this.state.data}
+                    items={this.state.labels}
                     onValueChange={value => {
-                      this.setState({
-                        favNumber: value,
+                      this.setState({ ////////////// why dis no work /////////// also need to fix logic so can filter by label and not size/idx
+                        currentLabel: [value],
                       });
+                      console.log("r u in ting");
                     }}
-                    value={this.state.favNumber}
+                    value={this.state.currentLabel[0]}
                     Icon={() => {
                       return (
                         <View
@@ -178,27 +194,21 @@ export class Compare extends Component {
                           <Text style={styles.column_header_text}>{item["name"]}</Text>
                         </View>
                         
-                        {/* <View style={styles.compare_item}>
-                          <Text style={styles.compare_column_name}>{item["content"][0]["title"]}</Text>
-                        </View>
-                        <View><Text style={styles.compare_column_value}>{item["content"][0]["content"]}</Text></View> */}
+                        {this.state.currentLabel.map((label, index) => {
+                          return (
+                            <View style={styles.compare_item}>
+                              <Text style={styles.compare_column_name}>{item["content"][index]["title"]}</Text>
+                              <Text style={styles.compare_column_value}>{item["content"][index]["content"]}</Text>
+                            </View>
+                          );
+                        })}
 
-                        <View style={styles.compare_item}>
+                        {/* <View style={styles.compare_item}>
                           <Text style={styles.compare_column_name}>{item["content"][1]["title"]}</Text>
                         </View>
-                        <View><Text style={styles.compare_column_value}>{item["content"][1]["content"]}</Text></View>
+                        <View><Text style={styles.compare_column_value}>{item["content"][1]["content"]}</Text></View> */}
 
-                        <View style={styles.compare_item}>
-                          <Text style={styles.compare_column_name}>{item["content"][2]["title"]}</Text>
-                        </View>
-                        <View><Text style={styles.compare_column_value}>{item["content"][2]["content"]}</Text></View>
-
-                        <View style={styles.compare_item}>
-                          <Text style={styles.compare_column_name}>{item["content"][3]["title"]}</Text>
-                        </View>
-                        <View><Text style={styles.compare_column_value}>{item["content"][3]["content"]}</Text></View>
-
-                        </View>
+                      </View>
 
                       <Ionicons name="ios-close" onPress={() => this._deleteItem(index)} style={[styles.close_icon, {paddingRight: 15}]}></Ionicons>
                     </ListItem>

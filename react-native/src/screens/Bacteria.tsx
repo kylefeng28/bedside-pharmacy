@@ -103,7 +103,7 @@ export class Bacteria extends Component {
                         renderItem={({item}) => 
                           <View>
                             <ListItem noIndent>          
-                                <Text style={styles.category_item}>{item.item}</Text>                  
+                                <Text style={styles.category_item}>{item.item.replace('*',' / ')}</Text>                  
                             </ListItem>           
                           </View>
                        }
@@ -141,7 +141,7 @@ export class Bacteria extends Component {
                           renderItem={({item}) => 
                             <View>
                               <ListItem noIndent onPress={()=> this._clickItem(item.item)}>          
-                                  <Text style={styles.category_item}>{item.item}</Text>                  
+                                  <Text style={styles.category_item}>{item.item.replace('^','.')}</Text>                  
                               </ListItem>           
                             </View>
                          }

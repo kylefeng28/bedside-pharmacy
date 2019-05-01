@@ -85,7 +85,7 @@ export class ClassList extends Component {
 
       // Replace '*' with '/' for class value
       for (i = 0; i < class_names.length; i++) {
-        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "").replace('*',' / ')};
+        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "").replace('*',' / ').replace('^','.')};
         class_array.push(a);
       }
 
@@ -142,7 +142,7 @@ export class ClassList extends Component {
               renderItem={({item}) => 
                 <ListItem noIndent
                     onPress={() => this._clickResult(item.path)}>          
-                    <Text style={styles.result_title}>{item.name}</Text>
+                    <Text style={styles.result_title}>{item.name.replace('^','.')}</Text>
                     <Text style={styles.result_path}>  in </Text>
                     <Text style={styles.result_path}>{item.path[0]}</Text>
                </ListItem>
@@ -194,9 +194,10 @@ export class ClassList extends Component {
                 tintColorSearch='#151515'
                 inputHeight={40}
                 iconSearch = {<Ionicons name="md-search" style={styles.search_icon}></Ionicons>}
-                // iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
+                iconDelete = {<Entypo name="circle-with-cross" style={styles.cancel_icon}></Entypo>}
                 middleWidth = {100}
                 placeholder = {"Seach by subclass, drug, bacteria etc."}
+                positionRightDelete = {80}
                 searchIconCollapsedMargin = {160}
                 placeholderCollapsedMargin = {145}
                 onCancel = {() => this._cancelSearch()}

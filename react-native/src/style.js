@@ -172,6 +172,12 @@ export default EStyleSheet.create({
         marginTop: -8,
     },
 
+    cancel_icon: {
+        color: '$DarkGray',
+        fontSize: 15,
+        marginTop: -5,
+    },
+
     class_list: {
         marginTop: 30
     },
@@ -199,9 +205,9 @@ export default EStyleSheet.create({
         color: '$DarkGray',
     },
 
-    result_box:{
-        height: 500
-    },
+    // result_box:{
+    //     height: 500
+    // },
 
 
 

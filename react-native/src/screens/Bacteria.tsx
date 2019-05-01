@@ -16,14 +16,9 @@ import SearchBar from 'react-native-search-bar'
 import Search from 'react-native-search-box';
 import AlphabetListView from 'react-native-alphabetlistview'
 
-
-//Load Firebase
-import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
-
 import styles from '../style';
 
-
+const Cache = require('global-cache');
 
 export class Bacteria extends Component {
 
@@ -43,8 +38,8 @@ export class Bacteria extends Component {
   }
 
   async getBacteriaList(){
-     itemsRef.on('value', snapshot =>{
-        var data = snapshot.val();
+     Cache.get('is_data_loaded').then(() => {
+        let data = Cache.get('drugs_data');
         var data_output = [];
         var bacterias = data[this.state.class_key][this.state.subclass_key];
         var header_names = Object.keys(bacterias);    

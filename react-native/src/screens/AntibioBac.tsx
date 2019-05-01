@@ -21,11 +21,8 @@ import { AccordionList } from "accordion-collapse-react-native";
 
 
 import styles from '../style';
-import { firebase } from '../utils/FirebaseWrapper';
-// let itemsRef = firebase.database.ref('/drugs_test');
-let itemsRef = firebase.database.ref('/drugs');
 
-
+const Cache = require('global-cache');
 
 export class AntibioBac extends Component {
   constructor(props) {
@@ -45,8 +42,8 @@ export class AntibioBac extends Component {
 
   getData(){
     var content = [];
-    itemsRef.on('value', snapshot =>{
-        let data = snapshot.val();
+    Cache.get('is_data_loaded').then(() => {
+        let data = Cache.get('drugs_data');
 
         // Antibiotics and Bacteria data structure are slightly different
         // Bacteria has an extra layer of header information

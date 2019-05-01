@@ -24,7 +24,6 @@ export class Subclass extends Component {
 
   constructor(props) {
     super(props);
-    // console.log(props.navigation.getParam('key', ''));
 
     this.state = {
       class_key: props.navigation.getParam('class_key', ''),
@@ -33,10 +32,8 @@ export class Subclass extends Component {
   }
 
   // search1: SearchBar
-
   componentDidMount() {
     this.getSubclassList();
-    // this.refs.searchBar.focus();
   }
 
   getSubclassList(){

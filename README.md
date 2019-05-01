@@ -37,6 +37,7 @@ npm start
 
 The first time you run this, it should ask you to login to your Expo account.
 The command should start a dev server, and you can then scan the QR code with your phone to see changes appear on your phone.
+The Android Expo app has the QR scanner built in; for iOS, you can use the Camera app to scan the QR code to open the project in Expo.
 
 See the scripts section of `package.json` to see what these commands do.
 

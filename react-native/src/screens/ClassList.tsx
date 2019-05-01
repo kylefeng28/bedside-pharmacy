@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import React, { Component } from 'react';
+import { NavigationScreenProp } from 'react-navigation';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, Card, CardItem, Content, FooterTab, Icon, Footer, List, ListItem, Item, Input} from 'native-base';
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Search from 'react-native-search-box';
@@ -35,17 +36,22 @@ export class ClassList extends Component {
   static navigationOptions = {
     header: null
   }
-  state:{
-    items: any[],
+  props: {
+    navigation: NavigationScreenProp<any, any>
+  }
+  state: {
+    data: any[],
+    searchResult: any[],
     onSearch: boolean,
     showClassList: boolean,
   }
 
   constructor(props) {
     super(props);
+    this.props = props; // not necessarily but needed to get ts-jest to shut up
 
     this.state = {
-      data:[],
+      data: [],
       searchResult: [],
       onSearch: false,
       showClassList: true,
@@ -78,13 +84,14 @@ export class ClassList extends Component {
 
   getClassList(){
     itemsRef.on('value', snapshot => {
+      if (!snapshot) { return; }
       let data = snapshot.val();
       SearchUtil.loadRawData(data);
       let class_names = Object.keys(data);
-      var class_array = [];
+      var class_array: any = [];
 
       // Replace '*' with '/' for class value
-      for (i = 0; i < class_names.length; i++) {
+      for (let i = 0; i < class_names.length; i++) {
         let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "").replace('*',' / ')};
         class_array.push(a);
       }
@@ -98,14 +105,15 @@ export class ClassList extends Component {
 
   _clickClass(class_key){
     itemsRef.on('value', snapshot => {
+      if (!snapshot) { return; }
       let data = snapshot.val();
 
       // slice the last element as it is the label info as default
       let subclass_key = Object.keys(data[class_key])[0];
 
-      if(class_key == 'Antibiotics And Organisms'){
+      if(class_key === 'Antibiotics And Organisms'){
         this.props.navigation.navigate('ToAntibiotics')
-      } else if (subclass_key == '_'){
+      } else if (subclass_key === '_'){
         this.props.navigation.navigate('ToDrugList',{class_key: class_key, subclass_key: subclass_key });
       }else{ 
         this.props.navigation.navigate('ToSubclass',{class_key: class_key});
@@ -134,7 +142,7 @@ export class ClassList extends Component {
         <ScrollView style={styles.result_box}>
           <FlatList
               data={this.state.searchResult}
-              renderItem={({item}) => 
+              renderItem={({item}: {item: any}) => 
                 <ListItem noIndent
                     onPress={() => this._clickResult(item.path)}>          
                     <Text style={styles.result_title}>{item.name}</Text>
@@ -180,7 +188,7 @@ export class ClassList extends Component {
          <Content padder>
            <Text style={[styles.title,styles.main_title]}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
 
-           <View styles = {styles.seach_box}>
+           <View style={styles.seach_box}>
              <Search
                 ref='search_box'
                 backgroundColor= '#FFFFFF'

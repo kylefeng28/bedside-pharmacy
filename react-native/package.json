@@ -69,8 +69,9 @@
     "not op_mini all"
   ],
   "jest": {
-    "preset": "ts-jest",
+    "preset": "ts-jest/presets/js-with-ts",
     "transform": {
+			"^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
 			"^.+\\.tsx?$": "ts-jest"
 		},
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",

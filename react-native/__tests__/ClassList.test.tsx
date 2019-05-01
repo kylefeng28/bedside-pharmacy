@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { ClassList  } from '../src/screens/ClassList';
+import { ClassList } from '../src/screens/ClassList';
 // import { DrugList } from '../src/screens/DrugList';
 
 test('ClassList renders correctly', () => {

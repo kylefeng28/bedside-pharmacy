@@ -149,7 +149,7 @@ export class Compare extends Component {
                     // }}
                     items={this.state.labels}
                     onValueChange={value => {
-                      this.setState({ ////////////// why dis no work /////////// also need to fix logic so can filter by label and not size/idx
+                      this.setState({
                         currentLabel: [value],
                       });
                       console.log("r u in ting");

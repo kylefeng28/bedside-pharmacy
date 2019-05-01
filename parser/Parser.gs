@@ -15,6 +15,7 @@ var errMsg;
 var warnings;
 var reformattedData;
 var columnsEmpty;
+var cache;
 //SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sedation").activate();
 function onOpen() {
   ui = SpreadsheetApp.getUi()
@@ -23,11 +24,16 @@ function onOpen() {
   .createMenu('Parse and Sync')    
   .addItem('Sync Current Tab', 'testTab')
   .addItem('Sync All Tabs', 'iterateTabs')
-  //.addItem('Show alert', 'showAlerts')
+  .addItem('Show alert', 'showAlerts')
   .addToUi();
 }
 function showAlerts(){
-  ui.alert(errMsg);
+ var html = HtmlService.createHtmlOutput(PropertiesService.getScriptProperties().getProperty('log'))
+      .setTitle('Alerts')
+      .setWidth(300);
+  SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
+      .showSidebar(html);
+  //ui.alert(PropertiesService.getScriptProperties().getProperty('log'));
 }
 function testTab(){
     alphaExcel = alphaExcel.split("");
@@ -41,15 +47,20 @@ function testTab(){
        } else if(sheet.getName() == "ANTIBIOTICS AND ORGANISMS"){
            parseAntibioticsTab();
        } else{
+           if(sheet.getName() == "Testing"){
+             url = 'https://' + projectId + '.firebaseio.com/' + parseSheetName(sheet.getName()) + '.json';
+           }
            parseNormalTab();
        }
      } catch (err){
        errMsg += err + "Unexpected error in cell (" + (r+1) + "," + getAlphaNum(c) + ")\n"; 
-       Logger.log(err + "\n");
-       Logger.log(err.stack);
+       //Logger.log(err + "\n");
+       //Logger.log(err.stack);
        //Logger.log(data[r][c]);
      }
-     ui.alert(errMsg + warnings);
+     //ui.alert(errMsg + warnings);    
+     PropertiesService.getScriptProperties().setProperty('log', errMsg+warnings);
+     showAlerts();
 }
 function iterateTabs() {
     alphaExcel = alphaExcel.split("");
@@ -80,6 +91,9 @@ function iterateTabs() {
           }
         }
         else{ //if(sheet.getName() == "ANTIARRYTHMICS"){
+            if(sheet.getName() == "Testing"){
+               url = 'https://' + projectId + '.firebaseio.com/' + parseSheetName(sheet.getName()) + '.json';
+            }else{
 			SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheet.getName()).activate();
             Logger.log("Parsing " +sheet.getName());
             //if(sheet.getName() == "SEDATION"){
@@ -87,16 +101,19 @@ function iterateTabs() {
                     parseNormalTab();
                 } catch (err){
                     errMsg += err + "Unexpected error in cell (" + (r+1) + "," + getAlphaNum(c) + ")\n"; 
-                    Logger.log(err + "\n");
-                    Logger.log(err.stack);
+                    //Logger.log(err + "\n");
+                    //Logger.log(err.stack);
                     //Logger.log(data[r][c]);
                 }
             //}
+            }
 		} 
         errMsg += warnings;
 	}
-    ui.alert(errMsg);
+    //ui.alert(errMsg);
     //SpreadsheetApp.getActiveSpreadsheet().getSheetByName("STYLE GUIDE").activate();
+    //PropertiesService.getScriptProperties().setProperty('log', errMsg+warnings);
+    //showAlerts();
 }
 function parseNormalTab() {
 	//var projectId = 'testing-ac10d';
@@ -106,13 +123,20 @@ function parseNormalTab() {
 	reformattedData = {};
 	// for each drug, parse [class, ..., warnings] // we will refer to them as columns 0-4
     var added = "";
+    var phase = 0;
 	reformattedData["labels"] = data[0].slice(1).map(function (str) { //takes labels, caps first letter, lowercase all others
         if(str == null || str.equals("")){
-             added = "Warning: There should be no cells past the last column header (last entry in row 1)\n";     
+             phase++;
+             added = "There should be no cells past the last column header (last entry in row 1)\n";     
         }else{
-            return str.split('/').map(function (indiv) {
-                return indiv.charAt(0) + indiv.slice(1).toLowerCase();
-            }).join('/');
+            if(phase == 1){
+                phase++;
+            }
+            if(phase <= 2){
+              return str.split('/').map(function (indiv) {
+                  return indiv.charAt(0) + indiv.slice(1).toLowerCase();
+              }).join('/');
+            }
         }
 	});
     /*var blankCell = false;
@@ -315,7 +339,12 @@ function parseUpperFirst(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 function parseFirebaseIllegals(toCut) {
-	return toCut.replace(/\//g, "*").replace(/\./g, '~').replace(/\[/g, '{').replace(/\]/g, '}').replace(/\n/g, '');
+	toCut = toCut.replace(/\//g, "*").replace(/\./g, '^').replace(/\[/g, '{').replace(/\]/g, '}').replace(/\n/g, '');
+    return toCut.split("*").map(function(parts){
+        return parts.split(" ").map(function(str){
+            return parseUpperFirst(str);
+        }).join(" ");
+    }).join("*");
 }
 function parseSheetName(sheet_name){
     return parseFirebaseIllegals(parseMultiWordCaps(sheet.getName()));

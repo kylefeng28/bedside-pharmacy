@@ -1,7 +1,6 @@
 import Fuse from 'fuse.js';
-
-import { firebase } from '../utils/FirebaseWrapper';
-let itemsRef = firebase.database.ref('/drugs');
+// TODO use global-cache
+// const Cache = require('global-cache');
 
 /*
 export enum SearchResultType
@@ -27,8 +26,8 @@ const ignored = [antibioticsSection,  'Bacteria', 'labels' ];
 
 // Process data for search
 // Returns SearchResult[]
-/*export*/ function processData(rawData)/*: SearchResult[]*/ {
-  const data/*: SearchResult[]*/ = [];
+function processData(rawData): any[] /*: SearchResult[]*/ {
+  const data: any[] /*: SearchResult[]*/ = [];
 
   // Loop through antibiotics
   const antibioticsData = rawData[antibioticsSection];
@@ -50,17 +49,28 @@ const ignored = [antibioticsSection,  'Bacteria', 'labels' ];
 
     let drugClass = rawData[drugClassName];
 
+    let drugClassAdded = false;
+
     // Loop through subclasses
     for (let subclassName in drugClass) {
       if (ignored.includes(subclassName)) { continue; }
 
       const subclass = drugClass[subclassName];
-      const isSubclass = subclassName === '_';
+      const isSubclass = !(subclassName === '_');
 
       const subclassPath = [ drugClassName, subclassName ];
 
       // Add entry
-      data.push(processSubclass(subclassName, subclassPath, isSubclass));
+      if (isSubclass) {
+        data.push(processSubclass(subclassName, subclassPath, true));
+        // Only add the parent class once
+        if (!drugClassAdded) {
+          data.push(processSubclass(drugClassName, [drugClassName], false));
+          drugClassAdded = true;
+        }
+      } else {
+        data.push(processSubclass(drugClassName, subclassPath, false));
+      }
 
       // Loop through drugs
       for (let drugName in subclass) {
@@ -82,7 +92,7 @@ function processAntibiotic(antibioticName)/*: SearchResult*/ {
     name: antibioticName,
     type: SearchResultType.ANTIBIOTIC,
     path: [ antibioticsSection, 'Antibiotics', antibioticName ],
-  }
+  };
 }
 
 function processBug(bugName, bugClassName)/*: SearchResult*/ {
@@ -132,17 +142,20 @@ function makeFuse(data/*: SearchResult[]*/) {
   return fuse;
 }
 
-// Fetch data from Firebase
-let rawData = null;
-let data = null;
-// TODO refactor into a separate class to be used by anything that gets data
-itemsRef.on('value', snapshot => {
-  rawData = snapshot.val();
-  data = processData(rawData);
-});
+// TODO use global-cache
+let _rawData: any = null;
+let _data: any = null;
 
-function getData()/*: SearchResult[]*/ {
-  return data;
+// Load raw data to be processed and cached
+// USES GLOBAL STATE
+export function loadRawData(rawData) {
+  _rawData = rawData;
+  _data = processData(rawData);
+}
+
+// TODO remove export
+export function getData()/*: SearchResult[]*/ {
+  return _data;
 }
 
 // TODO separate search antibiotic and drug search?
@@ -166,7 +179,7 @@ export function search(query/*: string*/)/*: SearchResult[]*/ {
 
   // unnest into array of fuseResultEntry.item and discard fuseResultEntry.matches
   // also add key
-  const result = fuseResult.map((r, i) => {
+  const result = fuseResult.map((r: any, i) => {
     return { ...r.item, key: '' + i };
   });
 

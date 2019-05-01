@@ -79,12 +79,13 @@ export class ClassList extends Component {
   getClassList(){
     itemsRef.on('value', snapshot => {
       let data = snapshot.val();
+      SearchUtil.loadRawData(data);
       let class_names = Object.keys(data);
       var class_array = [];
 
       // Replace '*' with '/' for class value
       for (i = 0; i < class_names.length; i++) {
-        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "").replace('*',' / ')};
+        let a = {key:JSON.stringify(class_names[i]).replace(/\"/g, ""),value:JSON.stringify(class_names[i]).replace(/\"/g, "").replace('*',' / ').replace('^','.')};
         class_array.push(a);
       }
 
@@ -115,12 +116,17 @@ export class ClassList extends Component {
   };
 
   _clickResult(path){
+    console.log(path);
     if(path.length == 1){
        this.props.navigation.navigate('ToSubclass',{class_key: path[0]});
      } else if (path.length == 2){
       this.props.navigation.navigate('ToDrugList',{class_key: path[0], subclass_key: path[1] });
      } else if(path.length == 3){
-       this.props.navigation.navigate('ToDrugInfo',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
+       if(path[1]=='Antibiotics' || path[1] == 'Bacteria'){
+         this.props.navigation.navigate('ToAntibioBac',{class_key: path[0], subclass_key: path[1], item_key: path[2]});
+       }else{
+          this.props.navigation.navigate('ToDrugInfo',{class_key: path[0], subclass_key: path[1], drug_key: path[2]});
+       }
     }
   }
 
@@ -136,7 +142,7 @@ export class ClassList extends Component {
               renderItem={({item}) => 
                 <ListItem noIndent
                     onPress={() => this._clickResult(item.path)}>          
-                    <Text style={styles.result_title}>{item.name}</Text>
+                    <Text style={styles.result_title}>{item.name.replace('^','.')}</Text>
                     <Text style={styles.result_path}>  in </Text>
                     <Text style={styles.result_path}>{item.path[0]}</Text>
                </ListItem>
@@ -179,7 +185,7 @@ export class ClassList extends Component {
          <Content padder>
            <Text style={[styles.title,styles.main_title]}>Bedside <Text style={styles.title_light}>Pharmacist</Text></Text>
 
-           <View styles = {styles.seach_box}>
+           <View style = {styles.seach_box}>
              <Search
                 ref='search_box'
                 backgroundColor= '#FFFFFF'
@@ -187,9 +193,13 @@ export class ClassList extends Component {
                 titleCancelColor='#007FAE'
                 tintColorSearch='#151515'
                 inputHeight={40}
-                iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
+                iconSearch = {<Ionicons name="md-search" style={styles.search_icon}></Ionicons>}
+                iconDelete = {<Entypo name="circle-with-cross" style={styles.cancel_icon}></Entypo>}
                 middleWidth = {100}
-                // onFocus = {() => this.setState({ onSearch: true})}
+                placeholder = {"Seach by subclass, drug, bacteria etc."}
+                positionRightDelete = {80}
+                searchIconCollapsedMargin = {160}
+                placeholderCollapsedMargin = {145}
                 onCancel = {() => this._cancelSearch()}
                 onChangeText = {(searchText) => this._onSearch(searchText)}
               />

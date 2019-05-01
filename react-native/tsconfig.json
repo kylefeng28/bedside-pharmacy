@@ -30,7 +30,8 @@
   "types": [
     "react",
     "react-dom",
-    "react-native"
+    "react-native",
+    "jest"
   ],
   "exclude": [
     "build",

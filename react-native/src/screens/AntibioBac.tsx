@@ -44,6 +44,7 @@ export class AntibioBac extends Component {
   }
 
   getData(){
+
     var content = [];
     itemsRef.on('value', snapshot =>{
         let data = snapshot.val();
@@ -126,7 +127,7 @@ export class AntibioBac extends Component {
           renderItem={({item}) => 
             <View style={styles.antibioBac_list}>
               {section.subclass =='Antibiotics'? <FontAwesome name="bug" style={styles.antiboBac_icon}></FontAwesome> : <MaterialCommunityIcons name='pill' style={styles.antiboBac_icon}></MaterialCommunityIcons> }
-              <Text style={styles.drug_list_item_text}>{item.value}</Text>
+              <Text style={styles.drug_list_item_text}>{item.value.replace('*','/').replace('*',' / ')}</Text>
             </View>  
           }
         />
@@ -144,11 +145,11 @@ export class AntibioBac extends Component {
 
         <Content padder style={styles.body}>
           <View style={styles.inline}>
-            <Text style={styles.title}>{this.state.item_key}
+            <Text style={styles.title}>{this.state.item_key.replace('*','/').replace('^','.')}
               <Text style={styles.brand_name}>{this.state.active}</Text>
             </Text>
            </View>
-           <Text style={styles.description_name}>{this.state.subclass_key}</Text>
+           <Text style={styles.description_name}>{this.state.subclass_key.replace('*','/')}</Text>
            <Accordion
             activeSections={this.state.activeSections}
             sections={this.renderData()}

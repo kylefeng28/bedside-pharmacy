@@ -58,9 +58,11 @@
 		// "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
 	},
 	"types": [
+    "node",
 		"react",
 		"react-dom",
-		"react-native"
+		"react-native",
+    "jest"
 	],
 	"exclude":[
 		"build",

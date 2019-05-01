@@ -152,7 +152,8 @@ export default EStyleSheet.create({
     },
 
     main_title:{
-      marginTop: 70
+      marginTop: 70,
+      marginBottom:10
     },
 
     title_light: {
@@ -167,7 +168,8 @@ export default EStyleSheet.create({
 
     search_icon: {
         color: '$DarkGray',
-        fontSize: 30
+        fontSize: 20,
+        marginTop: -8,
     },
 
     class_list: {

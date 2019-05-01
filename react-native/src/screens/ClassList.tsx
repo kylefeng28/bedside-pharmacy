@@ -194,9 +194,10 @@ export class ClassList extends Component {
                 tintColorSearch='#151515'
                 inputHeight={40}
                 iconSearch = {<Ionicons name="md-search" style={styles.search_icon}></Ionicons>}
-                // iconCancel = {<Entypo name="circle-with-cross" style={styles.search_icon}></Entypo>}
+                iconDelete = {<Entypo name="circle-with-cross" style={styles.cancel_icon}></Entypo>}
                 middleWidth = {100}
                 placeholder = {"Seach by subclass, drug, bacteria etc."}
+                positionRightDelete = {80}
                 searchIconCollapsedMargin = {160}
                 placeholderCollapsedMargin = {145}
                 onCancel = {() => this._cancelSearch()}

@@ -58,8 +58,9 @@ function testTab(){
        //Logger.log(err.stack);
        //Logger.log(data[r][c]);
      }
-     //ui.alert(errMsg + warnings);    
-     PropertiesService.getScriptProperties().setProperty('log', errMsg+warnings);
+     //ui.alert(errMsg + warnings);
+     var output = "\nOutput:\n" + JSON.stringify(reformattedData);
+     PropertiesService.getScriptProperties().setProperty('log', errMsg+warnings+output);
      showAlerts();
 }
 function iterateTabs() {

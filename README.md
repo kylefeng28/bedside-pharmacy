@@ -1,6 +1,6 @@
 # UNC Bedside SICU Pocket Pharmacy App
 
-COMP 523 Project Spring 2019
+COMP 523 Software Engineering Lab Spring 2019
 
 [Website](http://drugreference.web.unc.edu/)
 

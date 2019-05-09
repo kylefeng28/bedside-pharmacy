@@ -43,7 +43,6 @@ export class Compare extends Component {
   }
 
   componentWillReceiveProps() {
-    console.log('rerender here');
     this.getCompareList();
   }
 
@@ -55,11 +54,12 @@ export class Compare extends Component {
     var all_content = [];
     var labels = [];
     let newlabels = [];
+    let newlabelsidx = [];
 
     itemsRef.on('value', snapshot =>{
       let data = snapshot.val();
 
-      console.log(Cache.get("selected").length);
+      // console.log(Cache.get("selected").length);
       if (Cache.get("selected").length > 0) {
         labels = data[Cache.get("selected")[0][0]]['labels'];
       } else {
@@ -69,20 +69,26 @@ export class Compare extends Component {
       for (var i=0; i<labels.length; i++) {
         var str = labels[i];
         if (str != ""){
-          var obj = {label:str, value:str}; // not bad vscode
+          var obj = {label:str, value:i}; // not bad vscode
           newlabels.push(obj);
         }
       }
-        
+
+      for (var i=0; i<newlabels.length; i++) {
+        newlabelsidx.push(i);
+      }
+
       var drug_array = [];
 
       for (var i = 0; i < Cache.get("selected").length; i++) {
+        // drug_array.push(Object.keys(data[Cache.get("selected")[i][0]][Cache.get("selected")[i][1]][Cache.get("selected")[i][2]]));
         
         drug_array.push(data[Cache.get("selected")[i][0]][Cache.get("selected")[i][1]][Cache.get("selected")[i][2]]);
       
         var content = [];
         for (var j = 0; j < labels.length; j++) {
-          let a = {title:JSON.stringify(labels[j]).replace(/\"/g, ""),content:JSON.stringify((drug_array[i][j]==null) ? "Data not inserted":drug_array[i][j] ).replace(/\"/g, "")};
+          // let a = {title:JSON.stringify(labels[j]).replace(/\"/g, ""),content:JSON.stringify((drug_array[i][j]==null) ? "Data not inserted":drug_array[i][j] ).replace(/\"/g, "")};
+          let a = {title:JSON.stringify(labels[j]).replace(/\"/g, ""),content:(drug_array[i][j]==null) ? "Data not inserted":drug_array[i][j]};
           content.push(a);
         }
         // content.push({});
@@ -100,8 +106,11 @@ export class Compare extends Component {
       // data: [...drug_array],
       data: all_content,
       labels: newlabels,
-      currentLabel: newlabels,
-    }, function() {console.log(this.state.data);});
+      // currentLabel: newlabels,
+      currentLabel: newlabelsidx,
+    }, function() {
+      console.log(this.state.data);
+    });
   }
   
   _deleteItem(idx) {
@@ -109,6 +118,38 @@ export class Compare extends Component {
     temp.splice(idx, 1);
     Cache.set("selected", temp);
     this.getCompareList();
+  }
+
+  _renderContent(obj) {
+    var info_label = Object.keys(obj);
+
+    return (
+      info_label.map((item) => {
+        var bold = "";
+        var other_text = "";
+        if (item == "_") {
+          if (obj[item][0] == "@") {
+            // find next @, store bold text in bold var
+            var nextAt = obj[item].indexOf("@",2);
+            bold = obj[item].substring(1, nextAt);
+            other_text = obj[item].substring(nextAt + 1);
+          }
+        }
+
+        return ( (item != "_") ? (
+          <View>
+            <Text style={styles.compare_column_value_header}>{item}</Text>
+            <Text>{obj[item]}{'\n'}</Text>
+          </View>
+        ) : (
+          <Text>
+            <Text style={styles.compare_column_value_header}>{bold}</Text>
+            <Text>{other_text}{'\n'}</Text>
+          </Text>
+        )
+        );
+      })
+    );
   }
 
   render() {
@@ -142,7 +183,6 @@ export class Compare extends Component {
                       this.setState({
                         currentLabel: [value],
                       });
-                      console.log("r u in ting");
                     }}
                     value={this.state.currentLabel[0]}
                     Icon={() => {
@@ -175,6 +215,7 @@ export class Compare extends Component {
                 //   {name: 'Midazolam', onset: '15 minutes', duration: '<2 hours', metabolism: 'Urine metabolites'}]},
                 // tslint:disable-next-line:jsx-no-lambda
                 data={this.state.data}
+                extraData={this.state}
                 renderItem={({item, index}) => 
                   <View style={{ backgroundColor: colors[index % colors.length] }}>
                     <ListItem noIndent>
@@ -184,11 +225,16 @@ export class Compare extends Component {
                           <Text style={styles.column_header_text}>{item["name"]}</Text>
                         </View>
                         
-                        {this.state.currentLabel.map((label, index) => {
+                        {this.state.currentLabel.map((idx, index) => { // number
                           return (
                             <View style={styles.compare_item}>
-                              <Text style={styles.compare_column_name}>{item["content"][index]["title"]}</Text>
-                              <Text style={styles.compare_column_value}>{item["content"][index]["content"]}</Text>
+                              <Text style={styles.compare_column_name}>{item["content"][idx]["title"]}</Text>
+                              {/* <Text style={styles.compare_column_value}>{item["content"][idx]["content"]}</Text> */}
+                              {/* <Text style={styles.compare_column_value}>{item["content"][idx]["content"]["_"]}</Text> */}
+                              
+                              <View style={styles.compare_column_value}>
+                                { this._renderContent(item["content"][idx]["content"]) }
+                              </View>
                             </View>
                           );
                         })}

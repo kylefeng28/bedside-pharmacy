@@ -34,8 +34,9 @@ const ToDrugList = createStackNavigator({
 
 const ToDrugInfo = createStackNavigator({
     DrugInfo,
+    DrugList
 }, {
-    headerMode: 'none'
+    headerMode: 'none',
 })
 
 
@@ -53,7 +54,7 @@ const ToBacteria = createStackNavigator({
     headerMode: 'none'
 })
 
-const ToAntibioBac= createStackNavigator({
+const ToAntibioBac = createStackNavigator({
     AntibioBac
 }, {
     headerMode: 'none'

@@ -125,16 +125,27 @@ export class Compare extends Component {
 
     return (
       info_label.map((item) => {
+        var bold = "";
+        var other_text = "";
+        if (item == "_") {
+          if (obj[item][0] == "@") {
+            // find next @, store bold text in bold var
+            var nextAt = obj[item].indexOf("@",2);
+            bold = obj[item].substring(1, nextAt);
+            other_text = obj[item].substring(nextAt + 1);
+          }
+        }
+
         return ( (item != "_") ? (
           <View>
             <Text style={styles.compare_column_value_header}>{item}</Text>
             <Text>{obj[item]}{'\n'}</Text>
           </View>
         ) : (
-          <View>
-            {/* <Text style={styles.compare_column_value_header}>{item}</Text> */}
-            <Text>{obj[item]}{'\n'}</Text>
-          </View>
+          <Text>
+            <Text style={styles.compare_column_value_header}>{bold}</Text>
+            <Text>{other_text}{'\n'}</Text>
+          </Text>
         )
         );
       })

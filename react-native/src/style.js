@@ -442,7 +442,7 @@ export default EStyleSheet.create({
     compare_column_value_header: {
         paddingHorizontal: 0,
         color: '$MainBlack',
-        fontSize: 16,
+        // fontSize: 16,
         fontFamily: 'Open-Sans-SemiBold',
     },
 

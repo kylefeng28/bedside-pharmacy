@@ -39,6 +39,11 @@ export class DrugList extends Component {
 
   }
 
+  componentWillUpdate() {
+    // console.log("hey d00000000000d r u here");
+    // this.getDrugList();
+  }
+
   componentDidMount() {
     this.getDrugList();
   }
@@ -144,7 +149,7 @@ export class DrugList extends Component {
             <View style={styles.drug_list}>
               <FlatList
                 data={this.state.data}
-                extraData={this.state}
+                extraData={[this.state, this.props]}
                 //need a data extractor here
                 renderItem={({item}) =>
                   <View>

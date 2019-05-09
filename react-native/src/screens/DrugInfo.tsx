@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
+  BackHandler,
 } from 'react-native';
 
 import React, { Component } from 'react';
@@ -21,14 +22,20 @@ import { Separator } from 'native-base';
 
 import styles from '../style';
 import { firebase } from '../utils/FirebaseWrapper';
+// import { createNavigationContainer } from 'react-navigation';
 
 let itemsRef = firebase.database.ref('/drugs');
 
 var Cache = require('global-cache');
 
 export class DrugInfo extends Component {
+  static navigationOptions = {
+    header: null
+  }
+
   constructor(props) {
     super(props);
+    
     this.state = {
       class_key: props.navigation.getParam('class_key',''),
       subclass_key: props.navigation.getParam('subclass_key',''),
@@ -80,6 +87,18 @@ export class DrugInfo extends Component {
     return content;
   }
 
+  componentWillMount(){
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  handleBackButton = () => {
+    console.log("WHAT IS HAP");
+    // go back to druglist but re-render
+    this.props.navigation.navigate('DrugList',{class_key: this.state.class_key, subclass_key: this.state.subclass_key, selected: this.state.selected });
+    // this.props.navigation.navigate('ToDrugList',{class_key: this.state.class_key, subclass_key: this.subclass_key });
+
+    return true;
+  }
 
   componentDidMount(){
     this.getDescription();
@@ -105,19 +124,36 @@ export class DrugInfo extends Component {
 
   _renderContent(section, _, isActive) {
     var content = JSON.parse(section.content);
-    var subtitles = Object.keys(content);
-    var spec = Object.values(content);
-    console.log(spec);
+    var info_label = Object.keys(content);
+
     var output = [];
-    for (let i = 0; i< subtitles.length; i++){
-      var item = (
+    var item = info_label.map((label, i) => {
+      var bold = "";
+      var other_text = "";
+      if (label == "_") {
+        if (content[label][0] == "@") {
+          // find next @, store bold text in bold var
+          var nextAt = content[label].indexOf("@",2);
+          bold = content[label].substring(1, nextAt);
+          other_text = content[label].substring(nextAt + 1);
+        }
+      }
+
+      return ( (label != "_") ? (
         <View key = {100-i}>
-          <Text key={i} style={styles.accordion_subtitle}>{(subtitles[i] == '_') ? "" : subtitles[i].replace('*','/')}</Text>
-          <Text key={-1-i} style={styles.accordion_spec}>{spec}</Text>
+          <Text key={i} style={styles.compare_column_value_header}>{label}</Text>
+          <Text key={-1-i}>{content[label]}{'\n'}</Text>
         </View>
-        );
-      output.push(item);
-    }
+      ) : (
+        <Text key = {100-i}>
+          <Text key={i} style={styles.compare_column_value_header}>{bold}</Text>
+          <Text key={-1-i}>{other_text}{'\n'}</Text>
+        </Text>
+      )
+      );
+    });
+    output.push(item);
+
     return (
       <Animatable.View
         duration={400}
@@ -132,10 +168,6 @@ export class DrugInfo extends Component {
   }
 
   _changeIcon(class_key, subclass_key, item_key){
-    // this.setState({
-    //   selected: !this.state.selected
-    // })
-
     var exists = false;
     var idx = 0;
     for (var i=0; i<Cache.get("selected").length; i++) {
@@ -178,8 +210,6 @@ export class DrugInfo extends Component {
   }
 
   _renderIcon(item_key){
-    console.log("egg");
-
     var exists = false;
     for (var i=0; i<Cache.get("selected").length; i++) {
       if (Cache.get("selected")[i][2] == item_key) {
@@ -196,7 +226,6 @@ export class DrugInfo extends Component {
   }
 
 
-  // TODO
   render() {
     const { multipleSelect, activeSections } = this.state;
 

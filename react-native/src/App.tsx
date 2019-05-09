@@ -16,10 +16,6 @@ import { firebase } from './utils/FirebaseWrapper';
 //Reference data
 let itemsRef = firebase.database.ref('/drugs');
 
-//Delete later, for development use only
-import { AntibioBac } from './screens/AntibioBac';
-import { DrugInfo } from './screens/DrugInfo';
-
 export default class App extends Component {
   state: {
     font_loaded: boolean;
@@ -52,6 +48,5 @@ export default class App extends Component {
       return <AppLoading />;
     }
     return <AppContainer />;
-    // return <AntibioBac/>;
   }
 }

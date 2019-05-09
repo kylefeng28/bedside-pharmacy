@@ -13,19 +13,15 @@ import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, H1, H2, H3, Title, ListItem, Card, CardItem, Content, FooterTab, Icon, Footer } from 'native-base';
 import { SimpleLineIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Constants } from 'expo';
 import * as Animatable from 'react-native-animatable';
-import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import EStyleSheet from 'react-native-extended-stylesheet'; 
 
 import { AccordionList } from "accordion-collapse-react-native";
 import { Separator } from 'native-base';
-import { AppLoading, Font } from 'expo';
 
 import styles from '../style';
 import { firebase } from '../utils/FirebaseWrapper';
-// let itemsRef = firebase.database.ref('/drugs_test');
+
 let itemsRef = firebase.database.ref('/drugs');
 
 var Cache = require('global-cache');
@@ -98,7 +94,6 @@ export class DrugInfo extends Component {
   _renderHeader = (section, _, isActive) => {
     return (
       <View
-        // duration={400}
         style={[styles.indication_header, isActive ? styles.indication_active : styles.indication_inactive]}
         transition="backgroundColor"
       >
@@ -175,8 +170,6 @@ export class DrugInfo extends Component {
           Cache.set("selected", temp);
         }
       }
-
-      // console.log(Cache.get("selected"));
     }
 
     this.setState({
@@ -194,9 +187,7 @@ export class DrugInfo extends Component {
       }
     }
 
-    // console.log(this.state.selected);
     if (exists) {
-      // return (<SimpleLineIcons name="check" style={styles.add_icon}></SimpleLineIcons>)
       return (<Ionicons name="ios-checkmark-circle" style={styles.selected_comparison} ></Ionicons>)
     } else {
       return (<SimpleLineIcons name="plus" style={styles.add_icon}></SimpleLineIcons>)

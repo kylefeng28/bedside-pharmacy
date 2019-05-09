@@ -21,8 +21,6 @@ import { firebase } from '../utils/FirebaseWrapper';
 let itemsRef = firebase.database.ref('/drugs');
 
 var Cache = require('global-cache');
-
-// let colors = ['#d9b3ff', '#b3e0ff'];
 let colors = ['#ffffff', '#f2f2f2']
 
 export class Compare extends Component {
@@ -68,7 +66,6 @@ export class Compare extends Component {
         labels = [];
       }
 
-      // console.log(labels);
       for (var i=0; i<labels.length; i++) {
         var str = labels[i];
         if (str != ""){

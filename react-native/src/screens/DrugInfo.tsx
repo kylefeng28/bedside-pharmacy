@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 import React, { Component } from 'react';
@@ -180,7 +181,7 @@ export class DrugInfo extends Component {
 
     this.setState({
       selected: Cache.get("selected")
-    })
+    });
   }
 
   _renderIcon(item_key){
@@ -225,8 +226,8 @@ export class DrugInfo extends Component {
               <Button transparent>
               <TouchableOpacity onPress={() => this._changeIcon(this.state.class_key, this.state.subclass_key, this.state.drug_key)}>
                 {this._renderIcon(this.state.drug_key)}
-               </TouchableOpacity>
-               </Button>
+              </TouchableOpacity>
+              </Button>
              </Right>
            </View>
            <Text style={styles.description_name}>{this.state.description}</Text>

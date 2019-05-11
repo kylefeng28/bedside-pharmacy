@@ -12,6 +12,9 @@ import { Compare } from '../screens/Compare';
 import { Antibiotics } from '../screens/Antibiotics';
 import { Bacteria } from '../screens/Bacteria';
 import { AntibioBac } from '../screens/AntibioBac';
+import { About } from '../screens/AboutUs';
+import { Login } from '../screens/UserLogin';
+import { Signup } from '../screens/UserSignup';
 
 import styles from '../style';
 
@@ -71,7 +74,8 @@ const ReferenceNavigator = createStackNavigator({
     ToAntibioBac
 })
 
-const AppNavigator = createBottomTabNavigator({
+
+const Home = createBottomTabNavigator({
             ClassList: {
                 screen: ReferenceNavigator,
                 navigationOptions: {
@@ -115,4 +119,21 @@ const AppNavigator = createBottomTabNavigator({
             }
         );
 
-        export const AppContainer = createAppContainer(AppNavigator);
+const DrawerNavigator = createDrawerNavigator({
+            Home,
+            Signup,
+            About
+        },
+        {
+          contentOptions: {
+              activeTintColor: '#007FAE',
+              inactiveTintColor: '#767676',
+              labelStyle:{
+                  fontFamily:'Open-Sans-SemiBold',
+                  fontSize: 14
+              }
+            }
+        }
+    );
+
+export const AppContainer = createAppContainer(DrawerNavigator);

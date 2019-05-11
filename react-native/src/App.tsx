@@ -13,6 +13,9 @@ import { AppLoading, Font } from 'expo';
 import { AppContainer } from './components/navigator';
 import { firebase } from './utils/FirebaseWrapper';
 
+//Develop only import, delete later
+import { AboutUs } from './screens/AboutUs';
+
 //Reference data
 let itemsRef = firebase.database.ref('/drugs');
 
@@ -48,5 +51,6 @@ export default class App extends Component {
       return <AppLoading />;
     }
     return <AppContainer />;
+    // return <AboutUs />;
   }
 }

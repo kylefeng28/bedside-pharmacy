@@ -463,4 +463,24 @@ export default EStyleSheet.create({
 
     // use add_icon from druglist page
 
+     /*==========================================================================
+     About Page
+     ========================================================================== */
+
+     about_text:{
+        color: '$MainBlack',
+        fontSize: 16,
+        fontFamily: 'Open-Sans-Regular',
+     },
+
+     about_text_sp:{
+        marginBottom: 10
+     },
+
+     about_header:{
+         color: '$LinkBlue',
+         fontSize: 16,
+         fontFamily: 'Open-Sans-SemiBold',
+         marginTop: 15,
+     }
 });

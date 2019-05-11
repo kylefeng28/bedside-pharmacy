@@ -22,7 +22,7 @@ const SIGNUP_INITIAL_STATE = {
 };
 
 
-export class Signup extends Component {
+export class Account extends Component {
   state: {
     error: Error | null;
     email: string;

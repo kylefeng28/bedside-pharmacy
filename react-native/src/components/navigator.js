@@ -14,7 +14,7 @@ import { Bacteria } from '../screens/Bacteria';
 import { AntibioBac } from '../screens/AntibioBac';
 import { About } from '../screens/AboutUs';
 import { Login } from '../screens/UserLogin';
-import { Signup } from '../screens/UserSignup';
+import { Account } from '../screens/UserSignup';
 
 import styles from '../style';
 
@@ -121,7 +121,7 @@ const Home = createBottomTabNavigator({
 
 const DrawerNavigator = createDrawerNavigator({
             Home,
-            Signup,
+            Account,
             About
         },
         {

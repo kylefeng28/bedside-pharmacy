@@ -17,7 +17,7 @@ import AtoZListView from 'react-native-atoz-listview';
 
 import styles from '../style';
 
-export class AboutUs extends Component {
+export class About extends Component {
 
   render() {
 
@@ -27,7 +27,7 @@ export class AboutUs extends Component {
 	      	<Text style={[styles.title,styles.main_title]}>About Us</Text>
 	      	<Text style={styles.about_text}>Bedside SICU Pharmacy App was designed to aid clinicians by simplifying the medication research process.  We hope that this application can be useful when making important decisions in critical times.</Text>
 	      	<Text style={styles.about_header}>Initialized by</Text>
-	      	<Text style={styles.about_text}>
+	      	<Text style={[styles.about_text, styles.about_text_sp]}>
 	      		  John Yoon, DO
 				  Trauma and Surgical Critical Care
 				  University of North Carolina</Text>

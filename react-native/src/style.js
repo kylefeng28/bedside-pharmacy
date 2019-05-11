@@ -473,6 +473,10 @@ export default EStyleSheet.create({
         fontFamily: 'Open-Sans-Regular',
      },
 
+     about_text_sp:{
+        marginBottom: 10
+     },
+
      about_header:{
          color: '$LinkBlue',
          fontSize: 16,

@@ -15,7 +15,7 @@ const LOGIN_INITIAL_STATE = {
 };
 
 
-export class UserLogin extends Component {
+export class Login extends Component {
   state: {
     email: string;
     password: string;
